@@ -1,0 +1,55 @@
+#timeago_container .subheading {
+    font-size: 24px;
+    font-weight: 350;
+    line-height: 1.1;
+    display: block;
+    margin: 0;
+    padding: 10px 0 0;
+}
+
+#timeago_container .countdown_days_accurate_html strong,
+#timeago_container .countdown_hours_html strong,
+#timeago_container .countdown_minutes_html strong,
+#timeago_container .countdown_seconds_html strong,
+#timeago_container .countdown_milliseconds_html strong,
+#timeago_container .countdown_milliseconds_html strong,
+#timeago_container .countdown_years_html strong,
+#timeago_container .countdown_months_html strong,
+#timeago_container .countdown_days_html strong {
+    font-size: 55px;
+    line-height: 1.6;
+}
+
+#timeago_container .date_span {text-align:center}
+#timeago_container .date_time_span { font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align:center}
+
+#timeago_container .subheading {text-align:center}
+
+@media only screen and (min-width: 768px) {
+
+    #timeago_container .subheading {
+        font-size: 42px;
+        font-weight: 350;
+        line-height: 1.1;
+        display: block;
+        margin: 0 0 0;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .countdown_days_total_html {
+        font-size: 100px;
+    }
+
+    #timeago_container .countdown_days_accurate_html strong,
+    #timeago_container .countdown_hours_html strong,
+    #timeago_container .countdown_minutes_html strong,
+    #timeago_container .countdown_seconds_html strong,
+    #timeago_container .countdown_milliseconds_html strong,
+    #timeago_container .countdown_milliseconds_html strong,
+    #timeago_container .countdown_years_html strong,
+    #timeago_container  .countdown_months_html strong,
+    #timeago_container .countdown_days_html strong {
+        font-size: 90px;
+        line-height: 1.2;
+    }
+}
