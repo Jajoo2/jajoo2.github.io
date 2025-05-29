@@ -17,6 +17,35 @@ body
     font-family: 'Comfortaa';
 }
 
+
+
+.link
+{
+	color: #FFF;
+	text-decoration: none;
+    background-color: #00000075;
+    padding: 10px 10px;
+    border-radius: 10px;
+    transition-duration: 0.2s;
+}
+
+.link:hover
+{
+	font-weight: bold;
+	text-decoration: underline;
+    background-color: #11111185;
+}
+
+
+hr
+{
+    margin-left: 0;
+    width: 250px;
+    border: solid;
+    border-radius: 8px;
+    color: #FFFFFF25;
+}
+
 dd
 {
     font-size: 8px;
