@@ -17,6 +17,24 @@ body
     font-family: 'Comfortaa';
 }
 
+.fake-console
+{
+    max-height: 240px;  
+    min-height: 240px;
+    max-width: 550px;     
+    min-width: 450px;  
+    overflow-y: scroll;         
+    overflow-x: hidden;       
+    display: flex;
+    flex-wrap: wrap;          
+    align-content: flex-start; 
+    background-color: #0000004d;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: #0000004b;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
 
 
 .link

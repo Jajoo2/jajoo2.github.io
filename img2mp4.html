@@ -34,10 +34,26 @@
 		<button id="convert-btn">Convert</button>
 
 		<h3>Result:</h3>
-		<video id="output-video" controls height="250"></video>
+		<div style="display: flex;">
+			<video id="output-video" controls height="250"></video>
+			<div class="fake-console">
+				<p id="fake-console"></p>
+			</div>
+		</div>
 
-		
+
 		<script>
+			const fakeConsole = document.getElementById("fake-console");
+			const originalLog = console.log;
+
+			console.log = function (...args) {
+				// Keep original behavior
+				originalLog.apply(console, args);
+
+				// Write to the <p>
+				fakeConsole.innerText += args.join(" ") + "\n";
+				fakeConsole.parentElement.scrollTop = fakeConsole.parentElement.scrollHeight;
+			};
 			const { createFFmpeg, fetchFile } = FFmpeg;
 			const ffmpeg = createFFmpeg({ log: true });
 
@@ -65,7 +81,7 @@
 				ffmpeg.FS('writeFile', file.name, await fetchFile(file));
 
 				// ffmpeg -loop 1 -i img.png -c:v libx264 -t 0.1 -pix_fmt yuv420p vid.mp4
-				
+
 				await ffmpeg.run(
 					'-loop', '1',
 					'-i', file.name,
