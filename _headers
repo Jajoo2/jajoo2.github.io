@@ -1,3 +1,2 @@
 /*
-  Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Embedder-Policy: require-corp
+  Content-Security-Policy: frame-src https://www.youtube.com https://www.youtube-nocookie.com;
