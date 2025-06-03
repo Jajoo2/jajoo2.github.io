@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Project</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="script.js"></script>
+</head>
+
+<body>
+	<div id="topbar-container"></div>
+
+	<div style="padding-left: 30px;">
+		<h1 id="title"><i>Title</i></h1>
+		<div style="display: flex; justify-content: space-between; padding-right: 30px;">
+			<div id="imagediv"></div>
+			<div id="videodiv" style="position: relative;"></div>
+		</div>
+
+		<p id="description">Loading description...</p>
+	</div>
+
+	<script>
+		function getQueryParam(name) {
+			const params = new URLSearchParams(window.location.search);
+			return params.get(name);
+		}
+
+		const projectId = getQueryParam("id");
+
+		fetch("projects.json")
+			.then(res => res.json())
+			.then(data => {
+				const pageData = data[projectId];
+
+				if (!pageData) {
+					document.body.innerHTML = `<p>404. No project under this ID</p>`;
+					return;
+				}
+
+				// Fill in title and description
+				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
+				document.getElementById("description").innerHTML = pageData.description.replace(/\n/g, "<br>");
+
+				// Video
+				if (pageData.videoId) {
+					const iframe = document.createElement('iframe');
+					iframe.src = `https://www.youtube.com/embed/${pageData.videoId}`;
+					iframe.width = "560";
+					iframe.height = "315";
+					iframe.style.borderStyle = "none";
+					iframe.style.borderRadius = "10px";
+					iframe.setAttribute("allowfullscreen", "");
+					document.getElementById("videodiv").appendChild(iframe);
+				}
+
+				// Images
+				if (pageData.images?.length) {
+					const imagesHtml = pageData.images.map(src => `<img src="${src}">`).join("");
+
+					const html = `
+				<div style="display: flex; align-items: center;">
+					<div class="carousel-container">
+						<div class="carousel-track" id="carouselTrack">${imagesHtml}</div>
+					</div>
+				</div>
+
+				<div class="carousel-buttons">
+					<img class="imgbutton" src="leftarrow.svg" onclick="prevImage()" style="cursor: pointer;">
+					<img class="imgbutton" src="rightarrow.svg" onclick="nextImage()" style="cursor: pointer;">
+				</div>
+			`;
+
+					document.getElementById("imagediv").innerHTML = html;
+
+					const script = document.createElement("script");
+					script.src = "carousel.js";
+					document.body.appendChild(script);
+				}
+			});
+
+
+	</script>
+</body>
+
+</html>

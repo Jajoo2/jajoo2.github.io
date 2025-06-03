@@ -1,0 +1,20 @@
+{
+    "meisite": {
+        "title": "Mei Ste",
+        "description": "It's THIS site!",
+        "videoId": "",
+        "images": [
+            "eXample.png",
+            "example.png"
+        ]
+    },
+    "ansiCLIrenderer": {
+        "title": "ANSI CLI Image/Video renderer",
+        "description": "I'm pretty proud of this. Uses ANSI color codes & Unicode lower half block character.\nThe top \"pixel\" is the background color, and the bottom is the foreground.",
+        "videoId": "NsPUSzq1Cvs",
+        "images": [
+            "media/ANSI1.png",
+            "media/ANSI2.png"
+        ]
+    }
+}
