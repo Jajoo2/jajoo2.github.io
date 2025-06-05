@@ -3,22 +3,26 @@
     src: url('comfortaa.ttf');
 }
 
+
+.giscus-frame {
+    width: calc(100vw - 65px);
+    padding-right: 65px;
+}
+
 input[type="file"] {
     display: none;
 }
 
-.imgbutton
-{
+.imgbutton {
     filter: drop-shadow(2px 2px 5px #000);
     transition-duration: 0.1s;
 }
 
-.imgbutton:hover
-{
+.imgbutton:hover {
     transform: scale(1.1);
 }
-.imgbutton:active
-{
+
+.imgbutton:active {
     transform: scale(1);
 }
 
@@ -406,7 +410,7 @@ input[type="range"]::-moz-range-thumb:active {
 .carousel-track {
     display: flex;
     transition: transform 0.3s ease-in-out;
-    
+
 }
 
 .carousel-track img {
