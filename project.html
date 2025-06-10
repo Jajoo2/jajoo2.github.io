@@ -6,6 +6,14 @@
 	<title>Project</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script src="script.js"></script>
+	<!-- Fonts & Icons -->
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+	<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+
+	<!-- Carousel CSS -->
+	<link rel="stylesheet" href="css/carousel.css">
+
+
 </head>
 
 <body>
@@ -14,7 +22,24 @@
 	<div style="padding-left: 30px;">
 		<h1 id="title"><i>Title</i></h1>
 		<div style="display: flex; justify-content: space-between; padding-right: 30px;">
-			<div id="imagediv"></div>
+			<!--<div id="imagediv"></div>-->
+			<section class="carousel">
+				<div class="carousel_slider">
+					<div class="content_inner_slider" id="dynamicCarousel"></div>
+					<button class="prev_button"><ion-icon name="chevron-back-outline"></ion-icon></button>
+					<button class="next_button"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+				</div>
+				<ul class="dots"></ul>
+
+				<div class="form">
+					<label class="custom-checkbox">
+						<input type="checkbox" class="auto_slide" id="slide"/>
+						<span class="checkmark"></span>
+						Auto Slide
+					</label>
+				</div>
+			</section>
+
 			<div id="videodiv" style="position: relative;"></div>
 		</div>
 
@@ -28,7 +53,7 @@
 			data-theme="noborder_gray" data-lang="en" data-loading="lazy" crossorigin="anonymous" async>
 		</script>-->
 	</div>
-
+	<script src="js/carousel.js" defer></script>
 	<script>
 		function loadGiscus(projectId) {
 			const giscusContainer = document.getElementById("giscus-comments");
@@ -40,7 +65,7 @@
 			script.setAttribute("data-category", "Announcements");
 			script.setAttribute("data-category-id", "DIC_kwDOOwSZ4M4CrFC7");
 			script.setAttribute("data-mapping", "specific");
-			script.setAttribute("data-term", projectId); // 🔥 This makes it project-specific
+			script.setAttribute("data-term", projectId); // This makes it project-specific
 			script.setAttribute("data-strict", "0");
 			script.setAttribute("data-reactions-enabled", "1");
 			script.setAttribute("data-emit-metadata", "0");
@@ -91,27 +116,11 @@
 
 				// Images
 				if (pageData.images?.length) {
-					const imagesHtml = pageData.images.map(src => `<img src="${src}">`).join("");
-
-					const html = `
-				<div style="display: flex; align-items: center;">
-					<div class="carousel-container">
-						<div class="carousel-track" id="carouselTrack">${imagesHtml}</div>
-					</div>
-				</div>
-
-				<div class="carousel-buttons">
-					<img class="imgbutton" src="leftarrow.svg" onclick="prevImage()" style="cursor: pointer;">
-					<img class="imgbutton" src="rightarrow.svg" onclick="nextImage()" style="cursor: pointer;">
-				</div>
-			`;
-
-					document.getElementById("imagediv").innerHTML = html;
-
-					const script = document.createElement("script");
-					script.src = "carousel.js";
-					document.body.appendChild(script);
+					const container = document.getElementById("dynamicCarousel");
+					container.innerHTML = pageData.images.map(src => `<img src="${src}" class="img">`).join("");
+					setupCarousel(); // now run the carousel setup AFTER images are injected
 				}
+
 			});
 
 
