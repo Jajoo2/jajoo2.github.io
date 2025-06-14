@@ -91,7 +91,8 @@
 		</div>
 
 		<script>
-			name = prompt("pick a name. any  name.");
+			name = prompt("pick a name. any name.");
+
 			(function () {
 				const widget = document.getElementById('chat-widget');
 				const header = document.getElementById('chat-header');
@@ -99,7 +100,7 @@
 				const input = document.getElementById('chat-input');
 				const sendBtn = document.getElementById('chat-send-btn');
 
-				// Drag logic
+				// Drag logic (same as you have)
 				let isDragging = false;
 				let offsetX, offsetY;
 
@@ -117,7 +118,6 @@
 					if (!isDragging) return;
 					let x = e.clientX - offsetX;
 					let y = e.clientY - offsetY;
-					// Keep widget inside viewport horizontally and vertically
 					const maxX = window.innerWidth - widget.offsetWidth;
 					const maxY = window.innerHeight - widget.offsetHeight;
 					x = Math.min(Math.max(0, x), maxX);
@@ -126,27 +126,43 @@
 					widget.style.top = y + 'px';
 				});
 
-				// Messages store (in-memory, ephemeral)
-				const messages = [];
+				async function fetchMessages() {
+					try {
+						const res = await fetch('/hw');
+						if (!res.ok) throw new Error('Failed to fetch messages');
+						const msgs = await res.json();
+						renderMessages(msgs);
+					} catch (err) {
+						console.error(err);
+					}
+				}
 
-				function renderMessages() {
+				function renderMessages(msgs) {
 					messagesDiv.innerHTML = '';
-					for (const msg of messages) {
+					for (const msg of msgs) {
 						const div = document.createElement('div');
-						div.textContent = msg;
+						div.textContent = msg.name ? `${msg.name}: ${msg.text}` : JSON.stringify(msg);
 						messagesDiv.appendChild(div);
 					}
 					messagesDiv.scrollTop = messagesDiv.scrollHeight;
 				}
 
-				function sendMessage(text) {
+				async function sendMessage(text) {
 					if (!text.trim()) return;
-					messages.push(text.trim());
-					renderMessages();
+					try {
+						await fetch('/hw', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ name, text }),
+						});
+						await fetchMessages();
+					} catch (err) {
+						console.error('Failed to send message', err);
+					}
 				}
 
 				sendBtn.onclick = () => {
-					sendMessage(name+': '+input.value);
+					sendMessage(input.value);
 					input.value = '';
 					input.focus();
 				};
@@ -158,9 +174,13 @@
 					}
 				});
 
-				// Initial focus
 				input.focus();
+				fetchMessages();
+
+				// Optional: poll every 3-5 seconds
+				setInterval(fetchMessages, 4000);
 			})();
+
 		</script>
 
 	</div>
