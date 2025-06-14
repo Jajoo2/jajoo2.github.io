@@ -18,7 +18,7 @@
 
     // Fetch and show messages
     async function fetchMessages() {
-      const res = await fetch('/chat');
+      const res = await fetch('/hw');
       if (res.ok) {
         const messages = await res.json();
         messagesDiv.innerHTML = '';
@@ -33,7 +33,7 @@
     sendBtn.onclick = async () => {
       const text = input.value.trim();
       if (!text) return;
-      await fetch('/chat', {
+      await fetch('/hw', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({text})
