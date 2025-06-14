@@ -91,6 +91,7 @@
 		</div>
 
 		<script>
+			name = prompt("pick a name. any  name.");
 			(function () {
 				const widget = document.getElementById('chat-widget');
 				const header = document.getElementById('chat-header');
@@ -145,7 +146,7 @@
 				}
 
 				sendBtn.onclick = () => {
-					sendMessage(input.value);
+					sendMessage(name+': '+input.value);
 					input.value = '';
 					input.focus();
 				};
