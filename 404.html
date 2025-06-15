@@ -1,63 +1,146 @@
 <!DOCTYPE html>
-<html><head>
-    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'self'">
-    <title>404</title>
-    <style type="text/css" media="screen">
-      body {
-        background-color: #f1f1f1;
-        margin: 0;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      }
+<html>
 
-      .container { margin: 50px auto 40px auto; width: 600px; text-align: center; }
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; script-src 'unsafe-inline'; connect-src 'self'">
+	<title>404</title>
+	<style type="text/css" media="screen">
+		body {
+			background-color: #c59143;
+			margin: 0;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
 
-      a { color: #4183c4; text-decoration: none; }
-      a:hover { text-decoration: underline; }
+		.container {
+			margin: 50px auto 40px auto;
+			width: 600px;
+			text-align: center;
+		}
 
-      h1 { width: 800px; position:relative; left: -100px; letter-spacing: -1px; line-height: 60px; font-size: 60px; font-weight: 100; margin: 0px 0 50px 0; text-shadow: 0 1px 0 #fff; }
-      p { color: rgba(0, 0, 0, 0.5); margin: 20px 0; line-height: 1.6; }
+		a {
+			color: #4183c4;
+			text-decoration: none;
+		}
 
-      ul { list-style: none; margin: 25px 0; padding: 0; }
-      li { display: table-cell; font-weight: bold; width: 1%; }
+		h1 {
+			width: 800px;
+			position: relative;
+			left: -100px;
+			letter-spacing: -1px;
+			line-height: 60px;
+			font-size: 60px;
+			font-weight: 100;
+			margin: 0px 0 50px 0;
+			text-shadow: 0 1px 0 #fff;
+		}
 
-      .logo { display: inline-block; margin-top: 35px; }
-      .logo-img-2x { display: none; }
-      @media
-      only screen and (-webkit-min-device-pixel-ratio: 2),
-      only screen and (   min--moz-device-pixel-ratio: 2),
-      only screen and (     -o-min-device-pixel-ratio: 2/1),
-      only screen and (        min-device-pixel-ratio: 2),
-      only screen and (                min-resolution: 192dpi),
-      only screen and (                min-resolution: 2dppx) {
-        .logo-img-1x { display: none; }
-        .logo-img-2x { display: inline-block; }
-      }
+		p {
+			color: rgba(0, 0, 0, 0.5);
+			margin: 20px 0;
+			line-height: 1.6;
+		}
 
-      #suggestions {
-        margin-top: 35px;
-        color: #ccc;
-      }
-      #suggestions a {
-        color: #666666;
-        font-weight: 200;
-        font-size: 14px;
-        margin: 0 10px;
-      }
+		canvas#bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			z-index: -1;
+			pointer-events: none;
+		}
+	</style>
+</head>
 
-    </style>
-  </head>
-  <body>
+<body>
 
-    <div class="container">
-      <h1>404</h1>
-      <p><strong>There isn't a page here.</strong></p>
-    </div>
-      <center>
-            <a href="https://meisite.xyz/" style="font-size: 50px;">
-             🔙
-            </a>
-      </center>
+	<canvas id="bg"></canvas>
+
+	<script>
+		const canvas = document.getElementById("bg");
+		const ctx = canvas.getContext("2d");
+		let w, h;
+
+		const circles = [];
+		const circleCount = 70;
+
+		function initCircles() {
+			circles.length = 0; // clear array
+			for (let i = 0; i < circleCount; i++) {
+				circles.push({
+					x: Math.random() * w,
+					y: Math.random() * h,
+					r: 100 + Math.random() * 200,
+					hue: 25 + Math.random() * 35,
+					alpha: Math.random() * 255,
+					vx: (Math.random() - 0.5) * 20,
+					vy: (Math.random() - 0.5) * 20,
+				});
+			}
+		}
+
+		function drawCircles() {
+			ctx.clearRect(0, 0, w, h);
 
 
-</body></html>
+			circles.forEach(c => {
+				c.x += c.vx;
+				c.y += c.vy;
+
+				// wrap around edges
+				if (c.x - c.r > w) c.x = -c.r;
+				else if (c.x + c.r < 0) c.x = w + c.r;
+
+				if (c.y - c.r > h) c.y = -c.r;
+				else if (c.y + c.r < 0) c.y = h + c.r;
+
+				const gradient = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
+				gradient.addColorStop(0, `hsla(${c.hue}, 100%, 70%, ${c.alpha})`);
+				gradient.addColorStop(1, `hsla(${c.hue}, 100%, 70%, 0)`);
+
+				ctx.fillStyle = gradient;
+				ctx.beginPath();
+				ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+				ctx.fill();
+			});
+
+		}
+
+		function animate() {
+			drawCircles();
+			requestAnimationFrame(animate);
+		}
+
+		function resize() {
+			w = canvas.width = window.innerWidth;
+			h = canvas.height = window.innerHeight;
+			canvas.style.width = w + "px";
+			canvas.style.height = h + "px";
+		}
+
+		resize();
+		initCircles();
+		animate();
+
+		window.addEventListener('resize', () => {
+			resize();
+		});
+
+	</script>
+
+	<div class="container">
+		<h1>404</h1>
+		<p><strong>There isn't a page here.</strong></p>
+	</div>
+	<center>
+		<a href="https://meisite.xyz/" style="font-size: 50px;">
+			🔙
+		</a>
+	</center>
+
+
+</body>
+
+</html>
