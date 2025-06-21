@@ -1,106 +1,242 @@
-<!DOCTYPE html> <!--AI Generated :(((( -->
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Image to Colored Text</title>
-<style>
-  body { font-family: monospace; padding: 1em; background: #222; color: #eee; }
-  textarea { width: 100%; height: 300px; margin-top: 1em; background: #111; color: #eee; font-family: monospace; }
-  button { margin-top: 0.5em; padding: 0.5em 1em; font-size: 1em; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Image to Colored Text</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 1em;
+            background: #222;
+            color: #eee;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            margin-top: 1em;
+            background: #111;
+            color: #eee;
+            font-family: monospace;
+        }
+
+        button {
+            margin-top: 0.5em;
+            padding: 0.5em 1em;
+            font-size: 1em;
+        }
+    </style>
+    <style type="text/css" media="screen">
+
+        .container {
+            margin: 50px auto 40px auto;
+            width: 600px;
+            text-align: center;
+        }
+
+        a {
+            color: #4183c4;
+            text-decoration: none;
+        }
+
+        h1 {
+            width: 800px;
+            position: relative;
+            left: -100px;
+            letter-spacing: -1px;
+            line-height: 60px;
+            font-size: 60px;
+            font-weight: 100;
+            margin: 0px 0 50px 0;
+            text-shadow: 0 1px 0 #fff;
+        }
+
+        p {
+            color: rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        canvas#bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Image to Colored Text Converter</h2>
-<input type="file" id="fileInput" accept="image/*" />
-<br/>
-<button id="copyBtn" disabled>Copy Output</button>
+    <canvas id="bg"></canvas>
 
-<textarea id="output" readonly placeholder="Output will appear here..."></textarea>
+    <script>
+        const canvas = document.getElementById("bg");
+        const ctx = canvas.getContext("2d");
+        let w, h;
 
-<script>
-  const fileInput = document.getElementById('fileInput');
-  const output = document.getElementById('output');
-  const copyBtn = document.getElementById('copyBtn');
+        const circles = [];
+        const circleCount = 3;
 
-  const pixelChar = "█";
-  const scale = 0.7;
+        function initCircles() {
+            circles.length = 0; // clear array
+            for (let i = 0; i < circleCount; i++) {
+                circles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: 100 + Math.random() * 600,
+                    hue: 0,
+                    alpha: Math.random() * 0.06,
+                    vx: (Math.random() - 0.5) * 20,
+                    vy: (Math.random() - 0.5) * 20,
+                });
+            }
+        }
 
-  function rgbToHex(r, g, b) {
-    return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-  }
+        function drawCircles() {
+            ctx.clearRect(0, 0, w, h);
 
-  function processImage(img) {
-    // Create canvas to draw and resize image
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
 
-    // Resize dimensions scaled by `scale`
-    const width = Math.floor(img.width * scale);
-    const height = Math.floor(img.height * scale);
+            circles.forEach(c => {
+                c.x += c.vx;
+                c.y += c.vy;
 
-    canvas.width = width;
-    canvas.height = height;
+                // wrap around edges
+                if (c.x - c.r > w) c.x = -c.r;
+                else if (c.x + c.r < 0) c.x = w + c.r;
 
-    // Draw the image resized
-    ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, width, height);
+                if (c.y - c.r > h) c.y = -c.r;
+                else if (c.y + c.r < 0) c.y = h + c.r;
 
-    // Flip vertically and horizontally (equivalent of your transpose calls)
-    // We'll do this by reading pixels and writing into another canvas flipped
+                const gradient = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
+                gradient.addColorStop(0, `hsla(${c.hue}, 0%, 70%, ${c.alpha})`);
+                gradient.addColorStop(1, `hsla(${c.hue}, 0%, 70%, 0)`);
 
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCanvas.width = width;
-    tempCanvas.height = height;
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
 
-    tempCtx.translate(width, height);
-    tempCtx.scale(-1, -1);  // flip both axes
-    tempCtx.drawImage(canvas, 0, 0);
+        }
 
-    // Now get pixel data
-    const imageData = tempCtx.getImageData(0, 0, width, height);
-    const data = imageData.data;
+        function animate() {
+            drawCircles();
+            requestAnimationFrame(animate);
+        }
 
-    let string = "<size=-1><scale=1.8>\n";
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            canvas.style.width = w + "px";
+            canvas.style.height = h + "px";
+        }
 
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const i = (y * width + x) * 4;
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        string += `<color=${rgbToHex(r,g,b)}>${pixelChar}</color>`;
-      }
-      string += "\033[0m\n";
-    }
-    return string;
-  }
+        resize();
+        initCircles();
+        animate();
 
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+        window.addEventListener('resize', () => {
+            resize();
+        });
 
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const img = new Image();
-      img.onload = function() {
-        const result = processImage(img);
-        output.value = result;
-        copyBtn.disabled = false;
-      }
-      img.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
+    </script>
 
-  copyBtn.addEventListener('click', () => {
-    output.select();
-    document.execCommand('copy');
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => (copyBtn.textContent = 'Copy Output'), 2000);
-  });
-</script>
+    <h2>Image to Colored Text Converter</h2>
+    <input type="file" id="fileInput" accept="image/*" />
+    <br />
+    <button id="copyBtn" disabled>Copy Output</button>
+
+    <textarea id="output" readonly placeholder="Output will appear here..."></textarea>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const output = document.getElementById('output');
+        const copyBtn = document.getElementById('copyBtn');
+
+        const pixelChar = "█";
+        const scale = 0.7;
+
+        function rgbToHex(r, g, b) {
+            return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+        }
+
+        function processImage(img) {
+            // Create canvas to draw and resize image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Resize dimensions scaled by `scale`
+            const width = Math.floor(img.width * scale);
+            const height = Math.floor(img.height * scale);
+
+            canvas.width = width;
+            canvas.height = height;
+
+            // Draw the image resized
+            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, width, height);
+
+            // Flip vertically and horizontally (equivalent of your transpose calls)
+            // We'll do this by reading pixels and writing into another canvas flipped
+
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = width;
+            tempCanvas.height = height;
+
+            tempCtx.translate(width, height);
+            tempCtx.scale(-1, -1);  // flip both axes
+            tempCtx.drawImage(canvas, 0, 0);
+
+            // Now get pixel data
+            const imageData = tempCtx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+
+            let string = "<size=-1><scale=1.8>\n";
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const i = (y * width + x) * 4;
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    string += `<color=${rgbToHex(r, g, b)}>${pixelChar}</color>`;
+                }
+                string += "\n";
+            }
+            return string;
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const img = new Image();
+                img.onload = function () {
+                    const result = processImage(img);
+                    output.value = result;
+                    copyBtn.disabled = false;
+                }
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        copyBtn.addEventListener('click', () => {
+            output.select();
+            document.execCommand('copy');
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => (copyBtn.textContent = 'Copy Output'), 2000);
+        });
+    </script>
 
 </body>
+
 </html>
