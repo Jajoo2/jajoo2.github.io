@@ -64,7 +64,7 @@
 		let w, h;
 
 		const circles = [];
-		const circleCount = 70;
+		const circleCount = 10;
 
 		function initCircles() {
 			circles.length = 0; // clear array
@@ -72,7 +72,7 @@
 				circles.push({
 					x: Math.random() * w,
 					y: Math.random() * h,
-					r: 100 + Math.random() * 200,
+					r: 100 + Math.random() * 900,
 					hue: 25 + Math.random() * 35,
 					alpha: Math.random() * 255,
 					vx: (Math.random() - 0.5) * 20,
