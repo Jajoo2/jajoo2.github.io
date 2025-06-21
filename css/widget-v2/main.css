@@ -1,0 +1,47 @@
+#timeago_container p,
+#timeago_container span,
+#timeago_container div {
+    padding: 0;
+    margin-left: auto; margin-right: auto;
+}
+
+#timeago_container {
+    padding: 0 10px;
+    margin: 0;
+    font-family: monospace;
+    
+}
+
+#howlongagogo_p {
+    color: #666;
+    font-family: monospace;
+    font-size: 14px;
+    text-align: center;
+    margin: -1px 0 0;
+    padding: 9px 0;
+    width: 100%;
+    
+}
+
+#timeago_container #no_link_back {
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 0 0;
+    padding: 8px 0;
+    width: 100%
+}
+
+#timeago_container .d-flex {
+    display: flex;
+}
+
+#timeago_container .flex-fill {
+    flex: 0.1;
+    background-color: #00000075;
+    border-radius: 15px;
+}
+
+#timeago_container .d-none {
+    display: none
+}

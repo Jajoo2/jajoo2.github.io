@@ -10,6 +10,7 @@ html {
     font-family: 'Comfortaa';
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 /* General */
@@ -19,22 +20,133 @@ html {
     border-color: #3f3f3f;
 }
 
-.imgbutton
-{
+.imgbutton {
     transition-duration: 0.2s;
 }
 
-.imgbutton:hover
-{
+.imgbutton:hover {
     transform: scale(1.1);
 }
 
-.imgbutton:active
-{
+.imgbutton:active {
     transition-duration: 0.05s;
     transform: scale(0.9);
 }
 
+
+.giscus-frame {
+    width: calc(100vw - 65px);
+    padding-right: 65px;
+}
+
+
+/* Grid of icons */
+
+.grid {
+    height: 350px;
+    width: 950px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    gap: 0px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    background-color: #0000004d;
+    border-style: solid;
+    border-color: #0000004b;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+
+}
+
+.grid a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.grid a:hover
+{
+    color: #fff !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+}
+
+.grid-item {
+    position: relative;
+    display: block;
+    width: 250px;
+    height: 150px;
+    margin: 5px;
+    background: #000;
+    border-style: solid;
+    border-color: #0a0a0a9d;
+    align-content: center;
+    overflow: hidden;
+    transition-duration: 0.2s;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+ */
+    user-select: none;
+    /* Standard syntax */
+
+}
+
+
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition-duration: 0.2s;
+}
+
+.grid-item:hover img {
+    transform: scale(1.05);
+}
+
+.grid-item:active img {
+    transition-duration: 0.05s;
+    transform: scale(1);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.title {
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.subtitle {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    font-size: 0.5em;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.7);
+    /* Semi-transparent white */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    /* Adds a slight shadow for readability */
+}
+
+/* End of general */
 
 /* Navigations */
 nav {
@@ -51,7 +163,8 @@ nav ul {
 }
 
 
-nav li a { /* Various !importants added because of the below rules for <a> */
+nav li a {
+    /* Various !importants added because of the below rules for <a> */
     color: white !important;
     text-decoration: none;
     font-weight: bold;
@@ -110,4 +223,3 @@ footer ul {
     justify-content: center;
     gap: 4em;
 }
-

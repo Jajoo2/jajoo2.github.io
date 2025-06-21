@@ -1,0 +1,24 @@
+{
+    "meisite": {
+        "title": "Mei Ste",
+        "description": "It's THIS site!",
+        "summary": "This site.",
+        "videoId": "", 
+        "thumbnail": "img/mei.png",
+        "images": [
+            "eXample.png",
+            "example.png"
+        ]
+    },
+    "ansiCLIrenderer": {
+        "title": "ANSI CLI Image/Video renderer",
+        "description": "I'm pretty proud of this. Uses ANSI color codes & Unicode lower half block character.\nThe top \"pixel\" is the background color, and the bottom is the foreground.",
+        "summary": "Renders images and video in a terminal.",
+        "videoId": "NsPUSzq1Cvs",
+        "thumbnail": "img/projects/ANSI1.png",
+        "images": [
+            "/img/projects/ANSI1.png",
+            "/img/projects/ANSI2.png"
+        ]
+    }
+}
