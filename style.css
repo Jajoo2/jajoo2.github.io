@@ -13,6 +13,30 @@ html {
     overflow-x: hidden;
 }
 
+/* button */
+
+button 
+{
+    font-size: 25px;
+    background-color: #2f2f2f;
+    border-style: none;
+    border-radius: 20px;
+    padding: 30px;
+    color: #FFF;
+    transition-duration: 0.1s;
+}
+
+button:hover
+{
+    font-size: 40px;
+    padding: 10px;
+}
+
+button:active
+{
+    transform: scale(0.9);
+}
+
 /* General */
 .badge {
     border: solid;
@@ -61,14 +85,12 @@ html {
 
 }
 
-.grid a
-{
+.grid a {
     color: #fff;
     text-decoration: none;
 }
 
-.grid a:hover
-{
+.grid a:hover {
     color: #fff !important;
     text-decoration: none !important;
     text-shadow: none !important;

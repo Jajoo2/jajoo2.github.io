@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    fetch('src/footer.html')
+    fetch('/src/footer.html')
         .then(res => res.text())
         .then(html => {
             document.getElementById('footer-placeholder').innerHTML = html;

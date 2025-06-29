@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/style.css" />
+	<script src="/index.js"></script>
+</head>
+
+<body>
+
+	<div class="page-container">
+
+		<main>
+			<img id="randpic" src="#">
+			<div style="display:flex; justify-content: space-between;">
+				<button style="background-color: red;" id="unbasedbutton">Unbased</button>
+				<p id="indicatetext"></p>
+				<button style="background-color: green;" id="basedbutton">Based</button>
+			</div>
+		</main>
+
+		<script>
+			const pic = document.getElementById("randpic");
+			const button_unbased = document.getElementById("unbasedbutton");
+			const button_based = document.getElementById("basedbutton");
+			const indicator = document.getElementById("indicatetext");
+
+			pic.src=`https://picsum.photos/${window.screen.width}/${window.screen.height-250}?${new Date().getTime()}`;
+
+			button_based.addEventListener('click', function () {
+				console.log("Based");
+				pic.src=`https://picsum.photos/${window.screen.width}/${window.screen.height-250}?${new Date().getTime()}`;
+				indicator.innerText = "Based, changing image";
+			});
+
+			button_unbased.addEventListener('click', function () {
+				console.log("Unbased");
+				pic.src=`https://picsum.photos/${window.screen.width}/${window.screen.height-250}?${new Date().getTime()}`;
+				indicator.innerText = "Unbased, changing image";
+			});
+
+			pic.onload = () => {
+				indicator.innerText = "";
+			};
+
+			// Optional: catch errors
+			pic.onerror = () => {
+				indicator.innerText = "ERROR; FALLING BACK TO OTHER API (you shouldnt see this message)";
+				
+				pic.src=`https://random-image-pepebigotes.vercel.app/api/random-image?${new Date().getTime()}`
+			};
+
+		</script>
+
+	</div>
+
+</body>
+
+</html>
