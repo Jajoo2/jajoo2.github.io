@@ -58,6 +58,31 @@
 
 	<canvas id="bg"></canvas>
 
+	<audio id="bgmusic" src="src/amb.ogg" loop></audio>
+
+	<script>
+		const audio = document.getElementById("bgmusic");
+
+		const tryPlay = () => {
+			audio.play().then(() => {
+				console.log("Playback started");
+				audio.volume = 0;
+				for (let i = 0; i < 0.5; i += 0.001) {
+					setTimeout(() => {
+						audio.volume = i;
+					}, i * 1000);
+				}
+
+			}).catch(err => {
+				console.error("Playback failed:", err);
+			});
+			document.removeEventListener("mousemove", tryPlay);
+		};
+
+		document.addEventListener("mousemove", tryPlay);
+	</script>
+
+
 	<script>
 		const canvas = document.getElementById("bg");
 		const ctx = canvas.getContext("2d");
