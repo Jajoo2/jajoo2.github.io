@@ -18,6 +18,19 @@
         <main style="padding-left:30px;">
             <br>
             <h1>Projects</h1>
+            <p id="motd"></p>
+            <script>
+                motdp = document.getElementById("motd");
+                fetch('https://pubesucker.meisite.xyz/api/motd')
+                    .then(response => response.text())
+                    .then(text => {
+                        motdp.innerHTML = '<span style="font-family: Arial;"><b>MOTD: </b></span> '+text; // I used innerHTML so i can do HTML things in the motd!
+                    })
+                    .catch(error => {
+                        console.error('Error showing MOTD:', error);
+                    });
+
+            </script>
             <div class="grid">
             </div>
             <script>
