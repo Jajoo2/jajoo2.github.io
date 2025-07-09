@@ -17,24 +17,22 @@ html {
 
 button 
 {
-    font-size: 25px;
     background-color: #2f2f2f;
     border-style: none;
-    border-radius: 20px;
-    padding: 30px;
+    border-radius: 5px;
+    padding: 5px;
     color: #FFF;
     transition-duration: 0.1s;
 }
 
 button:hover
 {
-    font-size: 40px;
-    padding: 10px;
+    transform: scale(1.1);
 }
 
 button:active
 {
-    transform: scale(0.9);
+    transform: scale(1);
 }
 
 /* General */
