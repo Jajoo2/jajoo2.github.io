@@ -1,0 +1,99 @@
+<!doctype html>
+<!-- This is obviously not my page. -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>16:9 Cropper</title>
+    <!-- Cropper.js CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <style>
+        #preview {
+            max-width: 100%;
+            max-height: 60vh;
+        }
+
+        .controls {
+            margin-top: .5rem;
+        }
+
+        button {
+            margin-right: .5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="padding-left: 30px;">
+        <h2>Upload & Crop</h2>
+        <input type="file" id="fileInput" accept="image/*" />
+        <div style="margin-top:1rem;">
+            <img id="preview" src="" alt="Your image will appear here">
+        </div>
+        <hr style="width:auto;">
+        <div class="controls">
+            <button id="rotateLeft">⟲ Rotate −90°</button>
+            <button id="rotateRight">⟳ Rotate +90°</button>
+            <button id="getCropped">✔ Download Cropped Image</button>
+        </div>
+
+
+        <!-- Cropper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
+        <script>
+            const fileInput = document.getElementById('fileInput');
+            const img = document.getElementById('preview');
+            const rotateLeft = document.getElementById('rotateLeft');
+            const rotateRight = document.getElementById('rotateRight');
+            const getCropped = document.getElementById('getCropped');
+            const resultArea = document.getElementById('result');
+            let cropper;
+
+            fileInput.addEventListener('change', e => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const url = URL.createObjectURL(file);
+                img.src = url;
+                if (cropper) cropper.destroy();
+                img.onload = () => {
+                    cropper = new Cropper(img, {
+                        aspectRatio: 16 / 9,
+                        viewMode: 1,
+                        autoCropArea: 1,
+                        movable: true,
+                        zoomable: true,
+                        rotatable: true,
+                        scalable: false,
+                        background: false,
+                    });
+                };
+            });
+
+            rotateLeft.addEventListener('click', () => {
+                if (cropper) cropper.rotate(-90);
+            });
+            rotateRight.addEventListener('click', () => {
+                if (cropper) cropper.rotate(90);
+            });
+
+            getCropped.addEventListener('click', () => {
+                if (!cropper) return;
+                const canvas = cropper.getCroppedCanvas({
+                    width: 1600,  // you can set desired output size
+                    height: 900
+                });
+                canvas.toBlob(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'cropped.png';
+                    link.click();
+                }, 'image/png');
+
+            });
+        </script>
+    </div>
+</body>
+
+</html>

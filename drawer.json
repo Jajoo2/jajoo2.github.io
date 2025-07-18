@@ -1,0 +1,26 @@
+{
+    "typedeg": {
+        "title": "Type Degrees",
+        "summary": "How to type the ° symbol.",
+        "thumbnail": "img/drawer/degreee.png",
+        "link": "degree.html"
+    },
+    "sinceyear": {
+        "title": "Time Since 2025",
+        "summary": "Exact time* since 2025.",
+        "thumbnail": "img/drawer/20255.png",
+        "link": "sinceyear.html"
+    },
+    "lavapals": {
+        "title": "Lava Pals",
+        "summary": "BL modding resource.",
+        "thumbnail": "img/drawer/lavaa.png",
+        "link": "https://lava-pals.github.io/bl-guide-index/"
+    },
+    "img2mp4": {
+        "title": "Image to MP4 converter",
+        "summary": "Very useless.",
+        "thumbnail": "img/drawer/png2mp4.png",
+        "link": "img2mp4.html"
+    }
+}

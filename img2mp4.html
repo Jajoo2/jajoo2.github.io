@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<title>Image to MP4</title>
+	<meta content="degrees" property="og:title" />
+	<meta content="gay" property="og:description" />
+	<meta content="http://meisite.xyz/" property="og:url" />
+	<meta content="#612c8a" data-react-helmet="true" name="theme-color" />
+
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	
+	<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+
+
+
+</head>
+
+<body>
+	<div style="padding-left: 30px;">
+		<h2>Image to Video Converter</h2>
+
+		<label><b>Choose an image (PNG, JPG, etc):</b> </label>
+
+		<label class="link">
+			<span id="file-name" style="background-color: #00000075; padding: 5px; border-radius: 5px;">No file
+				selected</span>
+			<input type="file" style="display:unset;" id="input-image" accept="image/*" onchange="updateFileName(this)" />
+
+		</label>
+		<script>
+			function updateFileName(input) {
+				const fileName = input.files[0]?.name || "No file selected";
+				document.getElementById("file-name").textContent = fileName;
+			}
+		</script>
+
+
+
+		<br><br>
+
+
+
+		<button id="convert-btn">Convert</button>
+
+		<h3>Result:</h3>
+		<div style="display: flex; gap: 30px;">
+			<video id="output-video" controls height="250" src="uninitplaceholder.mp4"></video>
+			<div class="fake-console">
+				<p id="fake-console"></p>
+			</div>
+		</div>
+
+
+		<script>
+			const fakeConsole = document.getElementById("fake-console");
+			const originalLog = console.log;
+
+
+			console.log = function (...args) {
+				// Keep original behavior
+				originalLog.apply(console, args);
+
+				// Write to the <p>
+				if (args.join(" ").includes("[fferr]")) {
+					fakeConsole.innerHTML += `<span style="color:red">${args.join(" ")}</span><br>`;
+				} else {
+					fakeConsole.innerHTML += `<span style="color:green">${args.join(" ")}</span><br>`;
+				}
+				fakeConsole.parentElement.scrollTop = fakeConsole.parentElement.scrollHeight;
+			};
+			const { createFFmpeg, fetchFile } = FFmpeg;
+			const ffmpeg = createFFmpeg({ log: true });
+
+			document.getElementById('convert-btn').onclick = async () => {
+				fakeConsole.innerText = ""
+				document.getElementById('convert-btn').innerText = "Converting!"
+				const imgInput = document.getElementById('input-image');
+				const outputName = "vid.mp4";
+
+
+				const img = imgInput.files[0];
+
+				if (!img || !img.type.startsWith('image/')) {
+					alert('Please select an image file.');
+					document.getElementById('convert-btn').innerText = "Convert";
+					return;
+				}
+
+				if (!outputName || !outputName.endsWith('.mp4')) {
+					alert('Fatal error, for no descernible reason?');
+					document.getElementById('convert-btn').innerText = "Convert"
+					return;
+				}
+
+				const file = imgInput.files[0];
+
+				if (!ffmpeg.isLoaded()) {
+					await ffmpeg.load();
+				}
+
+				// Put the image in the ffmpeg FS
+				ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+
+				// ffmpeg -loop 1 -i img.png -c:v libx264 -t 0.1 -pix_fmt yuv420p vid.mp4
+
+				await ffmpeg.run(
+					'-loop', '1',
+					'-i', file.name,
+					'-c:v', 'libx264',
+					'-t', '0.1',
+					'-pix_fmt', 'yuv420p',
+					outputName
+				);
+
+				// Read the output file and make a URL for video playback
+				const data = ffmpeg.FS('readFile', outputName);
+				const video = document.getElementById('output-video');
+				video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+				document.getElementById('convert-btn').innerText = "Converted"
+			};
+		</script>
+		<p style="font-size: smaller;">Related: <a class="link" href="cropper.html">16:9 Cropper</a></p>
+	</div>
+
+
+
+</body>
+
+</html>

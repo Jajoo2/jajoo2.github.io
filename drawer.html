@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Porjects</title>
+    <title>Darwre</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="index.js"></script>
 </head>
@@ -17,25 +17,13 @@
 
         <main style="padding-left:30px;">
             <br>
-            <h1>Projects</h1>
-            <p id="motd"></p>
-            <script>
-                motdp = document.getElementById("motd");
-                fetch('https://pubesucker.meisite.xyz/api/motd')
-                    .then(response => response.text())
-                    .then(text => {
-                        motdp.innerHTML = '<span style="font-family: Arial;"><b>MOTD: </b></span> '+text; // I used innerHTML so i can do HTML things in the motd!
-                    })
-                    .catch(error => {
-                        console.error('Error showing MOTD:', error);
-                    });
-
-            </script>
+            <h1>The Drawer</h1>
+            <p>You know that drawer you toss things into? That's this.<br>General info and tools here.</p>
             <div class="grid">
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    fetch('projects.json')
+                    fetch('drawer.json')
                         .then(res => res.json())
                         .then(projects => {
                             const grid = document.querySelector('.grid');
@@ -43,7 +31,7 @@
 
                             for (const [id, project] of Object.entries(projects)) {
                                 const item = document.createElement('a');
-                                item.href = `project.html?id=${id}`;
+                                item.href = project.link;
                                 item.innerHTML = `
                                     <div class="grid-item">
                                         <img src="${project.thumbnail}" alt="${project.title}">
