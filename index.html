@@ -6,20 +6,32 @@
     <title>mesitie</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="index.js"></script>
+    <script src="js/toast.js"></script>
 </head>
 
 <body>
+
+    <div id="toast-container" style="display: flex; justify-content: center;">
+        <div id="toast">
+            <p>Toast Popup</p>
+        </div>
+    </div>
 
     <div class="page-container">
         <nav id="nav-placeholder"></nav>
         <script src="js/loadNav.js"></script>
 
 
+
         <main style="padding-left:30px;">
             <br>
+
+
             <h1>Home (Hi, I'm Mei)</h1>
             <p>I use Python and Linux Mint.</p>
             <p style="font-size: 8px">i know a LITTLE c#</p>
+            <p>This site is not finished</p>
+
             <p>I like:</p>
             <dl>
                 <dt>• nerd computer topics </dt>
@@ -31,21 +43,151 @@
                 <dt>• technology and circutry </dt>
                 <dd> i like the beep boops</dd>
             </dl>
-            <p>Here's a few UI elements for you to play with.</p>
-            <p style="font-size: 8px"><b>BTW the site isn't done</b></p>
-            <input type="range" max="100" min="0" value="0">
-            <br> <!--Huh..-->
-            <button>Download</button>
             <br>
-            <br>
-            <br>
-            <p>And here's my (LAPTOP!!!) neofetch..</p>
-            <a href="img/neofetch.png"><img src="img/neofetch.png" style="box-shadow: 0px 0px 20px #000,0px 0px 5px #000,0px 0px 10px #000; border-radius: 5px;" height="300px"></a>
-            </div>
-        </main>
+            <p>Here's a few things for you to play with.</p>
+            <div style="display: flex; gap: 15px; text-align: center;">
+                <div style="display: block;">
+                    <input type="range" min="0" max="100" value="0" class="slider" id="demoslider">
+                    <p>Value: <span id="demoValue">0</span></p>
+                    <div style="background-color: #000000;">
+                        <div style="position:relative">
+                            <img src="img/boing.png" style="position: absolute; transform: translateX(87px) translateY(-13px) rotate(-90deg);" height="30px">
+                            <img src="img/boing.png" style="position: absolute; transform: translateX(-120px) translateY(-13px) rotate(90deg);" height="30px">
+                        </div>
+                        <div id="demoColorBox" style="height:5px;"></div>
+                    </div>
+                </div>
 
-        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
-        <script src="js/loadFooter.js"></script>
+                <br>
+
+                <button>Button</button>
+                <div style="display: block;">
+                    <button id="notifdemobutton">Create a notification</button>
+                    <p style="font-size: xx-small; color: #CCCCCC75;">(notif is a little delayed! be patient)
+                        <br><br>also, notif function is <code>toastnotify(string);</code>
+                    </p>
+                </div>
+            </div>
+
+            <script>
+                btn = document.getElementById("notifdemobutton");
+
+                btn.addEventListener("click", function () {
+                    fetch('https://random-word-api.herokuapp.com/word?number=5')
+                        .then(response => response.json())
+                        .then(words => {
+                            // words is an array of 5 words now
+                            toastnotify(words.join(" "));
+                        })
+                        .catch(error => {
+                            console.error('Error fetching random words:', error);
+                        });
+                });
+
+            </script>
+
+            <script>
+                slider = document.getElementById("demoslider");
+                const display = document.getElementById('demoValue');
+                const box = document.getElementById('demoColorBox');
+                let reachedMax = false;
+                let reachedMin = false;
+                let previousValue = 0;
+                let previousTime = performance.now();
+                const sound = new Audio('src/ding.wav');
+
+                function easeOutSlider(to) {
+                    let current = Number(slider.value);
+                    let target = to;
+
+                    function animate() {
+                        // Ease out movement
+                        current += (target - current) * 0.1;
+
+                        // Stop if close enough
+                        if (Math.abs(current - target) < 0.5) {
+                            current = target;
+                        }
+
+                        slider.value = current;
+                        display.textContent = Math.round(current);
+                        box.style.backgroundColor = `hsl(${current}, 100%, 50%)`;
+                        box.style.width = `${current * 2}px`;
+
+                        if (current !== target) {
+                            requestAnimationFrame(animate);
+                        }
+                    }
+
+                    animate();
+                }
+
+                function onMaxReached(bounceTarget) {
+                    sound.currentTime = 0;
+                    sound.playbackRate = 5;
+                    sound.play();
+                    easeOutSlider(bounceTarget);
+                    toastnotify("Boing!!");
+                }
+
+
+
+                slider.addEventListener('input', () => {
+                    const val = slider.value;
+                    const now = performance.now();
+
+                    const deltaVal = val - previousValue;
+                    const deltaTime = now - previousTime;
+
+                    let speed = deltaVal / deltaTime; // Units: value change per ms
+
+                    display.textContent = val;
+
+                    box.style.backgroundColor = `hsl(${val}, 100%, 50%)`;
+                    box.style.width = `${val * 2}px`;
+
+                    if (+val === 100 && !reachedMax) {
+                        reachedMax = true;
+                        let bounceAmount = Math.min(Math.abs(speed) * 100, 90);
+                        let target = 100 - bounceAmount;
+
+                        onMaxReached(target);
+                    }
+
+                    if (+val < 100) {
+                        reachedMax = false;
+                    }
+
+
+                    if (+val === 0 && !reachedMin) {
+                        reachedMin = true;
+                        let bounceAmount = Math.min(Math.abs(speed) * 100, 90);
+                        let target = 0 + bounceAmount;
+
+                        onMaxReached(target);
+                    }
+
+                    if (+val > 0) {
+                        reachedMin = false;
+                    }
+
+                    previousValue = val;
+                    previousTime = now;
+                });
+            </script>
+
+            <br><br><br>
+
+
+            <p>And here's my (LAPTOP!!!) neofetch..</p>
+            <a href="img/neofetch.png"><img src="img/neofetch.png"
+                    style="box-shadow: 0px 0px 20px #000,0px 0px 5px #000,0px 0px 10px #000; border-radius: 5px;"
+                    height="300px"></a>
+    </div>
+    </main>
+
+    <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+    <script src="js/loadFooter.js"></script>
     </div>
 
 

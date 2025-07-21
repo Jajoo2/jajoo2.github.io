@@ -3,6 +3,8 @@
     src: url('comfortaa.ttf');
 }
 
+/* accent color is liike. 6f4597 i think, around that. */
+
 body,
 html {
     background-color: #1a181d;
@@ -11,12 +13,34 @@ html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
 }
 
-/* button */
+/* toast popup system */
 
-button 
-{
+#toast {
+    z-index: 10000;
+    position: absolute;
+    background-color: #3e2a47;
+    min-height: 5px;
+    min-width: 10px;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 12px;
+    font-weight: bolder;
+    box-shadow: 0px 2px 10px #000000ec;
+    opacity: 0;
+    transition-duration: 0.3s;
+}
+
+/* toast end */
+
+
+/* inputs */
+
+button {
     background-color: #2f2f2f;
     border-style: none;
     border-radius: 5px;
@@ -25,15 +49,81 @@ button
     transition-duration: 0.1s;
 }
 
-button:hover
-{
+button:hover {
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(1);
+}
+
+.slider {
+    appearance: none;
+    /* Remove default styles */
+    width: 200px;
+    height: 6px;
+    background-color: #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    background-color: #50505010;
+}
+
+/* Track hover */
+
+.slider:hover {
+    background-color: #74747428;
+}
+
+/* Webkit Thumb */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background-color: #51415f;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    margin-top: -7px;
+    /* To vertically center the thumb */
+}
+
+/* Thumb hover */
+.slider::-webkit-slider-thumb:hover {
+    background-color: #51415f;
     transform: scale(1.1);
 }
 
-button:active
-{
-    transform: scale(1);
+/* Firefox Thumb */
+.slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background-color: #51415f;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s, transform 0.2s;
 }
+
+/* Thumb hover Firefox */
+.slider::-moz-range-thumb:hover {
+    background-color: #9363c0;
+    transform: scale(1.1);
+}
+
+/* Firefox Track */
+.slider::-moz-range-track {
+    background-color: #50505010;
+    border-radius: 5px;
+    height: 8px;
+}
+
+
+/* inputs end */
 
 /* General */
 .badge {
@@ -59,6 +149,13 @@ button:active
 .giscus-frame {
     width: calc(100vw - 65px);
     padding-right: 65px;
+}
+
+code {
+    background-color: #00000075;
+    border-radius: 2px;
+    padding: 2px;
+    color: #fff;
 }
 
 
@@ -101,7 +198,7 @@ button:active
     width: 250px;
     height: 150px;
     margin: 5px;
-    background: #000;
+    background-color: #000;
     border-style: solid;
     border-color: #0a0a0a9d;
     align-content: center;
@@ -143,7 +240,7 @@ button:active
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    background-color: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }
 
 .title {
