@@ -179,12 +179,12 @@ code {
 }
 
 .grid a {
-    color: #fff;
+    color: #a3a3a3;
     text-decoration: none;
 }
 
 .grid a:hover {
-    color: #fff !important;
+    color: #a3a3a3 !important;
     text-decoration: none !important;
     text-shadow: none !important;
     letter-spacing: normal !important;
