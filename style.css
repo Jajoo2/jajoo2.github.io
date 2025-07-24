@@ -8,6 +8,10 @@
 body,
 html {
     background-color: #1a181d;
+    background: radial-gradient(circle at center, rgba(30, 23, 36, 1) 0%, rgba(26, 24, 29, 1) 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: #ccc;
     font-family: 'Comfortaa';
     margin: 0;
@@ -19,7 +23,7 @@ html {
 
 #toast {
     z-index: 10000;
-    position: absolute;
+    position: fixed;
     background-color: #3e2a47;
     min-height: 5px;
     min-width: 10px;
@@ -291,7 +295,7 @@ nav li a {
 }
 
 
-nav li a:hover {
+nav li a:hover, .navhover {
     background-color: #604f64;
     transform: scale(1.1);
     border-bottom-left-radius: 4px;
@@ -327,7 +331,8 @@ footer {
     padding: 1em;
     text-align: left;
     justify-content: space-between;
-    box-shadow: 0px -10px 200px #000000;
+    margin-top: 30px;
+    box-shadow: 0px -10px 200px #000000, 0px -10px 20px #030203;
 }
 
 footer ul {
