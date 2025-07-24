@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (anchor) {
                     const href = anchor.getAttribute('href').replace("/", "");
                     const text = anchor.textContent.trim();
-                    if (href == page) {
+                    if (href.split(".")[0] == page.split(".")[0]) {
                         anchor.classList.add('navhover');
                         anchor.style.backgroundColor = "#906f97";
                     }
