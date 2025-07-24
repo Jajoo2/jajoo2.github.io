@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Porjects</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+
+
+        <main style="padding-left:30px;">
+            <br>
+            <h1>User Projects</h1>
+            <p>Custom projects you can <a href="uploadproject.html">upload</a>. (⚠️API may not be online all the time⚠️)</p>
+
+            <div class="grid">
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetch('userprojects.json')
+                        .then(res => res.json())
+                        .then(projects => {
+                            const grid = document.querySelector('.grid');
+                            if (!grid) return console.error("No .grid container found!");
+
+                            for (const [id, project] of Object.entries(projects)) {
+                                const item = document.createElement('a');
+                                item.href = `userproject.html?id=${id}`;
+                                item.innerHTML = `
+                                    <div class="grid-item">
+                                        <img src="${project.thumbnail}" alt="${project.title}">
+                                        <div class="overlay"></div>
+                                        <div class="title">${project.title}</div>
+                                        <span class="subtitle">${project.summary}</span>
+                                    </div>`;
+                                grid.appendChild(item);
+                            }
+                        });
+                });
+
+
+            </script>
+        </main>
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -9,5 +9,31 @@
             "/img/projects/ANSI1.png",
             "/img/projects/ANSI2.png"
         ]
+    },
+    "meisite": {
+        "title": "Mei's Site (this)",
+        "description": "This is the only project I'm actively working on.\nThis is ALSO a test page.",
+        "summary": "Mom, look! It's me!",
+        "thumbnail": "img/mei.png",
+        "images": [
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png",
+            "/img/mei.png"
+            
+        ]
     }
 }

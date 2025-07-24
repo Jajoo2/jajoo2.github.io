@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Upload</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+
+
+        <main style="padding-left:30px;">
+            <br>
+            <h1>Upload project</h1>
+            <style>
+                #uploadForm {
+                    max-width: 80vw;
+                    margin: 60px auto;
+                    padding: 30px;
+                    background: #211b25;
+                    color: #eee;
+                    border-radius: 12px;
+                    font-family: sans-serif;
+                    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+                    box-sizing: border-box;
+                }
+
+
+                form input,
+                form textarea {
+                    width: 100%;
+                    padding: 14px;
+                    margin: 12px 0;
+                    border: none;
+                    border-radius: 6px;
+                    background: #312335;
+                    color: #fff;
+                    font-size: 15px;
+                    box-sizing: border-box;
+                }
+
+                form textarea {
+                    resize: vertical;
+                    min-height: 100px;
+                }
+
+                form button {
+                    padding: 12px 20px;
+                    margin-top: 16px;
+                    background: #693675;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition-duration: 0.15s;
+                }
+
+                form button:hover {
+                    background: #45a049;
+                }
+            </style>
+
+            <div style="display: flex; gap:30px;">
+                <!--<form id="loginForm" style="max-width: 300px; margin: 40px auto; font-family: sans-serif;">
+                    <input type="text" name="username" placeholder="Username" required
+                        style="width:100%; padding:8px; margin-bottom:10px;">
+                    <input type="password" name="password" placeholder="Password" required
+                        style="width:100%; padding:8px; margin-bottom:10px;">
+                    <button type="submit"
+                        style="width:100%; padding:10px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;">
+                        Login
+                    </button>
+                </form>
+
+                <script>
+                    document.getElementById('loginForm').addEventListener('submit', function (e) {
+                        e.preventDefault();
+
+                        const form = e.target;
+                        const data = {
+                            username: form.username.value.trim(),
+                            password: form.password.value.trim()
+                        };
+
+                        fetch('https://pubesucker.meisite.xyz/api/checkpassword', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        })
+                            .then(res => res.json())
+                            .then(success => {
+                                if (success === true) {
+                                    alert("Login successful!");
+                                    
+                                } else {
+                                    alert("Login failed: Incorrect username or password.");
+                                }
+                            })
+                            .catch(() => alert("Error checking login."));
+                    });
+                </script>
+            -->
+                <form id="uploadForm">
+                    <div style="display: flex; gap: 30px;">
+                        <div>
+                            <label>Use no title to delete a project.<br></label>
+                            <label>Use image URLS (direct) for images.</label>
+                            <input type="text" name="id" placeholder="Project ID" required>
+                            <input type="text" name="title" placeholder="Title" >
+                            <textarea name="description" placeholder="Description" rows="4" required></textarea>
+                            <input type="text" name="summary" placeholder="Summary">
+                            <input type="text" name="videoId"
+                                placeholder="YouTube Video ID (Not required, but its nice to use a video.)">
+                            <input type="text" name="thumbnail" placeholder="Thumbnail URL" required>
+                            <input type="text" name="images" placeholder="Image URLs (comma-separated)" required>
+                            <hr>
+                            <label>For editing/removing posts:</label>
+                            <input type="text" name="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit">Upload</button>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                document.getElementById('uploadForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const form = e.target;
+                    const data = {
+                        id: form.id.value,
+                        title: form.title.value,
+                        description: form.description.value,
+                        summary: form.summary.value,
+                        videoId: form.videoId.value,
+                        thumbnail: form.thumbnail.value,
+                        images: form.images.value.split(',').map(s => s.trim()),
+                        password: form.password.value
+                    };
+
+                    fetch('https://pubesucker.meisite.xyz/api/upload', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    })
+                        .then(res => res.json())
+                        .then(response => {
+                            if (response.status === 'success') {
+                                location.reload();
+                            } else {
+                                alert(response.message);
+                            }
+                        });
+                });
+            </script>
+
+
+
+            <div class="grid">
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetch('userprojects.json')
+                        .then(res => res.json())
+                        .then(projects => {
+                            const grid = document.querySelector('.grid');
+                            if (!grid) return console.error("No .grid container found!");
+
+                            for (const [id, project] of Object.entries(projects)) {
+                                const item = document.createElement('a');
+                                item.href = `userproject.html?id=${id}`;
+                                item.innerHTML = `
+                                    <div class="grid-item">
+                                        <img src="${project.thumbnail}" alt="${project.title}">
+                                        <div class="overlay"></div>
+                                        <div class="title">${project.title}</div>
+                                        <span class="subtitle">${project.summary}</span>
+                                    </div>`;
+                                grid.appendChild(item);
+                            }
+                        });
+                });
+
+
+            </script>
+        </main>
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+
+    </div>
+
+
+</body>
+
+</html>
