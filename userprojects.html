@@ -28,8 +28,18 @@
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
                         fetch('https://pubesucker.meisite.xyz/api/up')
-                            .then(res => {document.getElementById("APIcheck").innerText("API online");})
-                            
+                            .then(res => {
+                                if (res.ok) {
+                                    document.getElementById("APIcheck").innerText = "API online";
+                                } else {
+                                    document.getElementById("APIcheck").innerText = "API error";
+                                }
+                            })
+                            .catch(err => {
+                                document.getElementById("APIcheck").innerText = "API unreachable";
+                            });
+
+
                         fetch('https://pubesucker.meisite.xyz/api/uploads')
                             .then(res => res.json())
                             .then(projects => {
