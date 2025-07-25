@@ -87,7 +87,7 @@
 
 		const projectId = getQueryParam("id");
 
-		fetch("userprojects.json")
+		fetch("https://pubesucker.meisite.xyz/api/uploads")
 			.then(res => res.json())
 			.then(data => {
 				const pageData = data[projectId];
