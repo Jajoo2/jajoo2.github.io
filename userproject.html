@@ -22,7 +22,8 @@
 
 
 	<div style="padding-left: 30px;">
-		<h1 id="title"><i>Title</i></h1>
+		<h1 id="title"><i>Loading title...</i></h1>
+		<p id="username" style="font-size: small;">By Username</p>
 		<div style="display: flex; justify-content: space-between; padding-right: 30px;">
 			<!--<div id="imagediv"></div>-->
 			<section class="carousel">
@@ -100,6 +101,7 @@
 
 				// Fill in title and description
 				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
+				document.getElementById("username").innerHTML = `<i>${pageData.username}</i>`;
 				document.getElementById("description").innerHTML = pageData.description.replace(/\n/g, "<br>");
 
 				// Video
