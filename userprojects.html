@@ -30,7 +30,7 @@
                         fetch('https://pubesucker.meisite.xyz/api/up')
                             .then(res => res.json())
                             .then(dat => {
-                                if(dat)
+                                if(res)
                                 {
                                     document.getElementById("APIcheck").innerText("API online");
                                 }
