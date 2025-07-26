@@ -27,7 +27,7 @@
                 </div>
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
-                        fetch('http://thehole.garrysmod.gg:27935/api/up')
+                        fetch('https://pubesucker.meisite.xyz/api/up')
                             .then(res => {
                                 if (res.ok) {
                                     document.getElementById("APIcheck").innerText = "API online";
@@ -40,7 +40,7 @@
                             });
 
 
-                        fetch('http://thehole.garrysmod.gg:27935/api/uploads')
+                        fetch('https://pubesucker.meisite.xyz/api/uploads')
                             .then(res => res.json())
                             .then(projects => {
                                 const grid = document.querySelector('.grid');
