@@ -18,51 +18,52 @@
         <main style="padding-left:30px;">
             <br>
             <h1>User Projects</h1>
-            <h2 id="APIcheck"><b>API is down!</b></h1>
-                <p>Custom projects you can <a href="uploadproject.html">upload</a>. (⚠️API may not be online all the
-                    time⚠️)</p>
+            <h2 id="APIcheck"><b>API is down!</b></h2>
+            <p style="color: #ffffff75">The "API" is my laptop.</p>
+            <p>Custom projects you can <a href="uploadproject.html">upload</a>. (⚠️API may not be online all the
+                time⚠️)</p>
 
 
-                <div class="grid">
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        fetch('https://pubesucker.meisite.xyz/api/up')
-                            .then(res => {
-                                if (res.ok) {
-                                    document.getElementById("APIcheck").innerText = "API online";
-                                } else {
-                                    document.getElementById("APIcheck").innerText = "API error";
-                                }
-                            })
-                            .catch(err => {
-                                document.getElementById("APIcheck").innerText = "API unreachable";
-                            });
+            <div class="grid">
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetch('https://pubesucker.meisite.xyz/api/up')
+                        .then(res => {
+                            if (res.ok) {
+                                document.getElementById("APIcheck").innerText = "API online";
+                            } else {
+                                document.getElementById("APIcheck").innerText = "API error";
+                            }
+                        })
+                        .catch(err => {
+                            document.getElementById("APIcheck").innerText = "API unreachable";
+                        });
 
 
-                        fetch('https://pubesucker.meisite.xyz/api/uploads')
-                            .then(res => res.json())
-                            .then(projects => {
-                                const grid = document.querySelector('.grid');
-                                if (!grid) return console.error("No .grid container found!");
+                    fetch('https://pubesucker.meisite.xyz/api/uploads')
+                        .then(res => res.json())
+                        .then(projects => {
+                            const grid = document.querySelector('.grid');
+                            if (!grid) return console.error("No .grid container found!");
 
-                                for (const [id, project] of Object.entries(projects)) {
-                                    const item = document.createElement('a');
-                                    item.href = `userproject.html?id=${id}`;
-                                    item.innerHTML = `
+                            for (const [id, project] of Object.entries(projects)) {
+                                const item = document.createElement('a');
+                                item.href = `userproject.html?id=${id}`;
+                                item.innerHTML = `
                                     <div class="grid-item">
                                         <img src="${project.thumbnail}" alt="${project.title}">
                                         <div class="overlay"></div>
                                         <div class="title">${project.title}</div>
                                         <span class="subtitle">${project.summary}</span>
                                     </div>`;
-                                    grid.appendChild(item);
-                                }
-                            });
-                    });
+                                grid.appendChild(item);
+                            }
+                        });
+                });
 
 
-                </script>
+            </script>
         </main>
 
         <footer style="font-family: monospace;" id="footer-placeholder"></footer>
