@@ -9,7 +9,7 @@
             "https://i.imgur.com/bN1mYa2.webp?tb",
             "https://i.imgur.com/QveqOAJ.webp?tb"
         ],
-		"author": "John Doe (MeiSux)",
+        "author": "John Doe (MeiSux)",
         "passhash": "$2b$12$EybWyAIz6fR.mM7ITR/DzuY24DTOMPTWBpYJf5.hdtWmlPt.9wM/e"
     },
     "3d2desmos": {
@@ -19,9 +19,9 @@
         "videoId": "wDLwvhZAsxY",
         "thumbnail": "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g",
         "images": [
-            "https://i.imgur.com/wn8UOu6.png"
+            "https://i.imgur.com/XWGJzc5.png"
         ],
-		"author": "meisux",
+        "author": "meisux",
         "passhash": "$2b$12$AtB9QmT2CzNbXae0QsFTZeT1WrNpn4olMLYbz4SkWuId2ZYrBMs9u"
     },
     "simu": {
@@ -33,7 +33,7 @@
         "images": [
             "https://i.imgur.com/VqSsXFl.jpeg"
         ],
-		"author": "amy",
+        "author": "amy",
         "passhash": "$2b$12$pVnv/Mmw/vag0lwBvwu08uLFWJ.DMzWnb8yuaGghSMrv0LTv4bbyy"
     }
 }

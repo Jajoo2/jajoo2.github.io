@@ -89,7 +89,7 @@
                             password: form.password.value.trim()
                         };
 
-                        fetch('https://pubesucker.meisite.xyz/api/checkpassword', {
+                        fetch('http://thehole.garrysmod.gg:27935/api/checkpassword', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(data)
@@ -148,7 +148,7 @@
                         password: form.password.value
                     };
 
-                    fetch('https://pubesucker.meisite.xyz/api/upload', {
+                    fetch('http://thehole.garrysmod.gg:27935/api/upload', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
@@ -170,7 +170,7 @@
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    fetch('https://pubesucker.meisite.xyz/api/uploads')
+                    fetch('http://thehole.garrysmod.gg:27935/api/uploads')
                         .then(res => res.json())
                         .then(projects => {
                             const grid = document.querySelector('.grid');
