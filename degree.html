@@ -17,26 +17,28 @@
 <body>
 
 	<div id="toast-container" style="display: flex; justify-content: center;">
-        <div id="toast">
-            <p>Toast Popup</p>
-        </div>
-    </div>
+		<div id="toast">
+			<p>Toast Popup</p>
+		</div>
+	</div>
+
+	<nav id="nav-placeholder"></nav>
+	<script src="js/loadNav.js"></script>
 
 	<div style="padding-left: 30px;">
 		<h1><i>how to type degrees symbol</i></h1>
-		<p style="font-size: xx-large;"><kbd><span id="degreestirng">°</span></kbd> <!--i hate myself--> <button id="copybutton" onclick="copy()">Copy symbol</button></p>
-		
+		<p style="font-size: xx-large;"><kbd><span id="degreestirng">°</span></kbd> <!--i hate myself--> <button
+				id="copybutton" onclick="copy()">Copy symbol</button></p>
+
 		<script>
 			let clickCount = 0;
 			function copy() {
 				var copyText = document.getElementById("degreestirng");
-				
+
 				navigator.clipboard.writeText(copyText.innerText);
-				if(clickCount < 3)
-				{
+				if (clickCount < 3) {
 					toastnotify("Copied!");
-				}else
-				{
+				} else {
 					toastnotify('<span style="font-size:300px;">Copied!</span>');
 				}
 				clickCount += 1;
@@ -63,14 +65,11 @@
 		<br>
 		<p>One last thing: If you're on mobile or console, just check your on-screen keyboard; it'll probably be there.
 		</p>
-		<p id="na" style="font-family: serif;">This Page.. No ;'?</p>
-		<script>
-			const p = document.getElementById("na");
-			p.innerText = p.innerText.replace(";'", "<nav>")
-		</script>
+
 
 	</div>
-
+	<footer style="font-family: monospace;" id="footer-placeholder"></footer>
+	<script src="js/loadFooter.js"></script>
 
 
 </body>
