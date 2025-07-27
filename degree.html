@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
 	<meta charset=utf-8>
 	<title>Degree symdol</title>
@@ -9,33 +10,69 @@
 	<meta content="#612c8a" data-react-helmet="true" name="theme-color" />
 
 	<link rel="stylesheet" type="text/css" href="style.css" />
-
+	<script src="index.js"></script>
+	<script src="js/toast.js"></script>
 </head>
+
 <body>
-	
+
+	<div id="toast-container" style="display: flex; justify-content: center;">
+        <div id="toast">
+            <p>Toast Popup</p>
+        </div>
+    </div>
+
 	<div style="padding-left: 30px;">
-		<h1><i>How to type Degrees Symbol (°)</i></h1>
-		<p>Degree symbol is °.<br>Sometimes, we need to type this and can't because it isn't on our keyboards.<br>Here's how!</p>
-		<h1>Linux</h1>
+		<h1><i>how to type degrees symbol</i></h1>
+		<p style="font-size: xx-large;"><kbd><span id="degreestirng">°</span></kbd> <!--i hate myself--> <button id="copybutton" onclick="copy()">Copy symbol</button></p>
+		
+		<script>
+			let clickCount = 0;
+			function copy() {
+				var copyText = document.getElementById("degreestirng");
+				
+				navigator.clipboard.writeText(copyText.innerText);
+				if(clickCount < 3)
+				{
+					toastnotify("Copied!");
+				}else
+				{
+					toastnotify('<span style="font-size:300px;">Copied!</span>');
+				}
+				clickCount += 1;
+			} 
+		</script>
+
+		<h1>Linux Mint</h1>
+		<p style="color: #ffffff75; margin-top: -25px; font-size: xx-small;">(i don't know how to do it on other
+			distros)<br>IT WORKS ON MY MACHINE!!!!!!!!!!!!!!!!1</p>
 		<div class="section">
-			<p><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> and then type <code>B0</code>, now hit enter!</p>
+			<p><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> and then type <code>B0</code>, now hit enter</p>
 		</div>
 		<h1>Mac</h1>
 		<div class="section">
 			<p><kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>8</kbd><br><br>
-				Sadly, I think this one is the easiest :<</p>
+				Sadly, I think this one is the easiest :<< /p>
 		</div>
 		<h1>Windows</h1>
 		<div class="section">
 			<p>Hold <kbd>ALT</kbd>, and then type <code>0167</code> on your numpad.<br>
-				If you dont have a numpad, and have an <kbd>Fn</kbd> key, hold down <kbd>Fn</kbd> and use the normal numbers.</p>
+				If you dont have a numpad, and have an <kbd>Fn</kbd> key, hold down <kbd>Fn</kbd> and use the normal
+				numbers.</p>
 		</div>
 		<br>
-		<p>One last thing: If you're on mobile or console, just check your on-screen keyboard; it'll probably be there.</p>
-		
+		<p>One last thing: If you're on mobile or console, just check your on-screen keyboard; it'll probably be there.
+		</p>
+		<p id="na" style="font-family: serif;">This Page.. No ;'?</p>
+		<script>
+			const p = document.getElementById("na");
+			p.innerText = p.innerText.replace(";'", "<nav>")
+		</script>
+
 	</div>
-	
+
 
 
 </body>
+
 </html>
