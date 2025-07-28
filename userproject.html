@@ -36,7 +36,7 @@
 
 				<div class="form">
 					<label class="custom-checkbox">
-						<input type="checkbox" class="auto_slide" id="slide"/>
+						<input type="checkbox" class="auto_slide" id="slide" />
 						<span class="checkmark"></span>
 						Auto Slide
 					</label>
@@ -53,7 +53,7 @@
 
 	</div>
 	<footer style="font-family: monospace;" id="footer-placeholder"></footer>
-    <script src="js/loadFooter.js"></script>
+	<script src="js/loadFooter.js"></script>
 	<script src="js/carousel.js" defer></script>
 	<script>
 		function loadGiscus(projectId) {
@@ -87,7 +87,13 @@
 		}
 
 		const projectId = getQueryParam("id");
-
+		function replaceEmojiCodes(text) {
+			return text.replace(/:([a-zA-Z0-9_-]+):/g, (match, filename) => {
+				return `<span style="display:inline-flex; align-items:center; vertical-align:middle;">
+                    <img src="img/emoji/${filename}.gif" alt="${filename}" style="height:1.5em; width:auto;"/>
+                  </span>`;
+			});
+		}
 		fetch("https://pubesucker.meisite.xyz/api/uploads")
 			.then(res => res.json())
 			.then(data => {

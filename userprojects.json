@@ -35,5 +35,17 @@
         ],
         "author": "amy",
         "passhash": "$2b$12$pVnv/Mmw/vag0lwBvwu08uLFWJ.DMzWnb8yuaGghSMrv0LTv4bbyy"
+    },
+    "testofemojis": {
+        "title": "Emojis testing",
+        "description": "i'm HAPPY!! :333 :biggrin:\n:angry2:\nI'm MAD... :angry2:\n:acute:\n",
+        "summary": "Testing emojis, please hold",
+        "videoId": "",
+        "thumbnail": "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg",
+        "images": [
+            "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg"
+        ],
+        "author": "meisux69420",
+        "passhash": "$2b$12$TwrzfqYzYSqsov//058aoOsVSlmLoBWo3P39C/Nu4bRd1BQPCRQlW"
     }
 }
