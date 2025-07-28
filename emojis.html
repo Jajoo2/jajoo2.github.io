@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>mesitie</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+    <script src="js/toast.js"></script>
+</head>
+
+<body>
+
+    <div id="toast-container">
+
+    </div>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+
+
+
+        <main style="padding-left:30px;">
+            <br>
+
+            <h1>Emojis</h1>
+
+            <p>Click to copy</p>
+
+            <div id="emojicontainer"
+                style="display: flex; background-color: #00000075; flex-wrap: wrap; gap: 10px; max-height: 300px; overflow-y: auto; overflow-x: hidden; padding: 30px;">
+
+            </div>
+            <script>
+                const div = document.getElementById("emojicontainer");
+                fetch('/img/emoji/list.json')
+                    .then(res => res.json())
+                    .then(files => {
+                        for (let i = 0; i < files.length; i++) {
+                            const filename = files[i];
+                            const name = filename.replace(/\.[^/.]+$/, "");
+                            const item = document.createElement('div');
+                            item.style.width = "125px";
+                            item.style.height = "125px";
+                            item.innerHTML = `
+                            <img src="img/emoji/${filename}" title="${name}" alt="${filename}" width="125px" style="background-color: #2f2f2f; box-shadow: 0px 0px 10px #000 inset; cursor: pointer;" onclick="navigator.clipboard.writeText(':${name}:'); toastnotify('Copied');">
+                                    `;
+                            div.appendChild(item);
+                        }
+                    });
+
+            </script>
+
+        </main>
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+    </div>
+
+
+</body>
+
+</html>

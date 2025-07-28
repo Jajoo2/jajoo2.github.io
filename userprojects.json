@@ -1,7 +1,7 @@
 {
     "userprojectslaunch": {
         "title": "Launch",
-        "description": "UserProjects has been launched! W oohoo,",
+        "description": "UserProjects has been launched! W oohoo, :party:",
         "summary": "merely a test",
         "videoId": "",
         "thumbnail": "https://i.imgur.com/rdTSxWR.webp?tb",
@@ -14,7 +14,7 @@
     },
     "3d2desmos": {
         "title": ".OBJ to Desmos 3D converter",
-        "description": "Simply converts an .OBJ file to triangles for Desmos.\nYou can get this \"useful\" tool on my GitHub! https://github.com/Jajoo2/OBJ2Desmos",
+        "description": "Simply converts an .OBJ file to triangles for Desmos. (no way :wacko:)\nYou can get this \"useful\" tool on my GitHub! https://github.com/Jajoo2/OBJ2Desmos :biggrin:",
         "summary": "Puts .OBJ files in Desmos.",
         "videoId": "wDLwvhZAsxY",
         "thumbnail": "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g",
@@ -26,7 +26,7 @@
     },
     "simu": {
         "title": "simu",
-        "description": "simu is my game!!! i work on it all the time :) I'm Amy!!\n\nit's umm multiplayer 2d physics!! woo\n\nlos simulos",
+        "description": "simu is my game!!! i work on it all the time :) :biggrin: I'm Amy!!\n\nit's umm multiplayer 2d physics!! woo :party: :yahoo:",
         "summary": "simu is my game!!! i work on it all the time :) I'm Amy!!",
         "videoId": "XpK44_WDTpY",
         "thumbnail": "https://i.imgur.com/VqSsXFl.jpeg",
@@ -38,7 +38,7 @@
     },
     "testofemojis": {
         "title": "Emojis testing",
-        "description": "i'm HAPPY!! :333 :biggrin:\n:angry2:\nI'm MAD... :angry2:\n:acute:\n",
+        "description": "i'm HAPPY!! :333 :biggrin:\n:angry2:\nI'm MAD... :angry2:\n:acute:\nI got these off of <a href=\"https://www.en.kolobok.us/download.php?view.74\">https://www.en.kolobok.us/download.php?view.74</a> :cool:\nBye!! :bye:\n",
         "summary": "Testing emojis, please hold",
         "videoId": "",
         "thumbnail": "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg",
@@ -46,6 +46,6 @@
             "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg"
         ],
         "author": "meisux69420",
-        "passhash": "$2b$12$TwrzfqYzYSqsov//058aoOsVSlmLoBWo3P39C/Nu4bRd1BQPCRQlW"
+        "passhash": "$2b$12$z2KF896JzsJ2nypVBLKRSu6aSkRYJJuIaB4NnBkO1QyAhDFv7aXvO"
     }
 }
