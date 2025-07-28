@@ -18,8 +18,8 @@ export function textFlag(options) {
 
   let gap = cursorOptions.gap || textSize + 2;
   let angle = 0;
-  let radiusX = 0;
-  let radiusY = 0;
+  let radiusX = 0.1;
+  let radiusY = 0.3;
   let charArray = [];
 
   let width = window.innerWidth;
