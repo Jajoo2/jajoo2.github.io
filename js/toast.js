@@ -1,7 +1,16 @@
 function toastnotify(ntext) {
     const div = document.createElement("div");
     div.className = "toast";
-    div.innerHTML = `<p>${ntext}</p>`;
+    function replaceEmojiCodes(text) {
+        return text.replace(/:([a-zA-Z0-9_-]+):/g, (match, filename) => {
+            return `<span style="display:inline-flex; align-items:center; vertical-align:middle;">
+                    <img src="img/emoji/${filename}.gif" alt="${filename}" style="height:1.5em; width:auto;"/>
+                  </span>`;
+        });
+    }
+    
+
+    div.innerHTML = `<p>${replaceEmojiCodes(ntext)}</p>`;
 
     const container = document.getElementById("toast-container");
     container.appendChild(div);

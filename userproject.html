@@ -102,7 +102,7 @@
 				// Fill in title and description
 				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
 				document.getElementById("username").innerHTML = `<i>By ${pageData.author}</i>`;
-				document.getElementById("description").innerHTML = pageData.description.replace(/\n/g, "<br>");
+				document.getElementById("description").innerHTML = replaceEmojiCodes(pageData.description.replace(/\n/g, "<br>"));
 
 				// Video
 				if (pageData.videoId) {

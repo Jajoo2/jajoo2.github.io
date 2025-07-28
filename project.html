@@ -35,7 +35,7 @@
 
 				<div class="form">
 					<label class="custom-checkbox">
-						<input type="checkbox" class="auto_slide" id="slide"/>
+						<input type="checkbox" class="auto_slide" id="slide" />
 						<span class="checkmark"></span>
 						Auto Slide
 					</label>
@@ -52,7 +52,7 @@
 
 	</div>
 	<footer style="font-family: monospace;" id="footer-placeholder"></footer>
-    <script src="js/loadFooter.js"></script>
+	<script src="js/loadFooter.js"></script>
 	<script src="js/carousel.js" defer></script>
 	<script>
 		function loadGiscus(projectId) {
@@ -86,21 +86,27 @@
 		}
 
 		const projectId = getQueryParam("id");
-
+		function replaceEmojiCodes(text) {
+			return text.replace(/:([a-zA-Z0-9_-]+):/g, (match, filename) => {
+				return `<span style="display:inline-flex; align-items:center; vertical-align:middle;">
+                    <img src="img/emoji/${filename}.gif" alt="${filename}" style="height:1.5em; width:auto;"/>
+                  </span>`;
+			});
+		}
 		fetch("projects.json")
 			.then(res => res.json())
 			.then(data => {
 				const pageData = data[projectId];
 
 				if (!pageData) {
-					document.body.innerHTML = `<p>404. No project under this ID</p>`;
+					document.body.innerHTML = `<h1>404. (no project under this ID)</h1>`;
 					return;
 				}
 				loadGiscus(projectId);
 
 				// Fill in title and description
 				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
-				document.getElementById("description").innerHTML = pageData.description.replace(/\n/g, "<br>");
+				document.getElementById("description").innerHTML = replaceEmojiCodes(pageData.description.replace(/\n/g, "<br>"));
 
 				// Video
 				if (pageData.videoId) {
