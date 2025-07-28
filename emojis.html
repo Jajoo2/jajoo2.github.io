@@ -45,7 +45,7 @@
                             item.style.height = "125px";
                             item.innerHTML = `
                             <img src="img/emoji/${filename}" title="${name}" alt="${filename}" width="125px" style="background-color: #2f2f2f; box-shadow: 0px 0px 10px #000 inset; cursor: pointer;" onclick="navigator.clipboard.writeText(':${name}:'); toastnotify('Copied');">
-                                    `;
+                            <span style="font-size: 0px;">${name}</span>`;
                             div.appendChild(item);
                         }
                     });
