@@ -11,10 +11,8 @@
 
 <body>
 
-    <div id="toast-container" style="display: flex; justify-content: center;">
-        <div id="toast">
-            <p>Toast Popup</p>
-        </div>
+    <div id="toast-container">
+
     </div>
 
     <div class="page-container">
@@ -27,7 +25,7 @@
             <br>
 
             <h1>Home</h1>
-            
+
             <p>Here's a few things for you to play with.</p>
             <div style="display: flex; gap: 15px; text-align: center;">
                 <div style="display: block;">
@@ -35,8 +33,12 @@
                     <p>Value: <span id="demoValue">0</span></p>
                     <div style="background-color: #000000;">
                         <div style="position:relative">
-                            <img src="img/boing.png" style="position: absolute; transform: translateX(87px) translateY(-13px) rotate(-90deg);" height="30px">
-                            <img src="img/boing.png" style="position: absolute; transform: translateX(-120px) translateY(-13px) rotate(90deg);" height="30px">
+                            <img src="img/boing.png"
+                                style="position: absolute; transform: translateX(87px) translateY(-13px) rotate(-90deg);"
+                                height="30px">
+                            <img src="img/boing.png"
+                                style="position: absolute; transform: translateX(-120px) translateY(-13px) rotate(90deg);"
+                                height="30px">
                         </div>
                         <div id="demoColorBox" style="height:5px;"></div>
                     </div>
@@ -51,6 +53,11 @@
                         <br><br>also, notif function is <code>toastnotify(string);</code>
                     </p>
                 </div>
+            </div>
+            <br><br>
+            <div style="display: flex; flex-direction: column; width: 300px;">
+                <input type="text" id="demoText" placeholder="Toast Text">
+                <button onclick="toastnotify(document.getElementById('demoText').value)">Notify</button>
             </div>
 
             <script>
