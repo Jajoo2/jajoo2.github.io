@@ -28,7 +28,7 @@
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    fetch('https://pubesucker.meisite.xyz/api/up')
+                    fetch('https://api.meisite.xyz/api/up')
                         .then(res => {
                             if (res.ok) {
                                 document.getElementById("APIcheck").innerText = "API online";
@@ -41,7 +41,7 @@
                         });
 
 
-                    fetch('https://pubesucker.meisite.xyz/api/uploads')
+                    fetch('https://api.meisite.xyz/api/uploads')
                         .then(res => res.json())
                         .then(projects => {
                             const grid = document.querySelector('.grid');
