@@ -38,7 +38,7 @@
     },
     "testofemojis": {
         "title": "Emojis testing",
-        "description": "i'm HAPPY!! :333 :biggrin:\n:angry2:\nI'm MAD... :angry2:\n:acute:\nI got these off of <a href=\"https://www.en.kolobok.us/download.php?view.74\">https://www.en.kolobok.us/download.php?view.74</a> :cool:\nBye!! :bye:\n",
+        "description": "i'm HAPPY!! :333 :biggrin:\n:angry2:\nI'm MAD... :angry2:\n:acute:\nI got these off of <a href=\"https://www.en.kolobok.us/download.php?view.3\">https://www.en.kolobok.us/download.php?view.3</a> :cool:\nBye!! :bye:\n",
         "summary": "Testing emojis, please hold",
         "videoId": "",
         "thumbnail": "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg",
@@ -47,5 +47,55 @@
         ],
         "author": "meisux69420",
         "passhash": "$2b$12$z2KF896JzsJ2nypVBLKRSu6aSkRYJJuIaB4NnBkO1QyAhDFv7aXvO"
+    },
+    "meisitee": {
+        "title": "meisite (this site)",
+        "description": "meisite. pls give opinions in comments below\n<style>body{color: #2f2f2f; margin:0;height:100vh;background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,violet,red);background-size:1400% 1400%;animation:rainbow 20s linear infinite}@keyframes rainbow{0%{background-position:0% 50%}100%{background-position:100% 50%}}</style>\n\n\n",
+        "summary": "meisite. pls give opinions<button onclick=\"alert('uh ohh');\">click</button>",
+        "videoId": "",
+        "thumbnail": "img/mei.png",
+        "images": [
+            "img/mei.png",
+            "img/mei.png",
+            "img/mei.png"
+        ],
+        "author": "mei(site   creator)",
+        "passhash": "$2b$12$S.l9vvuQu5evgT7/w5H0SONS7ElM.uu9/WZF0X2bF4etAIDMnbgNK"
+    },
+    "bimulo": {
+        "title": "bimu (shit web realer)",
+        "description": "<div style=\"width:100%; height:100%; position:absolute; top:0; left:0; background-color:#ff00000a; pointer-events:none;\"></div>",
+        "summary": "<iframe src=\"https://carroted.github.io/Bimulo/client/\"         width=\"1600\"         height=\"900\"         title=\"Bimulo Client\"> </iframe>",
+        "videoId": "",
+        "thumbnail": "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160",
+        "images": [
+            "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160"
+        ],
+        "author": "amy",
+        "passhash": "$2b$12$cH9oJ9Qh83OKm0oIxcj./.7o2LgTw6UpfIJaaTKe1K.kte5z/U1rm"
+    },
+    "red": {
+        "title": "Cool red overlay",
+        "description": "its nice",
+        "summary": "<div style=\"width:1000vw; height:1000vh; position:absolute; top:-100vh; left:-100vw; background-color:#ff00000a; pointer-events:none;\"></div>",
+        "videoId": "",
+        "thumbnail": "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g",
+        "images": [
+            "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g"
+        ],
+        "author": "amy",
+        "passhash": "$2b$12$Gyo0Jy7nNXOb7S7EHjdKZudtRMPPVthef3807slvFYyPlDxszdRMK"
+    },
+    "bimu": {
+        "title": "bimu (shit web realer)",
+        "description": "<iframe src=\"https://carroted.github.io/Bimulo/client/\" width=\"1600\" height=\"900\" title=\"Bimulo Client\"></iframe>",
+        "summary": "shit web realer",
+        "videoId": "",
+        "thumbnail": "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160",
+        "images": [
+            "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160"
+        ],
+        "author": "amy",
+        "passhash": "$2b$12$WIOhxsUMyUTp8lnSoHa7NOlJeodtfwplypnWrphwFSVfG6rTa5Wy."
     }
 }

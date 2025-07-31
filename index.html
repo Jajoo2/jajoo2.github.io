@@ -53,6 +53,7 @@
                     <button id="notifdemobutton">Create a notification</button>
                     <p style="font-size: xx-small; color: #CCCCCC75;">(notif is a little delayed! be patient)
                         <br><br>also, notif function is <code>toastnotify(string);</code>
+                        <br><br>ALSO!! Button might not work sometimes; it's not my API!
                     </p>
                 </div>
             </div>
@@ -66,7 +67,7 @@
                 btn = document.getElementById("notifdemobutton");
 
                 btn.addEventListener("click", function () {
-                    fetch('https://random-word-api.herokuapp.com/word?number=5')
+                    fetch('https://random-word.ryanrk.com/api/en/word/random/5') // Herokuapp one broke?  'https://random-word-api.herokuapp.com/word?number=5')
                         .then(response => response.json())
                         .then(words => {
                             // words is an array of 5 words now
