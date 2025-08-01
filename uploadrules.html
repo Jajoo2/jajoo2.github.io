@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>mesitie</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+    <script src="js/toast.js"></script>
+</head>
+
+<body>
+
+    <div id="toast-container">
+
+    </div>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+
+
+
+        <main style="padding-left:30px;">
+            <br>
+
+            <h1>Uploading Rules</h1>
+            <h3 id="rulesReadIndicator">You haven't read the rules.</h3>
+            <ol>
+                <li>No (extreme) NSFW please,,</li>
+                <li>Please don't exploit the fact that it uses InnerHTML. Don't ruin the fun</li>
+                <li>You can upload whatever, it CAN be used as a forum , </li>
+                <li>Be  jolly and silly</li>
+            </ol>
+
+            <script>
+                const RRI = document.getElementById("rulesReadIndicator");
+                if(localStorage.getItem("rulesRead") == "sure yeah i guess")
+                {
+                    RRI.innerText = "You have read the rules.";
+                }
+
+                timeout = setTimeout(function() {
+                    localStorage.setItem("rulesRead", "sure yeah i guess");
+                    RRI.innerText = "You have read the rules.";
+                },6500);
+            </script>
+
+            <br><br>
+
+        </main>
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+    </div>
+
+
+</body>
+
+</html>

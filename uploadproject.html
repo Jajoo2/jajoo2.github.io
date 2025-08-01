@@ -108,6 +108,7 @@
                 </script>
             -->
                 <form id="uploadForm">
+                    <h2>RULES <a href="uploadrules.html">HERE</a></h2>
                     <div style="display: flex; gap: 30px;">
                         <div>
                             <label>Use no title to delete a project.<br></label>
@@ -135,6 +136,11 @@
             <script>
                 document.getElementById('uploadForm').addEventListener('submit', function (e) {
                     e.preventDefault();
+                    if(localStorage.getItem("rulesRead") != "sure yeah i guess")
+                    {
+                        alert("You haven't read the rules.");
+                        return 0
+                    }
 
                     const form = e.target;
                     const data = {
