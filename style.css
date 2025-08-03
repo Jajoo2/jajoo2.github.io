@@ -154,6 +154,14 @@ button:active {
 /* inputs end */
 
 /* General */
+
+hr
+{
+    margin-left: 0;
+    width: calc(100% - 30px);
+    color: #ffffff2f;
+}
+
 ::selection {
     background-color: #6b28d849;
 }
