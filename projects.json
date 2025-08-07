@@ -8,7 +8,8 @@
         "images": [
             "/img/projects/ANSI1.png",
             "/img/projects/ANSI2.png"
-        ]
+        ],
+        "imageSlideSpeed": "1000"
     },
     "meisite": {
         "title": "Mei's Site (this)",
@@ -34,6 +35,7 @@
             "/img/mei.png",
             "/img/mei.png"
             
-        ]
+        ],
+        "imageSlideSpeed": "100"
     }
 }

@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     const text = anchor.textContent.trim();
                     if (href.split(".")[0] == page.split(".")[0]) {
                         anchor.classList.add('navhover');
-                        anchor.style.backgroundColor = "#906f97";
+                        anchor.style.backgroundColor = "#9744aa";
                     }
                 }
 

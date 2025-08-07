@@ -17,6 +17,7 @@
 </head>
 
 <body>
+	<script>var imageSlideSpeed = 2000;</script>
 	<nav id="nav-placeholder"></nav>
 	<script src="js/loadNav.js"></script>
 
@@ -107,7 +108,7 @@
 				// Fill in title and description
 				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
 				document.getElementById("description").innerHTML = replaceEmojiCodes(pageData.description.replace(/\n/g, "<br>"));
-
+				imageSlideSpeed = Number(pageData.imageSlideSpeed);
 				// Video
 				if (pageData.videoId) {
 					const iframe = document.createElement('iframe');
