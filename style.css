@@ -75,14 +75,17 @@ button {
     padding: 5px;
     color: #FFF;
     transition-duration: 0.1s;
+    box-shadow: inset 0px 0px 10px #3f3f3f, 0px 4px 10px #00000075;
 }
 
 button:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) translateY(-1px);
+    box-shadow: inset 0px 0px 10px #3f3f3f, 0px 7px 10px #00000075;
 }
 
 button:active {
-    transform: scale(1);
+   transform: scale(1) translateY(1px);
+    box-shadow: inset 0px 0px 10px #1f1f1f, 0px -1px 10px #00000075;
 }
 
 .slider {
