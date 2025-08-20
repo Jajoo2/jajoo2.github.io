@@ -50,8 +50,8 @@
     },
     "meisitee": {
         "title": "meisite (this site)",
-        "description": "meisite. pls give opinions in comments below\n<style>body{color: #2f2f2f; margin:0;height:100vh;background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,violet,red);background-size:1400% 1400%;animation:rainbow 20s linear infinite}@keyframes rainbow{0%{background-position:0% 50%}100%{background-position:100% 50%}}</style>\n\n\n",
-        "summary": "meisite. pls give opinions<button onclick=\"alert('uh ohh');\">click</button>",
+        "description": "meisite. pls give opinions in comments below <iframe src=\"easteregg.html\" width=\"1000\" height=\"500\">\n<style>body{color: #2f2f2f; margin:0;height:100vh;background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,violet,red);background-size:1400% 1400%;animation:rainbow 20s linear infinite}@keyframes rainbow{0%{background-position:0% 50%}100%{background-position:100% 50%}}</style>\n\n\n",
+        "summary": "meisite. pls give opinions",
         "videoId": "",
         "thumbnail": "img/mei.png",
         "images": [
@@ -62,52 +62,16 @@
         "author": "mei(site   creator)",
         "passhash": "$2b$12$S.l9vvuQu5evgT7/w5H0SONS7ElM.uu9/WZF0X2bF4etAIDMnbgNK"
     },
-    "bimulo": {
-        "title": "bimu (shit web realer)",
-        "description": "<div style=\"width:100%; height:100%; position:absolute; top:0; left:0; background-color:#ff00000a; pointer-events:none;\"></div>",
-        "summary": "<iframe src=\"https://carroted.github.io/Bimulo/client/\"         width=\"1600\"         height=\"900\"         title=\"Bimulo Client\"> </iframe>",
+    "xssviabutton": {
+        "title": "buggy yuggy uggy buggy",
+        "description": "uggy yuggy.\n\n<button onclick=\"document.body.replaceChildren();(function(){let m=document.createElement('script');m.textContent = `(function tick(){let p=document.createElement('p');p.textContent = 'meows at you';document.body.appendChild(p);setTimeout(tick,1000);})();`;document.head.replaceChildren(m);document.body.replaceChildren();})();\">click me</button>\n\n\n\n\n",
+        "summary": "XSS",
         "videoId": "",
-        "thumbnail": "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160",
+        "thumbnail": "f",
         "images": [
-            "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160"
+            "f"
         ],
-        "author": "amy",
-        "passhash": "$2b$12$cH9oJ9Qh83OKm0oIxcj./.7o2LgTw6UpfIJaaTKe1K.kte5z/U1rm"
-    },
-    "red": {
-        "title": "Cool red overlay",
-        "description": "its nice",
-        "summary": "<div style=\"width:1000vw; height:1000vh; position:absolute; top:-100vh; left:-100vw; background-color:#ff00000a; pointer-events:none;\"></div>",
-        "videoId": "",
-        "thumbnail": "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g",
-        "images": [
-            "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g"
-        ],
-        "author": "amy",
-        "passhash": "$2b$12$Gyo0Jy7nNXOb7S7EHjdKZudtRMPPVthef3807slvFYyPlDxszdRMK"
-    },
-    "bimu": {
-        "title": "bimu (shit web realer)",
-        "description": "<iframe src=\"https://carroted.github.io/Bimulo/client/\" width=\"1600\" height=\"900\" title=\"Bimulo Client\"></iframe>",
-        "summary": "shit web realer",
-        "videoId": "",
-        "thumbnail": "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160",
-        "images": [
-            "https://cdn.discordapp.com/avatars/1131521203278975006/9c07accafdc3672af1db53abefc67b80.webp?size=160"
-        ],
-        "author": "amy",
-        "passhash": "$2b$12$WIOhxsUMyUTp8lnSoHa7NOlJeodtfwplypnWrphwFSVfG6rTa5Wy."
-    },
-    "yesye": {
-        "title": "erf",
-        "description": "erfre",
-        "summary": "esfref",
-        "videoId": "fref",
-        "thumbnail": "refrf",
-        "images": [
-            "erfref"
-        ],
-        "author": "erfrs",
-        "passhash": "$2b$12$598Af6RfFEtcarE6m0hwzOztFi.OYZsaZtDLBdU//Wuj2HLHyCRyy"
+        "author": "mei",
+        "passhash": "$2b$12$1WxszBG.e4.8WOVbSTSYpOFNqohKtfUZ/O/CMBev4.yeQARMnSBES"
     }
 }
