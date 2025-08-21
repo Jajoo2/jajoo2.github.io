@@ -14,7 +14,7 @@
     },
     "3d2desmos": {
         "title": ".OBJ to Desmos 3D converter",
-        "description": "Simply converts an .OBJ file to triangles for Desmos. (no way :wacko:)\nYou can get this \"useful\" tool on my GitHub! https://github.com/Jajoo2/OBJ2Desmos :biggrin:",
+        "description": "Simply converts an .OBJ file to triangles for Desmos. (no way :wacko:)\nYou can get this \"useful\" tool on my GitHub! <a href='https://github.com/Jajoo2/OBJ2Desmos'>https://github.com/Jajoo2/OBJ2Desmos</a> :biggrin:",
         "summary": "Puts .OBJ files in Desmos.",
         "videoId": "wDLwvhZAsxY",
         "thumbnail": "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g",
@@ -50,7 +50,7 @@
     },
     "meisitee": {
         "title": "meisite (this site)",
-        "description": "meisite. pls give opinions in comments below <iframe src=\"easteregg.html\" width=\"1000\" height=\"500\">\n<style>body{color: #2f2f2f; margin:0;height:100vh;background:linear-gradient(270deg,red,orange,yellow,green,cyan,blue,violet,red);background-size:1400% 1400%;animation:rainbow 20s linear infinite}@keyframes rainbow{0%{background-position:0% 50%}100%{background-position:100% 50%}}</style>\n\n\n",
+        "description": "meisite. pls give opinions in comments below \n\n\n",
         "summary": "meisite. pls give opinions",
         "videoId": "",
         "thumbnail": "img/mei.png",
