@@ -66,39 +66,11 @@
         "comments": [
             {
                 "user": "meible",
-                "text": "sorry i used ur project to test comments"
-            },
-            {
-                "user": "BOB BILLY ",
-                "text": "BILLY"
-            },
-            {
-                "user": "meisux17",
-                "text": "oh my fuck it works"
-            },
-            {
-                "user": "meisux17",
-                "text": "summit a comments"
-            },
-            {
-                "user": "evil billy boy",
-                "text": "i LOVE this!"
-            },
-            {
-                "user": "billy boy",
-                "text": "i HATE this!"
-            },
-            {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
+                "text": "i like it a lot im thinking :grin:"
             },
             {
                 "user": "bob",
-                "text": "nice work!"
+                "text": " i do like simu"
             }
         ]
     },
@@ -203,14 +175,6 @@
         "passhash": "$2b$12$S.l9vvuQu5evgT7/w5H0SONS7ElM.uu9/WZF0X2bF4etAIDMnbgNK",
         "comments": [
             {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
                 "user": "bob",
                 "text": "nice work!"
             }
@@ -229,14 +193,6 @@
         "passhash": "$2b$12$1WxszBG.e4.8WOVbSTSYpOFNqohKtfUZ/O/CMBev4.yeQARMnSBES",
         "comments": [
             {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
                 "user": "bob",
                 "text": "nice work!"
             }
@@ -254,21 +210,42 @@
         "author": "hawk fartuah",
         "passhash": "$2b$12$S50Lx25EG7hCE1hCOk2xEuCO7d.DCo2ykhiUh5rEsJJO8wTmLBMMm",
         "comments": [
+            
+            {
+                "user": "meible",
+                "text": "LMAO THAT COMMENT MADE IT FART BG<br> PEAK AS FARD"
+            },
+            {
+                "user": "meible",
+                "text": "<style>body {background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://media.istockphoto.com/id/520909949/vector/farting-emoticon.jpg?s=612x612&w=0&k=20&c=rVv1p8KmZ7SZuT71u5wrzTpz1FIyhEcmhi3B2t5Xgvg=')}</style>"
+            },
+            {
+                "user": "meible",
+                "text": "newlines dont work at all lmao<br>i mean, br works"
+            },
+            {
+                "user": "meible",
+                "text": "newlines dont work at all lmao"
+            },
+            {
+                "user": "meible",
+                "text": "okay wo\ncan newlines do this"
+            },
+            {
+                "user": "meible",
+                "text": "wait what if i <div style=\"background-color: #ff0000; width: 30px; height: 130px;\"> all over the place"
+            },
+            {
+                "user": "meible",
+                "text": "sometimes im :party: yknow"
+            },
+            {
+                "user": "meow",
+                "text": "i meow a lot,"
+            },
             {
                 "user": "meible",
                 "text": "its amazing "
-            },
-            {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
-                "user": "bob",
-                "text": "nice work!"
             }
         ]
     },
