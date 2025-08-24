@@ -163,8 +163,10 @@ button:active {
     display: flex;
     flex-direction: column;
     background-color: #101010;
-    padding: 5px;
+    padding: 15px;
     gap: 5px;
+    width: calc(100% - 65px) !important;
+    border-radius: 5px;
 }
 
 .comment
@@ -174,16 +176,18 @@ button:active {
     align-items: center;
     background-color: #1f1f1f;
     color: #ccc;
-    padding: 10px;
+    padding: 10px 20px;
     width: fit-content;
     white-space: pre-wrap;
+    border-radius: 50px;
 }
 
 .comment #name
 {
     background-color: #3b3b3b;
-    padding: 3px;
-    color: #aaa
+    padding: 5px;
+    color: #aaa;
+    border-radius: 10px;
 }
 
 hr

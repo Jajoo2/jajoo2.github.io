@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+    <h1>501 Not Implemented</h1>
+    <h1 style="color: #FFF">Why are you here??</h1>
+    <h1 style="color: #FFF">What ?..</h1>
+    <h1 style="color: #FFF">If the API is up (My laptop) you can give me a notification if you scroll below.</h1>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <form id="notifForm">
+        <label>Send a message to Mei</label>
+        <br>
+        <input type="text" name="text" placeholder="notif text" required></input>
+        <br>
+        <button type="submit" style="
+        position: relative; padding: 10px; 
+        background-color: #2a914c;">Post Notification</button>
+    </form>
+    <script>
+        form = document.getElementById("notifForm")
+        form.addEventListener("submit", async e => {
+            e.preventDefault(); // prevent reload
+
+            const formData = new FormData(form);
+            const text = formData.get("text");
+
+            // get project ID from URL ?id=...
+            const params = new URLSearchParams(window.location.search);
+            const projectId = params.get("id");
+
+            const payload = { text };
+
+            try {
+                const res = await fetch("https://api.meisite.xyz/api/notif", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                console.log("response:", data);
+            } catch (err) {
+                alert("Error!\n"+err);
+                console.error("error:", err);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

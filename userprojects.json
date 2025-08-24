@@ -11,20 +11,7 @@
         ],
         "author": "John Doe (MeiSux)",
         "passhash": "$2b$12$EybWyAIz6fR.mM7ITR/DzuY24DTOMPTWBpYJf5.hdtWmlPt.9wM/e",
-        "comments": [
-            {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
-                "user": "bob",
-                "text": "nice work!"
-            }
-        ]
+        "comments": []
     },
     "3d2desmos": {
         "title": ".OBJ to Desmos 3D converter",
@@ -37,20 +24,7 @@
         ],
         "author": "meisux",
         "passhash": "$2b$12$AtB9QmT2CzNbXae0QsFTZeT1WrNpn4olMLYbz4SkWuId2ZYrBMs9u",
-        "comments": [
-            {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
-                "user": "bob",
-                "text": "nice work!"
-            }
-        ]
+        "comments": []
     },
     "simu": {
         "title": "simu",
@@ -65,12 +39,8 @@
         "passhash": "$2b$12$pVnv/Mmw/vag0lwBvwu08uLFWJ.DMzWnb8yuaGghSMrv0LTv4bbyy",
         "comments": [
             {
-                "user": "meible",
-                "text": "i like it a lot im thinking :grin:"
-            },
-            {
-                "user": "bob",
-                "text": " i do like simu"
+                "user": "mei",
+                "text": "i like"
             }
         ]
     },
@@ -87,76 +57,32 @@
         "passhash": "$2b$12$z2KF896JzsJ2nypVBLKRSu6aSkRYJJuIaB4NnBkO1QyAhDFv7aXvO",
         "comments": [
             {
-                "user": "spammer",
-                "text": "Can't ratelimit an IP because it's 127.0.0.1!"
+                "user": "mrow",
+                "text": "meowdie"
             },
             {
-                "user": "spammer",
-                "text": "Can't ratelimit an IP because it's 127.0.0.1!"
+                "commid": "$2b$12$1DyICqGIBcD6PHGvFdgMKu4PsS6.JykNIex4nOa2vNsJVMsLEzoGW",
+                "passcode": "eow",
+                "user": "eow",
+                "text": "eowa"
             },
             {
-                "user": "spammer",
-                "text": "I actually literally can't stop spam because of 1 issue: it's still going through a CF tunnel"
+                "commid": "$2b$12$rppZsONaVTAfqY5l3Vs1/uJSEc3RTa/Rts94jMcz9nByfDZ5z7kB2",
+                "passcode": "eow",
+                "user": "eow",
+                "text": "eowa"
             },
             {
-                "user": "spammer",
-                "text": ":angry2:"
+                "commid": "$2b$12$yHd10MgO9rHkdLNNaIclU.0Usf8DOzGI7VntnAZRogSE4n3qz.XA.",
+                "passcode": "eowwa",
+                "user": "eow",
+                "text": "eow"
             },
             {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "spammer",
-                "text": ":angry2:"
-            },
-            {
-                "user": "meible",
-                "text": "nvm :angry2:"
-            },
-            {
-                "user": ":party: doesnt work here",
-                "text": "im so happy :biggrin: :party:"
-            },
-            {
-                "user": "meiblee",
-                "text": ":biggrin:"
-            },
-            {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
-                "user": "bob",
-                "text": "nice work!"
+                "passcode": "passcode",
+                "commid": "meicoming",
+                "user": "MeiBLE",
+                "text": "woo :party: woo"
             }
         ]
     },
@@ -173,12 +99,7 @@
         ],
         "author": "mei(site   creator)",
         "passhash": "$2b$12$S.l9vvuQu5evgT7/w5H0SONS7ElM.uu9/WZF0X2bF4etAIDMnbgNK",
-        "comments": [
-            {
-                "user": "bob",
-                "text": "nice work!"
-            }
-        ]
+        "comments": []
     },
     "xssviabutton": {
         "title": "buggy yuggy uggy buggy",
@@ -191,12 +112,7 @@
         ],
         "author": "mei",
         "passhash": "$2b$12$1WxszBG.e4.8WOVbSTSYpOFNqohKtfUZ/O/CMBev4.yeQARMnSBES",
-        "comments": [
-            {
-                "user": "bob",
-                "text": "nice work!"
-            }
-        ]
+        "comments": []
     },
     "69420": {
         "title": "AAAAAAAAAAAAAAAAAAAAAAAAA",
@@ -209,45 +125,7 @@
         ],
         "author": "hawk fartuah",
         "passhash": "$2b$12$S50Lx25EG7hCE1hCOk2xEuCO7d.DCo2ykhiUh5rEsJJO8wTmLBMMm",
-        "comments": [
-            
-            {
-                "user": "meible",
-                "text": "LMAO THAT COMMENT MADE IT FART BG<br> PEAK AS FARD"
-            },
-            {
-                "user": "meible",
-                "text": "<style>body {background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://media.istockphoto.com/id/520909949/vector/farting-emoticon.jpg?s=612x612&w=0&k=20&c=rVv1p8KmZ7SZuT71u5wrzTpz1FIyhEcmhi3B2t5Xgvg=')}</style>"
-            },
-            {
-                "user": "meible",
-                "text": "newlines dont work at all lmao<br>i mean, br works"
-            },
-            {
-                "user": "meible",
-                "text": "newlines dont work at all lmao"
-            },
-            {
-                "user": "meible",
-                "text": "okay wo\ncan newlines do this"
-            },
-            {
-                "user": "meible",
-                "text": "wait what if i <div style=\"background-color: #ff0000; width: 30px; height: 130px;\"> all over the place"
-            },
-            {
-                "user": "meible",
-                "text": "sometimes im :party: yknow"
-            },
-            {
-                "user": "meow",
-                "text": "i meow a lot,"
-            },
-            {
-                "user": "meible",
-                "text": "its amazing "
-            }
-        ]
+        "comments": []
     },
     "b?id=meisite2/diggle/biggle/chiggle/cwog": {
         "title": ":party:",
@@ -260,19 +138,6 @@
         ],
         "author": "///////////////////////////////",
         "passhash": "$2b$12$0TPN6A1cP.vH4kw7p9eCj.Q.uzCEpk7Qvhs0M9H90FnUK1947RUni",
-        "comments": [
-            {
-                "user": "jimbob",
-                "text": "i love this project i am a real human"
-            },
-            {
-                "user": "alice",
-                "text": "this is amazing!"
-            },
-            {
-                "user": "bob",
-                "text": "nice work!"
-            }
-        ]
+        "comments": []
     }
 }
