@@ -13,6 +13,19 @@
 	<!-- Carousel CSS -->
 	<link rel="stylesheet" href="css/carousel.css">
 
+	<style>
+		input, textarea {
+			width: 50%;
+			padding: 14px;
+			margin: 12px 0;
+			border: none;
+			border-radius: 6px;
+			background-color: #312335 !important;
+			color: #fff;
+			font-size: 15px;
+			box-sizing: border-box;
+		}
+	</style>
 
 </head>
 
@@ -49,7 +62,52 @@
 		<p id="description">Loading description...</p>
 		<br><br><br>
 		<h2>Comments</h2>
-		<div id="giscus-comments"></div>
+		<form id="commentForm" style="background-color: #120c13;">
+			<label>WARNING: Comments are permanent and you have to ask me to remove them. Your footprint is PERMANENT.</label>
+			<br>
+			<label>⚠️WIP⚠️ so the styling is dick ass butt. Sorry!</label>
+			<br>
+			<input type="text" name="name" placeholder="Name"></input>
+			<br>
+			<textarea name="text" placeholder="Comment"></textarea>
+			<br>
+			<button type="submit" style="
+			position: relative; padding: 10px; 
+			background-color: #2a914c;">Post Comment</button>
+		</form>
+		<script>
+			form = document.getElementById("commentForm")
+			form.addEventListener("submit", async e => {
+				e.preventDefault(); // prevent reload
+
+				const formData = new FormData(form);
+				const text = formData.get("text");
+				const name = formData.get("name") || "Anonymous";
+
+				if (!text) return alert("Please write something!");
+
+				// get project ID from URL ?id=...
+				const params = new URLSearchParams(window.location.search);
+				const projectId = params.get("id");
+
+				const payload = { id: projectId, name, text };
+
+				try {
+					const res = await fetch("https://api.meisite.xyz/api/comment", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(payload)
+					});
+					const data = await res.json();
+					console.log("response:", data);
+					window.location.reload();
+				} catch (err) {
+					alert("Error!\n"+err);
+					console.error("error:", err);
+				}
+			});
+		</script>
+		<div id="comments"></div>
 
 	</div>
 	<footer style="font-family: monospace;" id="footer-placeholder"></footer>
@@ -103,7 +161,7 @@
 					document.body.innerHTML = `<p>404. No project under this ID</p>`;
 					return;
 				}
-				loadGiscus(projectId);
+				//loadGiscus(projectId);
 
 				// Fill in title and description
 				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
@@ -128,6 +186,28 @@
 					container.innerHTML = pageData.images.map(src => `<img src="${src}" class="img">`).join("");
 					setupCarousel(); // now run the carousel setup AFTER images are injected
 				}
+
+				// Comments
+				const commentsContainer = document.getElementById("comments");
+
+				pageData.comments.forEach(comment => {
+					const commentDiv = document.createElement("div");
+					commentDiv.className = "comment";
+
+					const nameSpan = document.createElement("span");
+					nameSpan.id = "name";
+					nameSpan.textContent = comment.user;
+
+					const textSpan = document.createElement("span");
+					textSpan.id = "text";
+					textSpan.innerHTML = replaceEmojiCodes(comment.text);
+
+					commentDiv.appendChild(nameSpan);
+					commentDiv.appendChild(textSpan);
+
+					commentsContainer.appendChild(commentDiv);
+				});
+
 
 			});
 

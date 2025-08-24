@@ -158,6 +158,33 @@ button:active {
 
 /* General */
 
+#comments
+{
+    display: flex;
+    flex-direction: column;
+    background-color: #101010;
+    padding: 5px;
+    gap: 5px;
+}
+
+.comment
+{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: #1f1f1f;
+    color: #ccc;
+    padding: 10px;
+    width: fit-content;
+}
+
+.comment #name
+{
+    background-color: #3b3b3b;
+    padding: 3px;
+    color: #aaa
+}
+
 hr
 {
     margin-left: 0;
