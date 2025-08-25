@@ -3,12 +3,10 @@
 
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Content-Security-Policy"
-		content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; script-src 'unsafe-inline'; connect-src 'self'">
 	<title>404</title>
 	<style type="text/css" media="screen">
 		body {
-			background-color: #c59143;
+			background-color: #131313;
 			margin: 0;
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		}
@@ -33,11 +31,12 @@
 			font-size: 60px;
 			font-weight: 100;
 			margin: 0px 0 50px 0;
-			text-shadow: 0 1px 0 #fff;
+			text-shadow: 0 1px 0 #2c2c2c;
+			color: #ccc;
 		}
 
 		p {
-			color: rgba(0, 0, 0, 0.5);
+			color: #ccc;
 			margin: 20px 0;
 			line-height: 1.6;
 		}
@@ -58,24 +57,13 @@
 
 	<canvas id="bg"></canvas>
 
-	<audio id="bgmusic" src="src/amb.ogg" loop></audio>
+	<audio id="bgmusic" src="src/guitarchord.mp3"></audio>
 
 	<script>
 		const audio = document.getElementById("bgmusic");
 
 		const tryPlay = () => {
-			audio.play().then(() => {
-				console.log("Playback started");
-				audio.volume = 0;
-				for (let i = 0; i < 0.5; i += 0.001) {
-					setTimeout(() => {
-						audio.volume = i;
-					}, i * 1000);
-				}
-
-			}).catch(err => {
-				console.error("Playback failed:", err);
-			});
+			audio.play()
 			document.removeEventListener("mousemove", tryPlay);
 		};
 
@@ -89,7 +77,7 @@
 		let w, h;
 
 		const circles = [];
-		const circleCount = 10;
+		const circleCount = 5;
 
 		function initCircles() {
 			circles.length = 0; // clear array
@@ -97,9 +85,9 @@
 				circles.push({
 					x: Math.random() * w,
 					y: Math.random() * h,
-					r: 100 + Math.random() * 900,
-					hue: 25 + Math.random() * 35,
-					alpha: Math.random() * 255,
+					r: 5 + Math.random() * 1500,
+					hue: 0,
+					alpha: Math.random() * 0.1,
 					vx: (Math.random() - 0.5) * 20,
 					vy: (Math.random() - 0.5) * 20,
 				});
@@ -122,8 +110,9 @@
 				else if (c.y + c.r < 0) c.y = h + c.r;
 
 				const gradient = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
-				gradient.addColorStop(0, `hsla(${c.hue}, 100%, 70%, ${c.alpha})`);
-				gradient.addColorStop(1, `hsla(${c.hue}, 100%, 70%, 0)`);
+				gradient.addColorStop(0.99, `hsla(${c.hue}, 0%, 100%, ${c.alpha})`);
+				gradient.addColorStop(0.7, `hsla(${c.hue}, 0%, 100%, 0)`);
+				gradient.addColorStop(1, `hsla(${c.hue}, 0%, 100%, 0)`);
 
 				ctx.fillStyle = gradient;
 				ctx.beginPath();
