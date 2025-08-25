@@ -101,6 +101,16 @@
 			circles.forEach(c => {
 				c.x += c.vx;
 				c.y += c.vy;
+				c.vx *= 0.995;
+				c.vy *= 0.995;
+				if(c.vx < 0.004)
+				{
+					c.vx *= 1.001
+				}
+				if(c.vy < 0.004)
+				{
+					c.vy *= 1.001
+				}
 
 				// wrap around edges
 				if (c.x - c.r > w) c.x = -c.r;
