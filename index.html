@@ -29,7 +29,7 @@
             <p style="font-size: 8px">i know a LITTLE c#</p>
             <p>This site is not finished</p>
 
-			<p>I have general knowledge on like a billion things ask away</p>
+            <p>I have general knowledge on like a billion things ask away</p>
 
             <p>I like:</p>
             <dl>
@@ -94,6 +94,7 @@
                         })
                         .catch(error => {
                             console.error('Error fetching random words:', error);
+                            alert('Error fetching random words:', error);
                         });
                 });
 
@@ -194,8 +195,86 @@
 
             <p>And here's my (LAPTOP!!!) neofetch..</p>
             <a href="img/neofetch.png"><img src="img/neofetch.png"
-                    style="box-shadow: 0px 0px 20px #000; border-radius: 5px;"
-                    height="300px"></a>
+                    style="box-shadow: 0px 0px 20px #000; border-radius: 5px;" height="300px"></a>
+            <style>
+                input,
+                textarea {
+                    width: 50%;
+                    padding: 15px;
+                    margin: 12px 0;
+                    border: none;
+                    border-radius: 6px;
+                    background-color: #312335 !important;
+                    color: #fff;
+                    font-size: 15px;
+                    box-sizing: border-box;
+                }
+
+                #commentForm {
+                    background-color: #0604079a;
+                    padding: 15px;
+                    border-radius: 5px;
+                    width: fit-content;
+                }
+            </style>
+            <form id="commentForm">
+                <label>LOCAL comments thing so you can preview them</label>
+                <br>
+                <input type="text" name="name" placeholder="Name"></input>
+                <br>
+                <textarea name="text" placeholder="Comment"></textarea>
+                <br>
+                <button type="submit" style="
+                        position: relative; padding: 10px; 
+                        background-color: #2a914c;">Post Comment</button>
+            </form>
+            <div id="comments"></div>
+            <script>
+                function replaceEmojiCodes(text) {
+                    return text.replace(/:([a-zA-Z0-9_-]+):/g, (match, filename) => {
+                        return `<span style="display:inline-flex; align-items:center; vertical-align:middle;">
+                            <img src="img/emoji/${filename}.gif" alt="${filename}" style="height:1.5em; width:auto;"/>
+                          </span>`;
+                    });
+                }
+                form = document.getElementById("commentForm")
+                const commentsContainer = document.getElementById("comments");
+                const comments = []
+
+                form.addEventListener("submit", async e => {
+                    e.preventDefault(); // prevent reload
+
+                    const formData = new FormData(form);
+                    const text = formData.get("text");
+                    const name = formData.get("name") || "Anonymous";
+
+                    if (!text) return alert("Please write something!");
+                    const newComment = {
+                        user: name,
+                        text: text
+                    };
+                    comments.push(newComment);
+
+                    const commentDiv = document.createElement("div");
+                    commentDiv.className = "comment";
+
+                    const nameSpan = document.createElement("span");
+                    nameSpan.id = "name";
+                    nameSpan.textContent = newComment.user;
+
+                    const textSpan = document.createElement("span");
+                    textSpan.id = "text";
+                    textSpan.innerHTML = replaceEmojiCodes(newComment.text);
+
+                    commentDiv.appendChild(nameSpan);
+                    commentDiv.appendChild(textSpan);
+
+                    commentsContainer.appendChild(commentDiv);
+
+
+                });
+            </script>
+
     </div>
     </main>
 

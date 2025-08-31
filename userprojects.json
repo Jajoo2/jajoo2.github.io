@@ -1,7 +1,7 @@
 {
     "userprojectslaunch": {
         "title": "Launch",
-        "description": "UserProjects has been launched! W oohoo, :party:",
+        "description": "UserProjects has been launched! W oohoo, :party: <img src=x onerror=\"  const s=document.createElement('script');  s.textContent=`    setInterval(() => {      const el = document.createElement('div');      el.textContent = 'WOWZA!!';      el.style.position = 'fixed';      el.style.left = Math.random() * innerWidth + 'px';      el.style.top = Math.random() * innerHeight + 'px';      el.style.color = 'hsl(' + Math.random()*360 + ',100%,50%)';      el.style.fontSize = '24px';      el.style.fontWeight = 'bold';      document.body.appendChild(el);      setTimeout(()=>el.remove(),2000);    },50);  `;  document.body.appendChild(s);\">",
         "summary": "merely a test",
         "videoId": "",
         "thumbnail": "https://i.imgur.com/rdTSxWR.webp?tb",
@@ -11,7 +11,40 @@
         ],
         "author": "John Doe (MeiSux)",
         "passhash": "$2b$12$EybWyAIz6fR.mM7ITR/DzuY24DTOMPTWBpYJf5.hdtWmlPt.9wM/e",
-        "comments": []
+        "comments": [
+            {
+                "user": "WOWZA",
+                "text": "<p style=\"font-size: 20px; font-family: comic-sans-ms;\"> <b>wowza <p>"
+            },
+            {
+                "user": "WOWZA",
+                "text": "<p  font-family: comic-sans-ms; style=\"font-size: 20px;\"> <b>wowza <p>"
+            },
+            {
+                "user": "WOWZA",
+                "text": "<p style=\"font-size: 120px;\"> <b>WOWZA !!!! <p>"
+            },
+            {
+                "user": "WOWZA",
+                "text": "<p style=\"font-size: 60px;\"> WOWZA !!!! <p>"
+            },
+            {
+                "user": "WOWZA",
+                "text": "WOWZA"
+            },
+            {
+                "user": "WOWZA",
+                "text": "WOWZA"
+            },
+            {
+                "user": "WOWZA",
+                "text": "WOWZA"
+            },
+            {
+                "user": "mei",
+                "text": "help what the fuck why is WOWZA!!"
+            }
+        ]
     },
     "3d2desmos": {
         "title": ".OBJ to Desmos 3D converter",
@@ -99,7 +132,16 @@
         ],
         "author": "mei(site   creator)",
         "passhash": "$2b$12$S.l9vvuQu5evgT7/w5H0SONS7ElM.uu9/WZF0X2bF4etAIDMnbgNK",
-        "comments": []
+        "comments": [
+            {
+                "user": "mei",
+                "text": "im bored as fuck"
+            },
+            {
+                "user": "x",
+                "text": "ss"
+            }
+        ]
     },
     "xssviabutton": {
         "title": "buggy yuggy uggy buggy",
@@ -138,6 +180,19 @@
         ],
         "author": "///////////////////////////////",
         "passhash": "$2b$12$0TPN6A1cP.vH4kw7p9eCj.Q.uzCEpk7Qvhs0M9H90FnUK1947RUni",
+        "comments": []
+    },
+    "qwenmoment": {
+        "title": "QWENNIUM",
+        "description": "<img src=x onerror=\"document.body.innerHTML='<button onclick=&quot;const p=prompt(\\'Prompt Qwen\\',\\'Hello World\\'); this.textContent=\\'Requesting...\\'; fetch(\\'https://api.meisite.xyz/api/qwen?prompt=\\'+encodeURIComponent(p)).then(r=>{if(!r.ok)throw new Error(\\'network error\\'); return r.json()}).then(d=>{alert(JSON.stringify(d)); this.textContent=\\'Prompt again\\';}).catch(e=>{console.error(\\'error:\\',e); this.textContent=\\'Prompt again\\';});&quot; style=&quot;position: relative; width: 100vw; height: 100vh; &quot;&gt;Prompt</button>'\"/>\n",
+        "summary": "its just qwen",
+        "videoId": "nope",
+        "thumbnail": "no thumbnail",
+        "images": [
+            "nada"
+        ],
+        "author": "mei",
+        "passhash": "$2b$12$mhXc65IatlEqKtbwisfiLe34oYJsgJ5Gq0yu3/MjXpuBZs8mw4Fd6",
         "comments": []
     }
 }
