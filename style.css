@@ -1,6 +1,11 @@
 @font-face {
     font-family: 'Comfortaa';
-    src: url('comfortaa.ttf');
+    src: url('/src/fnt/comfortaa.ttf');
+}
+
+@font-face {
+    font-family: 'comic-sans-ms';
+    src: url('/src/fnt/ComicSansMS.ttf');
 }
 
 /* accent color is liike. 6f4597 i think, around that. */
@@ -336,6 +341,11 @@ code::selection {
     object-fit: cover;
     display: block;
     transition-duration: 0.2s;
+    font-family: "comic-sans-ms";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	color: #2f2f2f;
 }
 
 .grid-item:hover img {
