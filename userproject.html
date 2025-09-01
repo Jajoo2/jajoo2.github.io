@@ -12,9 +12,11 @@
 
 	<!-- Carousel CSS -->
 	<link rel="stylesheet" href="css/carousel.css">
+	<script src="js/toast.js"></script>
 
 	<style>
-		input, textarea {
+		input,
+		textarea {
 			width: 50%;
 			padding: 15px;
 			margin: 12px 0;
@@ -26,8 +28,7 @@
 			box-sizing: border-box;
 		}
 
-		#commentForm
-		{
+		#commentForm {
 			background-color: #0604079a;
 			padding: 15px;
 			border-radius: 5px;
@@ -40,7 +41,9 @@
 <body>
 	<nav id="nav-placeholder"></nav>
 	<script src="js/loadNav.js"></script>
+	<div id="toast-container">
 
+    </div>
 
 	<div style="padding-left: 30px;">
 		<h1 id="title"><i>Loading title...</i></h1>
@@ -71,7 +74,8 @@
 		<br><br><br>
 		<h2>Comments</h2>
 		<form id="commentForm">
-			<label>WARNING: Comments are permanent and you have to ask me to remove them. Your footprint is PERMANENT.</label>
+			<label>WARNING: Comments are permanent and you have to ask me to remove them. Your footprint is
+				PERMANENT.</label>
 			<br>
 			<label>⚠️WIP⚠️ so the styling is dick ass butt. Sorry!</label>
 			<br>
@@ -84,10 +88,11 @@
 			background-color: #2a914c;">Post Comment</button>
 		</form>
 		<script>
+			
+
 			form = document.getElementById("commentForm")
 			form.addEventListener("submit", async e => {
 				e.preventDefault(); // prevent reload
-
 				const formData = new FormData(form);
 				const text = formData.get("text");
 				const name = formData.get("name") || "Anonymous";
@@ -110,7 +115,7 @@
 					console.log("response:", data);
 					window.location.reload();
 				} catch (err) {
-					alert("Error!\n"+err);
+					alert("Error!\n" + err);
 					console.error("error:", err);
 				}
 			});
