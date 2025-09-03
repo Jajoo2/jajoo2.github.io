@@ -51,15 +51,15 @@
             <br>
             <button id="uploadthefile">upload!</button>
             <script>
-                const link = document.getElementById("fileLink");
+                const filelinke = document.getElementById("fileLink");
                 const filein = document.getElementById("fileInput");
                 const button = document.getElementById("uploadthefile");
                 button.addEventListener("click", (e) => {
                     const file = filein.files[0];
                     if (file) {
                         uploadFile(file).then(res => {
-                            link.href = "https://api.meisite.xyz" + res.url;
-                            link.innerText = "Uploaded! Click to view";
+                            filelinke.href = "https://api.meisite.xyz" + res.url;
+                            filelinke.innerText = "Uploaded! Click to view";
                         });
                     }
                 });
