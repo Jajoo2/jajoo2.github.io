@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Posts</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+
+
+        <main style="padding-left:30px;">
+            <br>
+            <h1></h1>
+            <h2 id="APIcheck"><b>checking API</b></h2>
+            <div class="list">
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetch('https://api.meisite.xyz/api/up')
+                        .then(res => {
+                            if (res.ok) {
+                                document.getElementById("APIcheck").innerText = "API online";
+                            } else {
+                                document.getElementById("APIcheck").innerText = "API error";
+                            }
+                        })
+                        .catch(err => {
+                            document.getElementById("APIcheck").innerText = "API unreachable";
+                        });
+
+
+                    fetch('https://api.meisite.xyz/api/posts')
+                        .then(res => res.json())
+                        .then(projects => {
+                            const grid = document.querySelector('.list');
+                            if (!grid) return console.error("No .list container found!");
+
+                            for (const [id, project] of Object.entries(projects)) {
+                                const item = document.createElement('a');
+                                item.href = `post.html?id=${id}`;
+                                item.innerHTML = `
+                                    <div class="entry">
+                                        <div class="title" style="height: 80%;">${project.title}</div>
+                                        <span class="subtitle" style="height: 70%;">${project.content.slice(0, 50)+"..."}</span>
+                                        <span class="subtitle" style="color: #ccc; font-size: large;">${project.summary}</span>
+                                    </div>`;
+                                grid.appendChild(item);
+                            }
+                        });
+                });
+
+
+            </script>
+        </main>
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+
+    </div>
+
+
+</body>
+
+</html>

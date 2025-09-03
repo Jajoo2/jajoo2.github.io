@@ -89,7 +89,7 @@ button:hover {
 }
 
 button:active {
-   transform: scale(1) translateY(1px);
+    transform: scale(1) translateY(1px);
     box-shadow: inset 0px 0px 10px #1f1f1f, 0px -1px 10px #00000075;
 }
 
@@ -163,8 +163,7 @@ button:active {
 
 /* General */
 
-#comments
-{
+#comments {
     display: flex;
     flex-direction: column;
     background-color: #101010;
@@ -174,8 +173,7 @@ button:active {
     border-radius: 5px;
 }
 
-.comment
-{
+.comment {
     display: flex;
     gap: 20px;
     align-items: center;
@@ -187,16 +185,14 @@ button:active {
     border-radius: 50px;
 }
 
-.comment #name
-{
+.comment #name {
     background-color: #3b3b3b;
     padding: 5px;
     color: #aaa;
     border-radius: 10px;
 }
 
-hr
-{
+hr {
     margin-left: 0;
     width: calc(100% - 30px);
     color: #ffffff2f;
@@ -276,10 +272,49 @@ code::selection {
 }
 
 
+/* Blog thing */
+.list {
+    height: calc(100vh * 0.9);
+    width: calc(100vw * 0.95);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    gap: 0px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    background-color: #0000004d;
+    border-style: solid;
+    border-color: #0000004b;
+    scrollbar-width: none;
+}
+
+.entry {
+    position: relative;
+    display: block;
+    width: calc(100vw * 0.94); /*HACKY-- DO NOT KEEP*/
+    height: 150px;
+    margin: 5px;
+    background-color: rgb(33, 29, 34);
+    border-style: solid;
+    border-color: #0a0a0a9d;
+    align-content: center;
+    overflow: hidden;
+    transition-duration: 0.2s;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+ */
+    user-select: none;
+    /* Standard syntax */
+}
+
+
 /* Grid of icons */
 
 .grid {
-    height: 350px;
+    height: calc(100vh /1.5);
     width: 950px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -297,17 +332,22 @@ code::selection {
 
 }
 
-.grid a {
+.grid a, .list a {
     color: #ccc;
     text-decoration: none;
     text-shadow: 0px 0px 3px #000 !important;
 }
 
-.grid a:hover {
+.grid a, .list a:hover {
     color: #ccc !important;
     text-decoration: none !important;
     text-shadow: 0px 0px 3px #000 !important;
     letter-spacing: normal !important;
+}
+
+.entry:hover
+{
+    transform: scale(1.01);
 }
 
 .grid-item {
@@ -345,7 +385,7 @@ code::selection {
     display: flex;
     justify-content: center;
     align-items: center;
-	color: #2f2f2f;
+    color: #2f2f2f;
 }
 
 .grid-item:hover img {

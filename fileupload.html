@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>mesitie</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+    <script src="js/toast.js"></script>
+</head>
+
+<body>
+
+    <div id="toast-container">
+
+    </div>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+
+
+
+        <main style="padding-left:30px;">
+            <script>
+                async function uploadFile(file) {
+                    const formData = new FormData();
+                    formData.append("file", file); // 'file' matches request.files.get("file")
+
+                    const response = await fetch("https://api.meisite.xyz/api/uploadfile", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (!response.ok) {
+                        alert("upload failed:", await response.text());
+                        return;
+                    }
+
+                    const result = await response.json();
+                    console.log("server response:", result);
+                    return result
+                }
+            </script>
+            <p>Every file is PUBLIC.</p>
+            <input type="file" id="fileInput"
+                style="height: 250px; width: 250px; align-content: center; border: dashed; background-color: #44384e3b; border-color: #4c4553a6;">
+            <br>
+            <a href="#" id="fileLink"></a>
+            <br>
+            <button id="uploadthefile">upload!</button>
+            <script>
+                const link = document.getElementById("fileLink");
+                const filein = document.getElementById("fileInput");
+                const button = document.getElementById("uploadthefile");
+                button.addEventListener("click", (e) => {
+                    const file = filein.files[0];
+                    if (file) {
+                        uploadFile(file).then(res => {
+                            link.href = "https://api.meisite.xyz" + res.url;
+                            link.innerText = "Uploaded! Click to view";
+                        });
+                    }
+                });
+            </script>
+        </main>
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+    </div>
+
+
+</body>
+
+</html>
