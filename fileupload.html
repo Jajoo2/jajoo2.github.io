@@ -33,12 +33,12 @@
                     });
 
                     if (!response.ok) {
-                        alert("upload failed:", await response.text());
+                        alert("upload failed:"+ await response.text());
                         return;
                     }
 
                     const result = await response.json();
-                    console.log("server response:", result);
+                    console.log("server response:"+ result);
                     return result
                 }
             </script>
@@ -58,7 +58,7 @@
                     const file = filein.files[0];
                     if (file) {
                         uploadFile(file).then(res => {
-                            filelinke.href = "https://api.meisite.xyz" + res.url;
+                            filelinke.href = res.url;
                             filelinke.innerText = "Uploaded! Click to view";
                         });
                     }
