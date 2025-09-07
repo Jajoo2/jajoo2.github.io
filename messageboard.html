@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>mesitie</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+    <script src="js/toast.js"></script>
+</head>
+
+<body>
+
+    <div id="toast-container">
+
+    </div>
+
+    <div class="page-container">
+        <nav id="nav-placeholder"></nav>
+        <script src="js/loadNav.js"></script>
+        <div style="height: 50px;"></div>
+        <input type="color" id="colorPicker" placeholder="#000000">
+
+        <canvas id="myCanvas" width="1000" height="1000"
+            style="border:1px solid black; background-color: #fff;"></canvas>
+
+        <script>
+            const canvas = document.getElementById("myCanvas");
+            const ctx = canvas.getContext("2d");
+            const picker = document.getElementById("colorPicker");
+            let color = "#000000";
+            picker.addEventListener("input", () => {
+                console.log("picked color:", picker.value);
+                color = picker.value;
+            });
+
+            ctx.font = "20px Comfortaa";
+
+            const refresher = setInterval(function () {
+                const rect = canvas.getBoundingClientRect();
+
+                fetch("https://api.meisite.xyz/api/msgboard")
+                    .then(res => res.json())
+                    .then(data => {
+                        
+                        ctx.clearRect(0, 0, canvas.width, canvas.height); // clea
+                        data.messages.forEach(message => {
+                            ctx.fillStyle = message.color;
+                            ctx.fillText(message.message, message.x, message.y);
+                        });
+                    });
+            }, 1000);
+
+            canvas.addEventListener("click", function (event) {
+                const rect = canvas.getBoundingClientRect();
+                x = event.clientX - rect.left;
+                y = event.clientY - rect.top;
+                x *= canvas.width / rect.width;
+                y *= canvas.height / rect.height;
+
+                console.log("click at:", x, y);
+
+                text = prompt("What to say here?")
+                if (text != undefined || text != null) {
+                    ctx.fillStyle = "#aaa";
+                    ctx.fillText(text, x, y);
+                    fetch("https://api.meisite.xyz/api/msgboard", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            message: text,
+                            x: x,
+                            y: y,
+                            color: color,
+                        })
+                    })
+                        .then(response => response.json())  // assuming the server returns json
+                        .then(data => {
+                            console.log("server said:", data);
+                        })
+                        .catch(err => {
+                            console.error("error:", err);
+                        });
+
+                }
+            });
+        </script>
+
+
+        <footer style="font-family: monospace;" id="footer-placeholder"></footer>
+        <script src="js/loadFooter.js"></script>
+    </div>
+
+
+</body>
+
+</html>
