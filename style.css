@@ -60,18 +60,7 @@ html {
 
 /* inputs */
 
-input[type="text"] {
-    font-size: 16px;
-    padding: 3px 8px;
-    border: 1px solid #000000;
-    border-radius: 4px;
-    color: #ccc;
-    background-color: #1b1b1b49;
-}
 
-input[type="text"]:focus {
-    outline: none;
-}
 
 button {
     background-color: #2f2f2f;
@@ -291,7 +280,8 @@ code::selection {
 .entry {
     position: relative;
     display: block;
-    width: calc(100vw * 0.94); /*HACKY-- DO NOT KEEP*/
+    width: calc(100vw * 0.94);
+    /*HACKY-- DO NOT KEEP*/
     height: 150px;
     margin: 5px;
     background-color: rgb(33, 29, 34);
@@ -314,39 +304,29 @@ code::selection {
 /* Grid of icons */
 
 .grid {
-    height: calc(100vh /1.5);
-    width: 950px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    width: 100%;
     gap: 0px 5px;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    background-color: #0000004d;
-    border-style: solid;
-    border-color: #0000004b;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* Internet Explorer 10+ */
-
 }
 
-.grid a, .list a {
+.grid a,
+.list a {
     color: #ccc;
     text-decoration: none;
     text-shadow: 0px 0px 3px #000 !important;
 }
 
-.grid a, .list a:hover {
+.grid a,
+.list a:hover {
     color: #ccc !important;
     text-decoration: none !important;
     text-shadow: 0px 0px 3px #000 !important;
     letter-spacing: normal !important;
 }
 
-.entry:hover
-{
+.entry:hover {
     transform: scale(1.01);
 }
 
@@ -357,9 +337,8 @@ code::selection {
     height: 150px;
     margin: 5px;
     background-color: #000;
-    border-style: solid;
-    border-color: #0a0a0a9d;
     align-content: center;
+    border-radius: 10px;
     overflow: hidden;
     transition-duration: 0.2s;
     -webkit-user-select: none;
@@ -373,7 +352,13 @@ code::selection {
 
 }
 
-
+.grid-item:hover
+{
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: #aaaaaa55;
+    box-shadow: 0px 0px 20px #cccccc70;
+}
 
 .grid-item img {
     width: 100%;
