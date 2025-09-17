@@ -5,20 +5,19 @@
 	<meta charset="UTF-8">
 	<title>meichat</title>
 	<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+	<script src="js/toast.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<style>
-		
-
 		#chat {
+			width: 50vw;
 			height: 80vh;
 			overflow-y: auto;
-			padding: 5px;
-			margin-bottom: 10px;
+			padding: 15px;
 			background: #00000075;
+			margin-bottom: 10px;
 		}
 
-		#msgInput,
-		#nameInput {
+		.tinput {
 			width: 100%;
 			padding: 8px;
 			box-sizing: border-box;
@@ -26,10 +25,20 @@
 			border-style: none;
 			background-color: #00000075;
 			color: #ccc;
+			width: 50vw;
+			font-family: 'Comfortaa';
 		}
 
 		.msg {
 			padding: 2px 0;
+			white-space: break-spaces;
+		}
+
+		main {
+			display: flex;
+			flex-direction: column;
+			margin: 10px;
+			align-items: center;
 		}
 	</style>
 </head>
@@ -39,73 +48,93 @@
 		<div id="toast-container"></div>
 		<nav id="nav-placeholder"></nav>
 		<script src="js/loadNav.js"></script>
-		<div id="chat"></div>
-		<input id="msgInput" type="text" placeholder="type a message and hit enter...">
-		<div style="height: 10px;"></div>
-		<input id="nameInput" type="text" placeholder="your name here">
-		<p id="alerter"></p>
+		<main>
+			<div id="chat"></div>
+			<input class="tinput" id="msgInput" type="text" placeholder="type a message and hit enter...">
+			<div style="height: 10px;"></div>
+			<input class="tinput" id="nameInput" type="text" placeholder="your name here">
+			<div style="height: 10px;"></div>
+			<input class="tinput" id="template" type="text" placeholder="message template ($msg is your message)">
+			
 
-		<script>
-			function parseColors(msg) {
-				return msg.replace(/<#[0-9A-Fa-f]{6}>(.*?)<\/>/g, (full, text) => {
-					const color = full.slice(1, 8); // "#FF0000"
-					return `<span style="color:${color}">${text}</span>`;
+			<script>
+				function replaceEmojiCodes(text) {
+					return text.replace(/:([a-zA-Z0-9_-]+):/g, (match, filename) => {
+						return `<span style="display:inline-flex; align-items:center; vertical-align:middle;">
+							<img src="img/emoji/${filename}.gif" alt="${filename}" style="height:1.5em; width:auto;"/>
+						</span>`;
+					});
+				}
+				function parseColors(msg) {
+					return msg.replace(/<#[0-9A-Fa-f]{6}>(.*?)<\/>/g, (full, text) => {
+						const color = full.slice(1, 8); // "#FF0000"
+						return `<span style="color:${color}">${text}</span>`;
+					});
+				}
+
+				function escapeHtml(str) {
+					return str.replace(/[&<>"']/g, match => ({
+						'&': '&amp;',
+						'<': '&lt;',
+						'>': '&gt;',
+						'"': '&quot;',
+						"'": '&#39;'
+					}[match]));
+				}
+
+			</script>
+
+			<script>
+				const socket = io("https://api.meisite.xyz/");
+				const chat = document.getElementById('chat');
+				const input = document.getElementById('msgInput');
+				const nameinput = document.getElementById('nameInput');
+				const alerter = document.getElementById('alerter');
+				const template = document.getElementById('template');
+
+
+				let name = "";
+				let lastmessage = "";
+
+				socket.on('message', (msg) => {
+					const div = document.createElement('div');
+					div.className = 'msg';
+					div.innerHTML = replaceEmojiCodes(parseColors(msg));
+					chat.appendChild(div);
+					chat.scrollTop = chat.scrollHeight; // auto-scroll down
 				});
-			}
 
-			function escapeHtml(str) {
-				return str.replace(/[&<>"']/g, match => ({
-					'&': '&amp;',
-					'<': '&lt;',
-					'>': '&gt;',
-					'"': '&quot;',
-					"'": '&#39;'
-				}[match]));
-			}
-
-		</script>
-
-		<script>
-			const socket = io("https://api.meisite.xyz/");
-			const chat = document.getElementById('chat');
-			const input = document.getElementById('msgInput');
-			const nameinput = document.getElementById('nameInput');
-			const alerter = document.getElementById('alerter');
-			let name = "";
-			let lastmessage = "";
-
-			socket.on('message', (msg) => {
-				const div = document.createElement('div');
-				div.className = 'msg';
-				div.innerHTML = parseColors(msg);
-				chat.appendChild(div);
-				chat.scrollTop = chat.scrollHeight; // auto-scroll down
-			});
-
-			input.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' && input.value.trim() !== '') {
-					socket.send(input.value);
-					lastmessage = input.value;
-					input.value = '';
-					if (name == "") {
-						alerter.innerText = 'You need to set a name first.';
+				input.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter' && input.value.trim() !== '') {
+						if(!template.value)
+						{
+							socket.send(input.value);
+						}else
+						{
+							socket.send(template.value.replace("$msg",input.value));
+						}
+						lastmessage = input.value;
+						input.value = '';
+						if (name == "") {
+							toastnotify("You need a name.");
+						}
 					}
-				}
-				if (e.key === 'ArrowUp') {
-					input.value = lastmessage;
-				}
-			});
+					if (e.key === 'ArrowUp') {
+						input.value = lastmessage;
+					}
+				});
 
-			nameinput.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' && nameinput.value.trim() !== '') {
-					socket.send("-NAME-= " + nameinput.value);
-					name = nameinput.value;
-					alerter.innerText = 'Name set to: ' + name;
-				}
-			});
+				nameinput.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter' && nameinput.value.trim() !== '') {
+						socket.send("-NAME-= " + nameinput.value);
+						name = nameinput.value;
+						toastnotify("Name changed to: "+name);
+					}
+				});
 
 
-		</script>
+			</script>
+		</main>
 		<footer style="font-family: monospace;" id="footer-placeholder"></footer>
 		<script src="js/loadFooter.js"></script>
 	</div>
