@@ -92,8 +92,9 @@
 				const alerter = document.getElementById('alerter');
 				const template = document.getElementById('template');
 
-
-				let name = "";
+				template.value = localStorage.getItem('template');
+				let name = localStorage.getItem('name');
+				nameinput.value = name;
 				let lastmessage = "";
 
 				socket.on('message', (msg) => {
@@ -129,6 +130,14 @@
 						socket.send("-NAME-= " + nameinput.value);
 						name = nameinput.value;
 						toastnotify("Name changed to: "+name);
+						localStorage.setItem('name', name);
+					}
+				});
+
+				template.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter' && template.value.trim() !== '') {
+						toastnotify("Saved template");
+						localStorage.setItem('template', template.value);
 					}
 				});
 
