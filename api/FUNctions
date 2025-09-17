@@ -1,0 +1,120 @@
+
+@app.route('/api/riddle', methods=['GET'])
+def get_riddle():
+    with open("/usr/share/games/fortunes/riddles", "r", encoding="utf-8", errors="ignore") as f:
+        riddles = f.read().split("\n%\n")
+    riddles = [r.strip() for r in riddles if r.strip()]
+    riddle = random.choice(riddles).replace("\\t","    ").replace("\\n","<br>")
+    return jsonify(riddle)
+
+
+
+@app.route('/api/riddlep', methods=['GET'])
+def get_riddlepage():
+    with open("/usr/share/games/fortunes/riddles", "r", encoding="utf-8", errors="ignore") as f:
+        riddles = f.read().split("\n%\n")
+    riddles = [r.strip() for r in riddles if r.strip()]
+    riddle = random.choice(riddles).replace("\\t","    ").replace("\\n","<br>").replace("\t","    ").replace("\n","<br>")
+    if "president" in riddle or "democrat" in riddle or "republican" in riddle:
+        riddle = random.choice(riddles).replace("\\t","    ").replace("\\n","<br>").replace("\t","    ").replace("\n","<br>")
+        # Try again
+    riddle2 = re.sub(r'\*(.*?)\*', r'<i>\1</i>', riddle)
+    embedriddel = riddle.replace("<br>","\n")
+    style = "body {background-color: #000; color: #fff; font-family: arial;}"
+    return f"""<!DOCTYPE html><html><head><title>{riddle}</title><meta property="og:title" content="riddle"><meta property="og:description" content="{embedriddel}"><meta property="og:type" content="website"><style>{style}</style></head><body><h1>Riddles from the Unix <code>fortune</code> program</h1><p style="font-size: 30px; margin: 0; width:100%; text-align: center; align-content: center; height: 50vh">{riddle2}</p></body></html>"""
+
+@app.route('/api/fortunep', methods=['GET'])
+def get_fortunepage():
+    with open("/usr/share/games/fortunes/fortunes", "r", encoding="utf-8", errors="ignore") as f:
+        fortunes = f.read().split("\n%\n")
+    fortunes = [r.strip() for r in fortunes if r.strip()]
+    fortune = random.choice(fortunes).replace("\\t","    ").replace("\\n","<br>").replace("\t","    ").replace("\n","<br>")
+    if "president" in fortune or "democrat" in fortune or "republican" in fortune:
+        fortune = random.choice(fortunes).replace("\\t","    ").replace("\\n","<br>").replace("\t","    ").replace("\n","<br>")
+        # Try again
+    fortune2 = re.sub(r'\*(.*?)\*', r'<i>\1</i>', fortune)
+    embedriddel = fortune.replace("<br>","\n")
+    style = "body {background-color: #000; color: #fff; font-family: arial;}"
+    return f"""<!DOCTYPE html><html><head><title>{fortune}</title><meta property="og:title" content="fortune"><meta property="og:description" content="{embedriddel}"><meta property="og:type" content="website"><style>{style}</style></head><body><h1>fortunes from the Unix <code>fortune</code> program</h1><p style="font-size: 30px; margin: 0; width:100%; text-align: center; align-content: center; height: 50vh">{fortune2}</p></body></html>"""
+
+@app.route('/api/fortune', methods=['GET'])
+def get_fortune():
+    with open("/usr/share/games/fortunes/fortunes", "r", encoding="utf-8", errors="ignore") as f:
+        fortunes = f.read().split("\n%\n")
+    fortunes = [r.strip() for r in fortunes if r.strip()]
+    fortune = random.choice(fortunes).replace("\\t","    ").replace("\\n","<br>").replace("\t","    ").replace("\n","<br>")
+    if "president" in fortune or "democrat" in fortune or "republican" in fortune:
+        fortune = random.choice(fortunes).replace("\\t","    ").replace("\\n","<br>").replace("\t","    ").replace("\n","<br>")
+        # Try again
+    return jsonify(fortune)
+
+@app.route("/api/qwen")
+def qwenprompt():
+    prompt = request.args.get("prompt", "hello")
+    subprompt = ("/no_think Keep the responses of all messages brief and casual.")
+
+    response = ollama.chat(model='qwen3:0.6b', messages=[ 
+                                                        
+        { 
+            'role': 'system',
+            'content': subprompt, 
+            'stream': False, 
+        },  
+                                                        
+        { 
+            'role': 'user',
+            'content': " /no_think "+prompt, 
+            'stream': False, 
+        },  
+    ]) 
+    print(response['message']['content'])
+    msg = response['message']['content']
+    return jsonify(msg)
+
+@app.route("/api/qwensys")
+def qwenpromptsys():
+    prompt = request.args.get("prompt", "hello")
+    subprompt = "/no_think "+request.args.get("sysprompt", "Keep the responses of all messages brief and casual.")
+
+    response = ollama.chat(model='qwen3:0.6b', messages=[ 
+                                                        
+        { 
+            'role': 'system',
+            'content': subprompt, 
+            'stream': False, 
+        },  
+                                                        
+        { 
+            'role': 'user',
+            'content': " /no_think "+prompt, 
+            'stream': False, 
+        },  
+    ]) 
+    print(response['message']['content'])
+    msg = response['message']['content']
+    return jsonify(msg)
+
+@app.route("/api/qwenp")
+def qwenpromptpage():
+    prompt = request.args.get("prompt", "hello")
+    subprompt = ("/no_think Keep the responses of all messages brief and casual.")
+
+    response = ollama.chat(model='qwen3:0.6b', messages=[ 
+                                                        
+        { 
+            'role': 'system',
+            'content': subprompt, 
+            'stream': False, 
+        },  
+                                                        
+        { 
+            'role': 'user',
+            'content': " /no_think "+prompt, 
+            'stream': False, 
+        },  
+    ]) 
+    print(response['message']['content'])
+    msg = response['message']['content']
+    style = "body {background-color: #000; color: #fff; font-family: arial;}"
+    return f"""<!DOCTYPE html><html><head><title>Response</title><meta property="og:title" content="fortune"><meta property="og:description" content="{msg}"><meta property="og:type" content="website"><style>{style}</style></head><body><h1>QWEN</h1><p style="font-size: 30px; margin: 0; width:100%; text-align: center; align-content: center; height: 50vh">{msg}</p></body></html>"""
+

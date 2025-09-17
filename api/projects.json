@@ -1,0 +1,217 @@
+{
+    "userprojectslaunch": {
+        "title": "Launch",
+        "description": "UserProjects has been launched! W oohoo, :party:",
+        "summary": "merely a test",
+        "videoId": "",
+        "thumbnail": "https://i.imgur.com/rdTSxWR.webp?tb",
+        "images": [
+            "https://i.imgur.com/bN1mYa2.webp?tb",
+            "https://i.imgur.com/QveqOAJ.webp?tb"
+        ],
+        "author": "John Doe (MeiSux)",
+        "passhash": "$2b$12$EybWyAIz6fR.mM7ITR/DzuY24DTOMPTWBpYJf5.hdtWmlPt.9wM/e",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "3d2desmos": {
+        "title": ".OBJ to Desmos 3D converter",
+        "description": "Simply converts an .OBJ file to triangles for Desmos. (no way :wacko:)\nYou can get this \"useful\" tool on my GitHub! <a href='https://github.com/Jajoo2/OBJ2Desmos'>https://github.com/Jajoo2/OBJ2Desmos</a> :biggrin:",
+        "summary": "Puts .OBJ files in Desmos.",
+        "videoId": "wDLwvhZAsxY",
+        "thumbnail": "https://i.ytimg.com/vi/wDLwvhZAsxY/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBCKTfPNrNxI8T0UBYuJpQ8oZsR0g",
+        "images": [
+            "https://i.imgur.com/XWGJzc5.png"
+        ],
+        "author": "meisux",
+        "passhash": "$2b$12$AtB9QmT2CzNbXae0QsFTZeT1WrNpn4olMLYbz4SkWuId2ZYrBMs9u",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "simu": {
+        "title": "simu",
+        "description": "simu is my game!!! i work on it all the time :) :biggrin: I'm Amy!!\n\nit's umm multiplayer 2d physics!! woo :party: :yahoo:",
+        "summary": "simu is my game!!! i work on it all the time :) I'm Amy!!",
+        "videoId": "XpK44_WDTpY",
+        "thumbnail": "https://i.imgur.com/VqSsXFl.jpeg",
+        "images": [
+            "https://i.imgur.com/VqSsXFl.jpeg"
+        ],
+        "author": "amy",
+        "passhash": "$2b$12$pVnv/Mmw/vag0lwBvwu08uLFWJ.DMzWnb8yuaGghSMrv0LTv4bbyy",
+        "comments": [
+            {
+                "user": "billy boy",
+                "text": "i HATE this!"
+            },
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "testofemojis": {
+        "title": "Emojis testing",
+        "description": "i'm HAPPY!! :333 :biggrin:\n:angry2:\nI'm MAD... :angry2:\n:acute:\nI got these off of <a href=\"https://www.en.kolobok.us/download.php?view.3\">https://www.en.kolobok.us/download.php?view.3</a> :cool:\nBye!! :bye:\n",
+        "summary": "Testing emojis, please hold",
+        "videoId": "",
+        "thumbnail": "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg",
+        "images": [
+            "https://www.en.kolobok.us/content_files/downloadthumbs/hd_kolobok.jpg"
+        ],
+        "author": "meisux69420",
+        "passhash": "$2b$12$z2KF896JzsJ2nypVBLKRSu6aSkRYJJuIaB4NnBkO1QyAhDFv7aXvO",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "meisitee": {
+        "title": "meisite (this site)",
+        "description": "meisite. pls give opinions in comments below \n\n\n",
+        "summary": "meisite. pls give opinions",
+        "videoId": "",
+        "thumbnail": "img/mei.png",
+        "images": [
+            "img/mei.png",
+            "img/mei.png",
+            "img/mei.png"
+        ],
+        "author": "mei(site   creator)",
+        "passhash": "$2b$12$S.l9vvuQu5evgT7/w5H0SONS7ElM.uu9/WZF0X2bF4etAIDMnbgNK",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "xssviabutton": {
+        "title": "buggy yuggy uggy buggy",
+        "description": "uggy yuggy.\n\n<button onclick=\"document.body.replaceChildren();(function(){let m=document.createElement('script');m.textContent = `(function tick(){let p=document.createElement('p');p.textContent = 'meows at you';document.body.appendChild(p);setTimeout(tick,1000);})();`;document.head.replaceChildren(m);document.body.replaceChildren();})();\">click me</button>\n\n\n\n\n",
+        "summary": "XSS",
+        "videoId": "",
+        "thumbnail": "f",
+        "images": [
+            "f"
+        ],
+        "author": "mei",
+        "passhash": "$2b$12$1WxszBG.e4.8WOVbSTSYpOFNqohKtfUZ/O/CMBev4.yeQARMnSBES",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "69420": {
+        "title": "AAAAAAAAAAAAAAAAAAAAAAAAA",
+        "description": "AUGHH",
+        "summary": "hehe",
+        "videoId": "E5S9vLKPh0k",
+        "thumbnail": "https://media.istockphoto.com/id/520909949/vector/farting-emoticon.jpg?s=612x612&w=0&k=20&c=rVv1p8KmZ7SZuT71u5wrzTpz1FIyhEcmhi3B2t5Xgvg=",
+        "images": [
+            "HGEIUWFUQWAHDWUballsacksHHIFEHIUH2WADHWHAIOHFOIWHIEAHIOIWFnutshuguiehuwohgfwwrg"
+        ],
+        "author": "hawk fartuah",
+        "passhash": "$2b$12$S50Lx25EG7hCE1hCOk2xEuCO7d.DCo2ykhiUh5rEsJJO8wTmLBMMm",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    },
+    "b?id=meisite2/diggle/biggle/chiggle/cwog": {
+        "title": ":party:",
+        "description": ":party:",
+        "summary": ":party:",
+        "videoId": ":party:",
+        "thumbnail": "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",
+        "images": [
+            "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+        ],
+        "author": "///////////////////////////////",
+        "passhash": "$2b$12$0TPN6A1cP.vH4kw7p9eCj.Q.uzCEpk7Qvhs0M9H90FnUK1947RUni",
+        "comments": [
+            {
+                "user": "jimbob",
+                "text": "i love this project i am a real human"
+            },
+            {
+                "user": "alice",
+                "text": "this is amazing!"
+            },
+            {
+                "user": "bob",
+                "text": "nice work!"
+            }
+        ]
+    }
+}

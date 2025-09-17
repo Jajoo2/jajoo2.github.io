@@ -1,0 +1,43 @@
+ <style>
+@keyframes wiggle {
+  25%   { transform: translateX(-5px) rotate(-15deg); }
+  50%   { transform: translateY(5px); }
+  75%   { transform: translateX(5px) rotate(15deg); }
+  100% { transform: translateY(5px); }
+}
+
+kbd {
+	padding: 5px 5px;
+    font-weight: bold;
+    animation: rgb-cycle 1.5s linear infinite,rgbg-cycle 1.5s linear infinite;
+}
+
+@keyframes rgb-cycle {
+    0%   { color: red; }
+    33%  { color: lime; }
+    66%  { color: blue; }
+    100% { color: red; }
+}
+
+@keyframes rgbg-cycle {
+    0%   { background-color: #FF000025; }
+    33%  { background-color: #0000FF25; }
+    66%  { background-color: #00FF0025; }
+    100% { background-color: #FF000025; }
+}
+
+
+code {
+  display: inline-block;
+  animation: wiggle 0.5s infinite alternate, rgb-cycle 1.5s linear infinite;
+  font-family: inherit;
+
+  font-weight: bold;
+
+}
+
+
+
+</style>
+
+<kbd>FLUFFY FLUFFY FUR BOYS BELOW</kbd><br><span style='font-size: 10px; white-space: pre;'>                                                           haha, made you look</span>
