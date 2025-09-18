@@ -97,7 +97,7 @@
 				let name = localStorage.getItem('name');
 				if(name)
 				{
-					socket.send("-NAME-= " + nameinput.value); // Please work.
+					socket.send("-NAME-= " + name); // Please work.
 				}
 				nameinput.value = name;
 				let lastmessage = "";
