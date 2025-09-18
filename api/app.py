@@ -408,6 +408,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")  # allow all origins
 users = {}
 ips = {}
 
+
 # store timestamps for each user by sid
 last_name_change = {}
 NAME_CHANGE_COOLDOWN = 10  # seconds
@@ -440,6 +441,9 @@ def handle_disconnect():
 @socketio.on("message")
 def handle_message(msg):
     print("Received message:", msg)
+    if ";users;" in msg:
+        send("<#AAAAAA>"+("\n".join(str(v) for k, v in users.items()))+"</>", to=request.sid)
+        return  
     if msg.startswith("-NAME-= "):
         now = time.time()
         last_change = last_name_change.get(request.sid, 0)
@@ -530,4 +534,4 @@ def delete_extension(ext_id):
 def handle_extension_message(data):
     emit('extension_broadcast', data, broadcast=True)
 
-socketio.run(app, debug=DBUG,host="0.0.0.0",port=8001)
+socketio.run(app, debug=DBUG,host="0.0.0.0",port=27935)
