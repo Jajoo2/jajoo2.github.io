@@ -95,6 +95,10 @@
 
 				template.value = localStorage.getItem('template');
 				let name = localStorage.getItem('name');
+				if(name)
+				{
+					socket.send("-NAME-= " + nameinput.value); // Please work.
+				}
 				nameinput.value = name;
 				let lastmessage = "";
 
