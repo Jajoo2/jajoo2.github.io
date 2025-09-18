@@ -442,7 +442,7 @@ def handle_disconnect():
 def handle_message(msg):
     print("Received message:", msg)
     if ";users;" in msg:
-        send("<#AAAAAA> Userlist:\n"+("\n".join(f"{k}: {v}" for k, v in users.items()))+"</>", to=request.sid)
+        send("Userlist:\n"+("\n".join(f"{k}: {v}" for k, v in users.items())), to=request.sid)
         return  
     if msg.startswith("-NAME-= "):
         now = time.time()
