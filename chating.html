@@ -49,6 +49,7 @@
 		<nav id="nav-placeholder"></nav>
 		<script src="js/loadNav.js"></script>
 		<main>
+			<div id="user-extensions"></div>
 			<div id="chat"></div>
 			<textarea class="tinput" id="msgInput" placeholder="type a message and hit enter..."></textarea>
 			<div style="height: 10px;"></div>
@@ -142,6 +143,116 @@
 				});
 
 
+				const userExtensionsContainer = document.getElementById('user-extensions');
+					const activeExtensionSockets = {};
+
+					// The passive class that holds listeners for an extension instance.
+					class ChatSocket {
+						constructor(extensionId) {
+							this.extensionId = extensionId;
+							this.listeners = {};
+						}
+
+						on(type, callback) {
+							if (!this.listeners[type]) {
+								this.listeners[type] = [];
+							}
+							this.listeners[type].push(callback);
+						}
+
+						send(type, body) {
+							socket.emit('extension_message', {
+								from: this.extensionId,
+								type: type,
+								body: body
+							});
+						}
+					}
+
+					// The global factory function that extensions will call.
+					function getChatSocket(extensionId) {
+						// If an old instance exists for this ID, simply delete it from our manager.
+						// It will be garbage collected, and its listeners will no longer be called.
+						if (activeExtensionSockets[extensionId]) {
+							delete activeExtensionSockets[extensionId];
+						}
+						// Create and register the new instance.
+						const newSocket = new ChatSocket(extensionId);
+						activeExtensionSockets[extensionId] = newSocket;
+						return newSocket;
+					}
+					window.getChatSocket = getChatSocket;
+
+					// The single, centralized dispatcher. It listens for broadcasts
+					// and routes them to the correct active extension instances.
+					socket.on('extension_broadcast', (data) => {
+						// data should be { from: 'some-ext-id', type: 'some-type', body: ... }
+						if (!data || !data.type) return;
+
+						Object.values(activeExtensionSockets).forEach(instance => {
+							if (instance.listeners[data.type]) {
+								instance.listeners[data.type].forEach(callback => {
+									try {
+										callback(data.body, data.from); // Pass body and sender ID
+									} catch (e) {
+										console.error(`Error in extension '${instance.extensionId}' handling event '${data.type}':`, e);
+									}
+								});
+							}
+						});
+					});
+
+					// --- DOM Management Functions ---
+					function loadExtension(id, content) {
+						// First, ensure any old version is completely removed.
+						removeExtension(id);
+
+						const extensionWrapper = document.createElement('div');
+						extensionWrapper.id = `user-extension-${id}`;
+						extensionWrapper.innerHTML = content;
+						userExtensionsContainer.appendChild(extensionWrapper);
+					}
+
+					function removeExtension(id) {
+						// Remove the socket instance from the manager. It's now inert.
+						if (activeExtensionSockets[id]) {
+							delete activeExtensionSockets[id];
+						}
+						// Remove the element from the DOM.
+						const element = document.getElementById(`user-extension-${id}`);
+						if (element) {
+							element.remove();
+						}
+					}
+
+					// --- Real-time Handlers for Extension Updates ---
+					socket.on('extension_updated', (data) => {
+						console.log(`Loading extension: ${data.id}`);
+						loadExtension(data.id, data.content);
+					});
+
+					socket.on('extension_removed', (data) => {
+						console.log(`Removing extension: ${data.id}`);
+						removeExtension(data.id);
+					});
+
+					// --- Initial Load ---
+					async function fetchAndLoadExtensions() {
+						try {
+							const response = await fetch('https://api.meisite.xyz/api/extensions');
+							const extensions = await response.json();
+							for (const [id, content] of Object.entries(extensions)) {
+								loadExtension(id, content);
+							}
+						} catch (error) {
+							console.error('Failed to load extensions:', error);
+						}
+					}
+
+					// Fetch extensions once the main socket is connected.
+					socket.on('connect', () => {
+						fetchAndLoadExtensions();
+					});
 			</script>
 		</main>
 		<footer style="font-family: monospace;" id="footer-placeholder"></footer>

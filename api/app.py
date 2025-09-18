@@ -462,4 +462,76 @@ def handle_message(msg):
     
 DBUG = "-D" in sys.argv[1:]
 
+import sqlite3
+
+# --- Database Setup ---
+def init_db():
+    conn = sqlite3.connect('extensions.db')
+    cursor = conn.cursor()
+    # Create table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS extensions (
+            id TEXT PRIMARY KEY,
+            content TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Initialize the database when the app starts
+init_db()
+
+# --- API Endpoints for Extensions ---
+@app.route('/api/extensions', methods=['GET', 'POST'])
+def handle_extensions():
+    conn = sqlite3.connect('extensions.db')
+    conn.row_factory = sqlite3.Row # Makes rows behave like dicts
+    cursor = conn.cursor()
+
+    if request.method == 'GET':
+        cursor.execute('SELECT id, content FROM extensions')
+        rows = cursor.fetchall()
+        extensions = {row['id']: row['content'] for row in rows}
+        conn.close()
+        return jsonify(extensions)
+
+    if request.method == 'POST':
+        data = request.get_json()
+        ext_id = data.get('id')
+        content = data.get('content')
+
+        if not ext_id or not content:
+            conn.close()
+            return jsonify({'status': 'error', 'message': 'Missing id or content'}), 400
+
+        # INSERT OR REPLACE is atomic: it updates if the id exists, or inserts if it's new.
+        cursor.execute('INSERT OR REPLACE INTO extensions (id, content) VALUES (?, ?)', (ext_id, content))
+        conn.commit()
+        conn.close()
+
+        # Broadcast the update to all connected clients
+        socketio.emit('extension_updated', {'id': ext_id, 'content': content})
+        return jsonify({'status': 'success', 'message': f'Extension {ext_id} saved.'}), 201
+
+@app.route('/api/extensions/<string:ext_id>', methods=['DELETE'])
+def delete_extension(ext_id):
+    conn = sqlite3.connect('extensions.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM extensions WHERE id = ?', (ext_id,))
+    conn.commit()
+    conn.close()
+    
+    # Broadcast the removal to all connected clients
+    socketio.emit('extension_removed', {'id': ext_id})
+    return jsonify({'status': 'success', 'message': f'Extension {ext_id} deleted.'}), 200
+
+# --- Socket.IO Relay for Extensions ---
+@socketio.on("extension_message")
+def handle_extension_message(data):
+    # This is a simple relay. It receives a message from an extension
+    # and broadcasts it back out to all clients' extensions.
+    # We broadcast on a different event name ('extension_broadcast')
+    # so a client doesn't receive its own echo directly.
+    socketio.emit('extension_broadcast', data, broadcast=True)
+
 socketio.run(app, debug=DBUG,host="0.0.0.0",port=8001)
