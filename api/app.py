@@ -9,7 +9,7 @@ import bcrypt
 from werkzeug.utils import secure_filename
 import os
 from datetime import datetime, timezone
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 import time
 
 
@@ -528,10 +528,6 @@ def delete_extension(ext_id):
 # --- Socket.IO Relay for Extensions ---
 @socketio.on("extension_message")
 def handle_extension_message(data):
-    # This is a simple relay. It receives a message from an extension
-    # and broadcasts it back out to all clients' extensions.
-    # We broadcast on a different event name ('extension_broadcast')
-    # so a client doesn't receive its own echo directly.
-    socketio.emit('extension_broadcast', data, broadcast=True)
+    emit('extension_broadcast', data, broadcast=True)
 
 socketio.run(app, debug=DBUG,host="0.0.0.0",port=8001)
