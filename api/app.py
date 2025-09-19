@@ -25,6 +25,14 @@ def check_password(plain_text_password, hashed_password):
     # hashed_password must be bytes, so encode it again
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
+def check_banned():
+    with open('banlist.json','r') as f:
+        ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+        bans = json.load(f)
+        for key, value in bans.items():
+            if ip == key:
+                return jsonify({'status': 'failure', 'reason': f'Banned. Reason: {value}'}), 403
+
 
 MAX_SIZE = 5 * 1024 * 1024  # 5 MB in bytes
 
@@ -43,13 +51,13 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-
 @app.route('/api/msgboard', methods=['POST', 'GET'])
 def msgb():
     if request.method == 'GET':
         with open('messageboard.json','r') as f:
             return json.load(f)
     elif request.method == 'POST':
+        check_banned()
         data = request.get_json()
         message = data.get('message', 'I was here!')
         x = data.get('x')
@@ -80,6 +88,7 @@ def msgb():
 # upload endpoint
 @app.route("/api/uploadfile", methods=["POST"])
 def upload_file():
+    check_banned()
     file = request.files.get("file")
     if not file or file.filename == "":
         return jsonify({"error": "no file provided"}), 400
@@ -245,6 +254,7 @@ def get_post():
 def pingme():
     return jsonify(True)
 
+
 @app.route('/api/project', methods=['GET']) 
 def get_project():
     key = request.args.get('id')  # gets ?id=value from URL teehee
@@ -261,6 +271,7 @@ def get_project():
     
 @app.route('/api/comment', methods=['POST'])
 def post_comment():
+    check_banned()
     try:
         with open("../userprojects.json", "r") as f:
             data = json.load(f)
@@ -302,6 +313,7 @@ def post_notif():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_proj():
+    check_banned()
     data = request.get_json()
     title = data.get('title', 'Untitled')
     description = data.get('description','No description')
@@ -366,6 +378,7 @@ def upload_proj():
 
 @app.route('/api/user', methods=['POST'])
 def create_user():
+    check_banned()
     data = request.get_json()
     username = data.get('username', 'Untitled')
     password = data.get('password')
@@ -409,9 +422,11 @@ users = {}
 ips = {}
 
 
+
+
 # store timestamps for each user by sid
 last_name_change = {}
-NAME_CHANGE_COOLDOWN = 10  # seconds
+NAME_CHANGE_COOLDOWN = 2  # seconds
 
 def unique_name(desired, users):
     original = desired
@@ -441,6 +456,12 @@ def handle_disconnect():
 @socketio.on("message")
 def handle_message(msg):
     print("Received message:", msg)
+    with open('banlist.json','r') as f:
+        ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+        bans = json.load(f)
+        for key, value in bans.items():
+            if ip == key:
+                send("<#ff5252>You're banned.</>", to=request.sid)
     if ";users;" in msg:
         send("Userlist:\n"+("\n".join(f"{k}: {v}" for k, v in users.items())), to=request.sid)
         return  
@@ -449,7 +470,7 @@ def handle_message(msg):
         last_change = last_name_change.get(request.sid, 0)
 
         if now - last_change < NAME_CHANGE_COOLDOWN:
-            send("<#AAAAAA>[SYSTEM] You must wait before changing your name again.</>", to=request.sid)
+            send(f"<#AAAAAA>[SYSTEM] You must wait {str(NAME_CHANGE_COOLDOWN - (now - last_name_change))} seconds before changing your name again.</>", to=request.sid)
             return  
         
         name = msg.split("-NAME-= ")[1]
