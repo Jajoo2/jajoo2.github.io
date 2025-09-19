@@ -57,7 +57,7 @@ def msgb():
         with open('messageboard.json','r') as f:
             return json.load(f)
     elif request.method == 'POST':
-        check_banned()
+        return check_banned()
         data = request.get_json()
         message = data.get('message', 'I was here!')
         x = data.get('x')
@@ -88,7 +88,7 @@ def msgb():
 # upload endpoint
 @app.route("/api/uploadfile", methods=["POST"])
 def upload_file():
-    check_banned()
+    return check_banned()
     file = request.files.get("file")
     if not file or file.filename == "":
         return jsonify({"error": "no file provided"}), 400
@@ -271,7 +271,7 @@ def get_project():
     
 @app.route('/api/comment', methods=['POST'])
 def post_comment():
-    check_banned()
+    return check_banned()
     try:
         with open("../userprojects.json", "r") as f:
             data = json.load(f)
@@ -313,7 +313,7 @@ def post_notif():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_proj():
-    check_banned()
+    return check_banned()
     data = request.get_json()
     title = data.get('title', 'Untitled')
     description = data.get('description','No description')
@@ -378,7 +378,7 @@ def upload_proj():
 
 @app.route('/api/user', methods=['POST'])
 def create_user():
-    check_banned()
+    return check_banned()
     data = request.get_json()
     username = data.get('username', 'Untitled')
     password = data.get('password')
@@ -461,7 +461,8 @@ def handle_message(msg):
         bans = json.load(f)
         for key, value in bans.items():
             if ip == key:
-                send("<#ff5252>You're banned.</>", to=request.sid)
+                send(f"<#ff5252>You're banned. Reason: {value}</>", to=request.sid)
+                return
     if ";users;" in msg:
         send("Userlist:\n"+("\n".join(f"{k}: {v}" for k, v in users.items())), to=request.sid)
         return  
