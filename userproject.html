@@ -43,7 +43,7 @@
 	<script src="js/loadNav.js"></script>
 	<div id="toast-container">
 
-    </div>
+	</div>
 
 	<div style="padding-left: 30px;">
 		<h1 id="title"><i>Loading title...</i></h1>
@@ -88,7 +88,7 @@
 			background-color: #2a914c;">Post Comment</button>
 		</form>
 		<script>
-			
+
 
 			form = document.getElementById("commentForm")
 			form.addEventListener("submit", async e => {
@@ -110,10 +110,14 @@
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(payload)
-					});
-					const data = await res.json();
-					console.log("response:", data);
-					window.location.reload();
+					}).then(res => res.json())
+						.then(response => {
+							if (response.status === 'success') {
+								location.reload();
+							} else {
+								alert(response.reason);
+							}
+						});
 				} catch (err) {
 					alert("Error!\n" + err);
 					console.error("error:", err);
