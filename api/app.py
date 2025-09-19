@@ -142,7 +142,7 @@ def get_posts():
     with open('posts.json', 'r') as f:
         return json.load(f)
 
-@app.route('/api/comment', methods=['POST'])
+@app.route('/api/commentblog', methods=['POST'])
 def post_comment_blog():
     try:
         with open("posts.json", "r") as f:
@@ -534,4 +534,4 @@ def delete_extension(ext_id):
 def handle_extension_message(data):
     emit('extension_broadcast', data, broadcast=True)
 
-socketio.run(app, debug=DBUG,host="0.0.0.0",port=27935)
+socketio.run(app, debug=DBUG,host="0.0.0.0",port=8001)
