@@ -313,7 +313,9 @@ def post_notif():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_proj():
-    return check_banned()
+    banned = check_banned()
+    if banned:
+        return banned  
     data = request.get_json()
     title = data.get('title', 'Untitled')
     description = data.get('description','No description')
