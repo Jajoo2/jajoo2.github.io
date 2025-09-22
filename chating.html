@@ -67,7 +67,7 @@
 					});
 				}
 				function parseColors(msg) {
-					return msg.replace(/<#[0-9A-Fa-f]{6}>(.*?)<\/>/g, (full, text) => {
+					return msg.replace(/<#[0-9A-Fa-f]{6}>(.*?)<\/>/gs, (full, text) => {
 						const color = full.slice(1, 8); // "#FF0000"
 						return `<span style="color:${color}">${text}</span>`;
 					});
