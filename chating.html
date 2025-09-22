@@ -111,7 +111,8 @@
 				});
 
 				input.addEventListener('keydown', (e) => {
-					if (e.key === 'Enter' && e.ctrlKey && input.value.trim() !== '') {
+					if (e.key === 'Enter' && !e.shiftKey) {
+						e.preventDefault(); // block normal enter
 						if(!template.value)
 						{
 							socket.send(input.value);
