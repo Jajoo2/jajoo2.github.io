@@ -236,6 +236,9 @@
             const gravity = 1;
             const maxSpeed = 5;
             let players = {};
+            let now = performance.now();
+            let delta = (now - last) / 1000; // seconds
+            let last = now;
 
             function gameLoop() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
