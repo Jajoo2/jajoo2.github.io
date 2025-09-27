@@ -178,6 +178,19 @@
             const button = document.getElementById('button');
             let tabbedIn = false;
 
+            let lastSend = 0;
+            const sendInterval = 1000 / 20; // 20hz
+
+            function throttledSend(data) {
+            const now = Date.now();
+            if (now - lastSend >= sendInterval) {
+                socket.send(data);
+                lastSend = now;
+            }
+            }
+
+
+
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
@@ -250,7 +263,7 @@
                 if (keys["Space"] && player.pos.y === floorHeight) {
                     player.vel.y = -15; // jump
                 }
-                socket.send(({ x: player.pos.x, y: player.pos.y }));
+                throttledSend(({ x: player.pos.x, y: player.pos.y }));
 
                 // draw
                 ctx.fillStyle = "#0000ff55";
