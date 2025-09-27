@@ -430,6 +430,8 @@ socketio = SocketIO(app, cors_allowed_origins="*")  # allow all origins
 
 users = {}
 ips = {}
+gamers = []
+boxes = {} # "id" : [ [ (10,10) , (50,50) ] ]
 
 
 
@@ -458,14 +460,18 @@ def handle_connect():
 
 @socketio.on("disconnect")
 def handle_disconnect():
-    print(f"[{request.sid}]  | ",users[request.sid]+" left the chat!")
+    print(f"[{request.sid}]  |  disconnected")
+    if request.sid in gamers:
+        gamers.remove(request.sid)
+        return
     send(users[request.sid]+" left the chat!", broadcast=True)
     users[request.sid] = ""
+    
 
 
 @socketio.on("message")
 def handle_message(msg):
-    print("Received message:", msg)
+    #print("Received message:", msg)
     with open('banlist.json','r') as f:
         ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
         bans = json.load(f)
@@ -473,6 +479,24 @@ def handle_message(msg):
             if ip == key:
                 send(f"<#ff5252>You're banned. Reason: {value}</>", to=request.sid)
                 return
+    if msg == "-GAME-=.join" and request.sid not in gamers:
+        gamers.append(request.sid)
+        return
+    
+    
+    # Gaming area
+    
+    
+    if request.sid in gamers:
+        data = msg
+        data["id"] = request.sid
+        send(data, broadcast=True)
+    
+        return 
+    
+    if isinstance(msg, dict):
+        return
+   
     if ";users;" in msg:
         send("Userlist:\n"+("\n".join(f"{k}: {v}" for k, v in users.items())), to=request.sid)
         return  
@@ -565,5 +589,5 @@ def delete_extension(ext_id):
 @socketio.on("extension_message")
 def handle_extension_message(data):
     emit('extension_broadcast', data, broadcast=True)
-
+print("Yes, I'm running!")
 socketio.run(app, debug=DBUG,host="0.0.0.0",port=8001)

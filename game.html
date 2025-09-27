@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>meiformer</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+    <script src="js/toast.js"></script>
+    <style>
+        #chat-container {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            max-width: 80vw;
+            /* so it doesn't go off-screen */
+            background: #00000075;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* important fix */
+        }
+
+        #chat {
+            height: 250px;
+            width: 80%;
+            overflow-y: auto;
+            padding: 10px;
+            background: transparent;
+            word-wrap: break-word;
+            /* force long words to wrap */
+            overflow-wrap: anywhere;
+            /* modern equivalent, even better */
+        }
+
+        .msg {
+            padding: 2px 0;
+            font-size: 14px;
+            white-space: pre-wrap;
+            /* preserve newlines but allow wrapping */
+        }
+
+
+        .tinput {
+            width: 90%;
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: none;
+            border: 1px solid #333;
+            background: #00000075;
+            color: #ccc;
+            font-family: 'Comfortaa';
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="toast-container">
+
+    </div>
+
+    <div class="page-container">
+        <!-- Sorry, no nav. -->
+
+        <canvas id="gamewindow" width="800" height="600" style="width:100vw; height:100vh; background:#fff;"></canvas>
+
+        <div id="chat-container">
+            <div id="chat"></div>
+            <textarea class="tinput" id="msgInput" placeholder="type a message and hit enter..."></textarea>
+            <div style="height: 10px;"></div>
+            <textarea class="tinput" id="nameInput" placeholder="your name here"></textarea>
+            <div style="height: 10px;"></div>
+            <textarea class="tinput" id="template" placeholder="message template ($msg is your message)"></textarea>
+        </div>
+
+        <script>
+            function replaceEmojiCodes(text) {
+                return text.replace(/:([a-zA-Z0-9_-]+):/g, (match, filename) => {
+                    return `<span style="display:inline-flex; align-items:center; vertical-align:middle;">
+							<img src="img/emoji/${filename}.gif" alt="${filename}" style="height:1.5em; width:auto;"/>
+						</span>`;
+                });
+            }
+            function parseColors(msg) {
+                return msg.replace(/<#[0-9A-Fa-f]{6}>(.*?)<\/>/gs, (full, text) => {
+                    const color = full.slice(1, 8); // "#FF0000"
+                    return `<span style="color:${color}">${text}</span>`;
+                });
+            }
+
+            function escapeHtml(str) {
+                return str.replace(/[&<>"']/g, match => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[match]));
+            }
+
+        </script>
+
+        <script>
+            const chatsocket = io("https://api.meisite.xyz/");
+            const chat = document.getElementById('chat');
+            const input = document.getElementById('msgInput');
+            const nameinput = document.getElementById('nameInput');
+            const alerter = document.getElementById('alerter');
+            const template = document.getElementById('template');
+
+            template.value = localStorage.getItem('template');
+            let name = localStorage.getItem('name');
+            if (name) {
+                chatsocket.send("-NAME-= " + name); // Please work.
+            }
+            nameinput.value = name;
+            let lastmessage = "";
+
+            chatsocket.on('message', (msg) => {
+                const div = document.createElement('div');
+                div.className = 'msg';
+                div.innerHTML = replaceEmojiCodes(parseColors(msg));
+                chat.appendChild(div);
+                chat.scrollTop = chat.scrollHeight; // auto-scroll down
+            });
+
+            
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (!template.value) {
+                        chatsocket.send(input.value);
+                    } else {
+                        chatsocket.send(template.value.replace("$msg", input.value));
+                    }
+                    lastmessage = input.value;
+                    input.value = '';
+                    if (name == "") {
+                        toastnotify("You need a name.");
+                    }
+                }
+                if (e.key === 'ArrowUp') {
+                    input.value = lastmessage;
+                }
+            });
+
+            nameinput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey && nameinput.value.trim() !== '') {
+                    chatsocket.send("-NAME-= " + nameinput.value);
+                    name = nameinput.value;
+                    toastnotify("Name changed to: " + name);
+                    localStorage.setItem('name', name);
+                }
+            });
+
+            template.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey && template.value.trim() !== '') {
+                    toastnotify("Saved template");
+                    localStorage.setItem('template', template.value);
+                }
+            });
+
+        </script>
+
+        <script>
+            const socket = io("http://localhost:8001");
+            const canvas = document.getElementById('gamewindow');
+            const ctx = canvas.getContext("2d");
+            const button = document.getElementById('button');
+            let tabbedIn = false;
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            canvas.addEventListener("click", (e) => {
+                const rect = canvas.getBoundingClientRect(); // canvas position on screen
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                console.log("clicked at:", x, y);
+            });
+
+            let player = {
+                pos: { x: 0, y: 0 },
+                vel: { x: 0, y: 0 }
+            };
+
+            socket.send("-GAME-=.join")
+
+            canvas.addEventListener("focus", () => tabbedIn = true);
+            canvas.addEventListener("blur", () => tabbedIn = false);
+            canvas.tabIndex = 0; // needed for focus events to work
+
+            let keys = {};
+            document.addEventListener("keydown", e => {
+                if (tabbedIn) {
+                    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+                        e.preventDefault(); // stop browser from scrolling
+                    }
+                    keys[e.code] = true;   // mark key as pressed
+                }
+            });
+
+            document.addEventListener("keyup", e => {
+                keys[e.code] = false;  // mark key as released
+            });
+
+            const floorHeight = 400;
+            const gravity = 1;
+            const maxSpeed = 5;
+            let players = {};
+
+            function gameLoop() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Logic
+                player.pos.x += player.vel.x;
+                player.pos.y += player.vel.y;
+
+                player.vel.x *= 0.75
+
+                if (player.pos.y > floorHeight) {
+                    player.pos.y = floorHeight;
+                    player.vel.y = 0;
+                } else {
+                    player.vel.y += gravity;
+                }
+
+                if (keys["KeyA"] && Math.abs(player.vel.x) < maxSpeed) {
+                    player.vel.x -= 2.5;
+                }
+                else if (keys["KeyD"] && Math.abs(player.vel.x) < maxSpeed) {
+                    player.vel.x += 2.5;
+                }
+
+                if (keys["Space"] && player.pos.y === floorHeight) {
+                    player.vel.y = -15; // jump
+                }
+                socket.send(({ x: player.pos.x, y: player.pos.y }));
+
+                // draw
+                ctx.fillStyle = "#0000ff55";
+                ctx.fillRect(player.pos.x, player.pos.y, 20, 40);
+
+                for (const id in players) {
+                    const p = players[id];
+                    ctx.fillStyle = "#0000ff";
+                    ctx.fillRect(p.x, p.y, 20, 40);
+                }
+
+
+                ctx.fillStyle = "black";
+                ctx.fillRect(-10, floorHeight + 40, 200000, 200000);
+                requestAnimationFrame(gameLoop);
+            }
+            socket.on('message', (msg) => {
+                try {
+                    players[msg.id] = { x: msg.x, y: msg.y };
+                } catch (err) {
+                    console.error("bad json:", err);
+                }
+            });
+
+            gameLoop();
+
+
+        </script>
+
+    </div>
+
+</body>
+
+</html>
