@@ -282,12 +282,20 @@
                 requestAnimationFrame(gameLoop);
             }
             socket.on('message', (msg) => {
-                try {
-                    players[msg.id] = { x: msg.x, y: msg.y, color: "#" + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, "0") };
-                } catch (err) {
-                    console.error("bad json:", err);
+                if (!players[msg.id]) {
+                    // only generate a color the first time this player appears
+                    players[msg.id] = {
+                        x: msg.x,
+                        y: msg.y,
+                        color: "#" + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, "0")
+                    };
+                } else {
+                    // just update position
+                    players[msg.id].x = msg.x;
+                    players[msg.id].y = msg.y;
                 }
             });
+
 
             gameLoop();
 
