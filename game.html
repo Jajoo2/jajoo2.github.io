@@ -182,11 +182,11 @@
             const sendInterval = 1000 / 20; // 20hz
 
             function throttledSend(data) {
-            const now = Date.now();
-            if (now - lastSend >= sendInterval) {
-                socket.send(data);
-                lastSend = now;
-            }
+                const now = Date.now();
+                if (now - lastSend >= sendInterval) {
+                    socket.send(data);
+                    lastSend = now;
+                }
             }
 
 
@@ -233,7 +233,7 @@
             });
 
             const floorHeight = 400;
-            const gravity = 1;
+            const gravity = 10 * delta;
             const maxSpeed = 5;
             let players = {};
             let now = performance.now();
@@ -261,14 +261,14 @@
                 }
 
                 if (keys["KeyA"] && Math.abs(player.vel.x) < maxSpeed) {
-                    player.vel.x -= 2.5 * delta;
+                    player.vel.x -= 25 * delta;
                 }
                 else if (keys["KeyD"] && Math.abs(player.vel.x) < maxSpeed) {
-                    player.vel.x += 2.5 * delta;
+                    player.vel.x += 25 * delta;
                 }
 
                 if (keys["Space"] && player.pos.y === floorHeight) {
-                    player.vel.y = -15 * delta; // jump
+                    player.vel.y = -15; // jump
                 }
                 throttledSend(({ x: player.pos.x, y: player.pos.y }));
 
