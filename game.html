@@ -239,6 +239,9 @@
 
             function gameLoop() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let now = performance.now();
+                let delta = (now - last) / 1000; // seconds
+                last = now;
 
                 // Logic
                 player.pos.x += player.vel.x;
@@ -254,14 +257,14 @@
                 }
 
                 if (keys["KeyA"] && Math.abs(player.vel.x) < maxSpeed) {
-                    player.vel.x -= 2.5;
+                    player.vel.x -= 2.5 * delta;
                 }
                 else if (keys["KeyD"] && Math.abs(player.vel.x) < maxSpeed) {
-                    player.vel.x += 2.5;
+                    player.vel.x += 2.5 * delta;
                 }
 
                 if (keys["Space"] && player.pos.y === floorHeight) {
-                    player.vel.y = -15; // jump
+                    player.vel.y = -15 * delta; // jump
                 }
                 throttledSend(({ x: player.pos.x, y: player.pos.y }));
 
@@ -271,7 +274,7 @@
 
                 for (const id in players) {
                     const p = players[id];
-                    ctx.fillStyle = "#0000ff";
+                    ctx.fillStyle = players[color];
                     ctx.fillRect(p.x, p.y, 20, 40);
                 }
 
@@ -282,7 +285,7 @@
             }
             socket.on('message', (msg) => {
                 try {
-                    players[msg.id] = { x: msg.x, y: msg.y };
+                    players[msg.id] = { x: msg.x, y: msg.y, col: "#" + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, "0") };
                 } catch (err) {
                     console.error("bad json:", err);
                 }
