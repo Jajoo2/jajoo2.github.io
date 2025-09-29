@@ -34,6 +34,24 @@
 			border-radius: 5px;
 			width: fit-content;
 		}
+		.thething
+		{
+			display: flex; 
+			justify-content: space-between; 
+			padding-right: 30px;
+		}
+		@media (max-width: 600px) 
+		{
+			.thething
+			{
+				overflow-x: scroll;
+				width: 100%;
+			}
+			.content_inner_slider
+			{
+				width: 90vw !important;
+			}
+		}
 	</style>
 
 </head>
@@ -48,7 +66,7 @@
 	<div style="padding-left: 30px;">
 		<h1 id="title"><i>Loading title...</i></h1>
 		<p id="username" style="font-size: small;">By Username</p>
-		<div style="display: flex; justify-content: space-between; padding-right: 30px;">
+		<div class="thething">
 			<!--<div id="imagediv"></div>-->
 			<section class="carousel">
 				<div class="carousel_slider">
@@ -66,7 +84,7 @@
 					</label>
 				</div>
 			</section>
-
+			
 			<div id="videodiv" style="position: relative;"></div>
 		</div>
 

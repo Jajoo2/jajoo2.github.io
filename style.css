@@ -24,6 +24,8 @@ html {
     overflow-x: hidden;
 }
 
+
+
 /* toast popup system */
 
 #toast-container {
@@ -356,8 +358,7 @@ code::selection {
 
 }
 
-.grid-item:hover
-{
+.grid-item:hover {
     outline-style: solid;
     outline-width: 2px;
     outline-color: #aaaaaa55;
@@ -493,4 +494,25 @@ footer ul {
     display: flex;
     justify-content: center;
     gap: 4em;
+}
+
+@media (max-width: 600px) {
+    .grid-item {
+        width: 85vw;
+        height: 200px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        /* stack links vertically */
+        gap: 0;
+        /* remove space between items */
+    }
+
+    nav li a {
+        padding: 0.75em;
+        /* a bit tighter padding */
+        text-align: center;
+        /* center text */
+    }
 }
