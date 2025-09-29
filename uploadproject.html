@@ -124,8 +124,47 @@
                             <input type="text" name="author" placeholder="Author (your name/handle)" required>
                             <textarea name="description" placeholder="Description" rows="4" required></textarea>
                             <input type="text" name="summary" placeholder="Summary">
-                            <input type="text" name="videoId"
-                                placeholder="YouTube Video ID (Not required, but its nice to use a video.)">
+                            <input type="text" name="videoId" placeholder="YouTube Video ID (Not required, but its nice to use a video.)">
+                            <script>
+                                async function uploadFile(file) {
+                                    const formData = new FormData();
+                                    formData.append("file", file); // 'file' matches request.files.get("file")
+                
+                                    const response = await fetch("https://api.meisite.xyz/api/uploadfile", {
+                                        method: "POST",
+                                        body: formData,
+                                    });
+                
+                                    if (!response.ok) {
+                                        alert("upload failed:"+ await response.text());
+                                        return;
+                                    }
+                
+                                    const result = await response.json();
+                                    console.log("server response:"+ result);
+                                    return result
+                                }
+                            </script>
+                            <input type="file" accept="image/*" id="fileInput"
+                                style="height: 250px; width: 250px; align-content: center; border: dashed; background-color: #44384e3b; border-color: #4c4553a6;">
+                            <br>
+                            <a href="#fileInput" id="fileLink">You can use this uploader for thumbnails and images. Returns a URL for you to use.</a>
+                            <br>
+                            <button type="button" style="font-size: small;" id="uploadthefile">upload! (link should appear a few seconds after upload)</button>
+                            <script>
+                                const filelinke = document.getElementById("fileLink");
+                                const filein = document.getElementById("fileInput");
+                                const button = document.getElementById("uploadthefile");
+                                button.addEventListener("click", (e) => {
+                                    const file = filein.files[0];
+                                    if (file) {
+                                        uploadFile(file).then(res => {
+                                            filelinke.href = res.url;
+                                            filelinke.innerText = res.url;
+                                        });
+                                    }
+                                });
+                            </script>
                             <input type="text" name="thumbnail" placeholder="Thumbnail URL" required>
                             <input type="text" name="images" placeholder="Image URLs (comma-separated)" required>
                             <hr>
@@ -138,20 +177,7 @@
             </div>
 
             <script>
-                function isImageUrl(url) { // Really fucking dirty because im not dealing with async right now
-                    try {
-                        const xhr = new XMLHttpRequest();
-                        xhr.open("HEAD", url, false);
-                        xhr.send(null);
-                        if (xhr.status >= 200 && xhr.status < 300) {
-                            const type = xhr.getResponseHeader("content-type") || "";
-                            return type.startsWith("image/");
-                        }
-                    } catch (e) {
-                        return false;
-                    }
-                    return false;
-                }
+                
 
                 let careNot = 0
                 document.getElementById('uploadForm').addEventListener('submit', function (e) {
@@ -159,7 +185,6 @@
 
                     if (localStorage.getItem("rulesRead") != "sure yeah i guess") {
                         toastnotify("You haven't read the rules.");
-                        return 0
                     }
 
                     const form = e.target;
@@ -174,13 +199,6 @@
                         username: form.author.value,
                         password: form.password.value
                     };
-                    if (isImageUrl(data.thumbnail) == false) {
-                        if (careNot == 0) {
-                            toastnotify(":umnik2: Thumbnail is not a valid image link. Next time you click upload it'll do it anyway.");
-                            careNot = 1;
-                            return 0
-                        }
-                    }
 
                     fetch('https://api.meisite.xyz/api/upload', {
                         method: 'POST',
