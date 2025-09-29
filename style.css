@@ -496,7 +496,7 @@ footer ul {
     gap: 4em;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .grid-item {
         width: 85vw;
         height: 200px;
