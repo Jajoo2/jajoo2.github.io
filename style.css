@@ -461,7 +461,7 @@ a {
 }
 
 a:hover {
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
     color: #ccccff;
 }
