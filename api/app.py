@@ -11,6 +11,20 @@ import os
 from datetime import datetime, timezone
 from flask_socketio import SocketIO, send, emit
 import time
+import sqlite3
+
+# connect once at startup
+conn = sqlite3.connect("chat.db", check_same_thread=False)
+c = conn.cursor()
+c.execute("""
+CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    text TEXT,
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
+conn.commit()
 
 
 # To hash a plaintext password before storing
@@ -49,7 +63,166 @@ app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = "uploads"
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def get_audio_duration(filename):
+    import subprocess
+    result = subprocess.run(
+        [
+            "ffprobe",
+            "-v", "error",
+            "-show_entries", "format=duration",
+            "-of", "csv=p=0",
+            filename
+        ],
+        stdout=subprocess.PIPE,
+        text=True
+    )
+    return float(result.stdout.strip())
+
+
+@app.route('/api/files',methods=['GET'])
+def filespage():
+    files = os.listdir("uploads/")
+    filelist = ""
+    for i in files:
+        filelist += f'<li><a href="uploads/{i}">{i}/</a></li>'
+    style="""                        body
+            {
+                background-color: #2f2f2f;
+                color: #CCC;
+                font-family: monospace;
+            }
+
+            li
+            {
+                color: #FFFFFF75;
+            }
+
+            .folder a {
+                color: #4caf50; /* green for folders */
+            }
+
+            .file a {
+                color: #2196f3; /* blue for files */
+            }
+
+            a
+            {
+                color: #FFF;
+                text-decoration: none;
+            }
+
+            a:hover
+            {
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            .filelist
+            {
+                font-size: 15px;
+                width:fit-content;
+                padding-right: 30px;
+                background-color: #00000075;
+                border: solid;
+                border-radius: 10px;
+                border-width: 1.5px;
+            }"""
+    return f"""<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+            <html><head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Directory listing for uploads/</title>
+            <style>
+            {style}
+            </style>
+            </head>
+            <body>
+            <h1>Directory listing for uploads/</h1>
+            <hr>
+            <ul>
+            {filelist}
+            </ul>
+            <hr>
+            </body></html>"""
+
+@app.route('/api/video',methods=['GET'])
+def videolink():
+    import subprocess
+    text = request.args.get("text","Arguments are bgcol, text, fgcol")
+    bgcol = request.args.get("bgcol","black")
+    fgcol = request.args.get("fgcol","white")
+    tts = request.args.get("tts","false")
+    
+        
+    text = text.replace("'","").replace('"',"").replace(";","\\;").replace(':','\\:')
+    video_width = 1280//2
+    base_fontsize = 50
+    # rough approximation: assume each char ~ base_fontsize/2 pixels wide
+    char_width_factor = 0.6  # average char is ~60% of fontsize wide
+    estimated_text_width = len(text) * base_fontsize * char_width_factor
+    fontsize = min(base_fontsize, int(video_width / estimated_text_width * base_fontsize))
+    outpath = f"videos/{text}-{bgcol}-{fgcol}-{tts}.mp4"
+    dur = 0.1
+    if os.path.exists(outpath):
+        return send_file(outpath, mimetype="video/mp4")
+    
+    if tts=="true":
+        subprocess.run(["espeak", text, "-w", "speech.wav"])
+        dur = get_audio_duration('speech.wav')
+
+    merge_cmd = [
+        "ffmpeg",
+        "-i", outpath,
+        "-i", "speech.wav",
+        "-c:v", "copy",
+        "-c:a", "aac",
+        "-shortest",
+        "-y", "videos/tmp.mp4",
+    ]
+    
+    
+    cmd = [
+        "ffmpeg",
+        "-nostdin",
+        "-f", "lavfi",
+        "-i", f"color=c={bgcol}:s=1280x720:d={dur}",
+        "-vf", f"drawtext=fontfile=font.ttf:text='{text}':fontsize={fontsize}:fontcolor={fgcol}:x=(w-text_w)/2:y=(h-text_h)/2",
+        "-c:v", "libopenh264",
+        "-pix_fmt", "yuv420p",
+        "-g","1",
+        "-preset","ultrafast",
+        "-y",
+        outpath,
+        
+    ]  # USE libopenh264 ON SERVER
+    
+    subprocess.run(cmd)
+    if tts=="true":
+        subprocess.run(merge_cmd)
+        os.remove(outpath)
+        os.rename("videos/tmp.mp4", outpath)
+    
+    return send_file(outpath, mimetype="video/mp4")
+
+import requests
+@app.route("/api/scratch/projects/<int:project_id>")
+def get_scratch_project(project_id):
+    r = requests.get(f"https://api.scratch.mit.edu/projects/{project_id}")
+    data = r.json()
+    response = jsonify(data)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+@app.route("/api/scratch/comments/<string:user_name>/<int:project_id>")
+def get_scratch_comments(user_name,project_id):
+    r = requests.get(f"https://api.scratch.mit.edu/users/{user_name}/projects/{project_id}/comments/")
+    data = r.json()
+    response = jsonify(data)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
 
 @app.route('/api/msgboard', methods=['POST', 'GET'])
 def msgb():
@@ -456,6 +629,10 @@ def handle_connect():
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
     ips[request.sid] = ip
     print(request.sid,"|",ip)
+    c.execute("SELECT username, text FROM messages ORDER BY id DESC LIMIT 100")
+    for name, text in reversed(c.fetchall()):
+        send(f"<#7F7F7F>{name}: {text}</>", to=request.sid)
+    return
     
 
 @socketio.on("disconnect")
@@ -465,7 +642,7 @@ def handle_disconnect():
         gamers.remove(request.sid)
         return
     send(users[request.sid]+" left the chat!", broadcast=True)
-    users[request.sid] = ""
+    del users[request.sid]
     
 
 
@@ -498,8 +675,9 @@ def handle_message(msg):
         return
    
     if ";users;" in msg:
-        send("Userlist:\n"+("\n".join(f"{k}: {v}" for k, v in users.items())), to=request.sid)
+        send("<span style=\"color: #7f7f7f\">Userlist:\n"+("\n".join(f"{v.replace('<','')}</span>" for k, v in users.items())), to=request.sid)
         return  
+    
     if msg.startswith("-NAME-= "):
         now = time.time()
         last_change = last_name_change.get(request.sid, 0)
@@ -518,6 +696,9 @@ def handle_message(msg):
     else:
         if request.sid in users:
             send(users[request.sid] + ": " + msg, broadcast=True)
+            c.execute("INSERT INTO messages (username, text) VALUES (?, ?)",
+                    (users[request.sid], msg))
+            conn.commit()
 
     
 DBUG = "-D" in sys.argv[1:]
