@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from flask_socketio import SocketIO, send, emit
 import time
 import sqlite3
+import threading # I know a certain someone who LOVES this word. <3
+from PIL import Image
 
 # connect once at startup
 conn = sqlite3.connect("chat.db", check_same_thread=False)
@@ -80,6 +82,28 @@ def get_audio_duration(filename):
         text=True
     )
     return float(result.stdout.strip())
+
+lock = threading.Lock()
+
+@app.route('/api/place/update', methods=['POST'])
+def update_pixels():
+    data = request.get_json()
+    pixels = data.get("pixels", [])
+
+    with lock:
+        img = Image.open("canvas.png")
+        px = img.load()
+        for p in pixels:
+            x, y = p["x"], p["y"]
+            r, g, b = p["color"]
+            px[x, y] = (r, g, b)
+        img.save("canvas.png")
+
+    return jsonify({'status': 'success'}), 200
+
+@app.route('/api/place/getcanvas')
+def get_canvas():
+    return send_file('canvas.png', mimetype='image/png')
 
 
 @app.route('/api/files',methods=['GET'])
