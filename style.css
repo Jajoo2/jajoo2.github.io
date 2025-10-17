@@ -496,23 +496,26 @@ footer ul {
     gap: 4em;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+    body
+    {
+        font-size: 1.5em;
+    }
     .grid-item {
         width: 85vw;
         height: 200px;
     }
-
     nav ul {
-        flex-direction: column;
-        /* stack links vertically */
-        gap: 0;
-        /* remove space between items */
+        overflow-x: scroll;
+        overflow-y: visible;
+        height: 6em;
+        align-items:center;
+        gap: 1em;
     }
 
     nav li a {
         padding: 0.75em;
-        /* a bit tighter padding */
-        text-align: center;
-        /* center text */
+        font-size: 25px;
+        border-radius: 5px;
     }
 }
