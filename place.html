@@ -33,10 +33,12 @@
         <div style="display:flex; width:100%; justify-content:center; align-items:center;">
             <input type="color" id="colorpicker">
             <button id="submit">send</button>
+            <button id="refresh">refresh</button>
         </div>
 
         <script>
             const canvas = document.getElementById('place');
+            const refreshbutton = document.getElementById('refresh');
             const ctx = canvas.getContext('2d');
             const img = new Image();
             let pending = [];
@@ -52,6 +54,7 @@
             }
             window.addEventListener('resize', resizeCanvas);
             resizeCanvas(); // initial sizing
+            refreshbutton.addEventListener('click', function() {img.src = 'https://api.meisite.xyz/api/place/getcanvas?t=' + Date.now(); img.onload = () => requestAnimationFrame(draw);});
 
             function draw() {
                 ctx.save();
