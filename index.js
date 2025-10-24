@@ -58,3 +58,5 @@ function compressImage(file, maxSizeMB = 10) {
         img.onerror = () => reject("image load error");
     });
 }
+if (location.search.includes('utm_source'))
+  alert("no. bad. no tracking tags on my turf.");
