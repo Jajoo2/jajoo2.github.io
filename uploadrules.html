@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>mesitie</title>
+    <title>how to upload</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="index.js"></script>
     <script src="js/toast.js"></script>
@@ -24,25 +24,38 @@
         <main style="padding-left:30px;">
             <br>
 
-            <h1>Uploading Rules</h1>
-            <h3 id="rulesReadIndicator">You haven't read the rules.</h3>
+            <h1>How2Upload</h1>
+            <h3 id="rulesReadIndicator">You haven't read the guidelines.</h3>
+            <h3>You don't have to read these, and i'm embarrassed about it, but: </h3>
             <ol>
-                <li>No (extreme) NSFW please,,</li>
+                <li>No NSFW please,,</li>
                 <li>Please don't exploit the fact that it uses InnerHTML. Don't ruin the fun</li>
-                <li>You can upload whatever, it CAN be used as a forum , </li>
+                <li>You can upload whatever, it CAN be used as a forum , though its not really designed for that (i'm trying) </li>
                 <li>Be  jolly and silly</li>
+                <li>Describe your project in detail <strong>or it's probably getting removed</strong></li>
+                <li>Important note: <i>I CAN EDIT YOUR PROJECTS.</i> Just thought I should throw that out there. 
+                    <br>If I don't want to remove the project entirely, I might.</li>
+                <li>677777</li>
+                <li></li>
+                <li></li>
+                
+                <li><span style="font-size: x-large;"><strong>These aren't rules.</strong></span> You don't <i>have</i> to follow them! This is just a warning that I am 100% not a good person</li>
+                <li>These are just for uploading posts, they don't apply to comments. Don't be racist/any type of phobic there though. Please?</li>
+                <li>Unfortunately, I can and will bend the rules sometimes. I really am sorry if I do something unfair, it's just the way I am sometimes.,,</li>
+                <li>This place is purely based on Good Vibes please Don't Be a Dick or you will be Exterminated</li>
+                <li style="color:red;">im EVIL :<</li>
             </ol>
 
             <script>
                 const RRI = document.getElementById("rulesReadIndicator");
                 if(localStorage.getItem("rulesRead") == "sure yeah i guess")
                 {
-                    RRI.innerText = "You have read the rules.";
+                    RRI.innerText = "You have read the guidelines.";
                 }
 
                 timeout = setTimeout(function() {
                     localStorage.setItem("rulesRead", "sure yeah i guess");
-                    RRI.innerText = "You have read the rules.";
+                    RRI.innerText = "You have read the guidelines.";
                 },6500);
             </script>
 

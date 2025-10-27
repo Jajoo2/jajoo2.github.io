@@ -112,7 +112,7 @@
                 </script>
             -->
                 <form id="uploadForm">
-                    <h2>RULES <a href="uploadrules.html">HERE</a></h2>
+                    <h2>GUIDELINES <a href="uploadrules.html">HERE</a></h2>
                     <div style="display: flex; gap: 30px;">
                         <div>
                             <label>Use no title to delete a project.<br></label>
@@ -184,7 +184,7 @@
                     e.preventDefault();
 
                     if (localStorage.getItem("rulesRead") != "sure yeah i guess") {
-                        toastnotify("You haven't read the rules.");
+                        alert("You haven't read the guidelines!");
                     }
 
                     const form = e.target;
