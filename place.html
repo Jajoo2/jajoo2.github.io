@@ -115,8 +115,10 @@
                     parseInt(color.slice(3, 5), 16),
                     parseInt(color.slice(5, 7), 16)
                 ];
-
-                pending.push({ x: worldX, y: worldY, color: rgb }); // red pixel
+                if(worldX < 600 & worldX >= 0 & worldY < 600 & worldY >= 0)
+                {
+                    pending.push({ x: worldX, y: worldY, color: rgb });
+                }
             });
 
             canvas.addEventListener('wheel', e => {
