@@ -81,11 +81,11 @@
                 // Draw grid lines
                 ctx.strokeStyle = 'rgba(128,128,128,0.2)'; // Made grid a bit more visible
                 ctx.lineWidth = 1 / scale; // Keep grid lines thin when zoomed
-                for (let i = 0; i <= 800; i++) {
+                for (let i = 0; i <= 600; i++) {
                     ctx.beginPath();
-                    ctx.moveTo(i, 0); ctx.lineTo(i, 800); ctx.stroke();
+                    ctx.moveTo(i, 0); ctx.lineTo(i, 600); ctx.stroke();
                     ctx.beginPath();
-                    ctx.moveTo(0, i); ctx.lineTo(800, i); ctx.stroke();
+                    ctx.moveTo(0, i); ctx.lineTo(600, i); ctx.stroke();
                 }
                 ctx.restore();
                 requestAnimationFrame(draw);
