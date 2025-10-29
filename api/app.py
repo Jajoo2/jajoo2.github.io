@@ -14,6 +14,10 @@ import time
 import sqlite3
 import threading # I know a certain someone who LOVES this word. <3
 from PIL import Image
+from difflib import SequenceMatcher
+
+def similarity(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
 # connect once at startup
 conn = sqlite3.connect("chat.db", check_same_thread=False)
@@ -193,8 +197,9 @@ def videolink():
         return send_file(outpath, mimetype="video/mp4")
     
     if tts=="true":
-        subprocess.run(["espeak", text, "-w", "speech.wav"])
-        dur = get_audio_duration('speech.wav')
+        #subprocess.run(["espeak", text, "-w", "speech.wav"])
+        #dur = get_audio_duration('speech.wav')
+        return 501
 
     merge_cmd = [
         "ffmpeg",
@@ -216,7 +221,6 @@ def videolink():
         "-c:v", "libopenh264",
         "-pix_fmt", "yuv420p",
         "-g","1",
-        "-preset","ultrafast",
         "-y",
         outpath,
         
@@ -258,7 +262,7 @@ def msgb():
         if banned:
             return banned  
         data = request.get_json()
-        message = data.get('message', 'I was here!')
+        message = data.get('message', 'help im trapped in a default message')
         x = data.get('x')
         y = data.get('y')
         color = data.get('color')
@@ -281,7 +285,9 @@ def msgb():
         except Exception as ex:
             print(ex)
             return jsonify({'status': 'failure', 'reason': f'500 internal server error?! exception: {ex}'}), 500
-        
+    with open('server.log','a') as f:
+        ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+        f.write(f"{ip} said \"{message}\" on messageboard\n")
     return jsonify({'status': 'success'}), 201
 
 # upload endpoint
@@ -296,7 +302,9 @@ def upload_file():
     
     filename = secure_filename(file.filename)
     file.save(os.path.join(UPLOAD_FOLDER, filename))
-    
+    with open('server.log','a') as f:
+        ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+        f.write(f"{ip} uploaded {filename}\n")
     return jsonify({
         "message": "file uploaded",
         "url": f"https://api.meisite.xyz/api/files/{filename}"
@@ -344,8 +352,18 @@ def get_embed():
 
 @app.route('/api/uploads', methods=['GET'])
 def get_projects():
-    with open('../userprojects.json', 'r') as f:
-        return json.load(f)
+    arg = request.args.get("author")
+    if arg:
+        with open('../userprojects.json', 'r') as f:
+            projects = json.load(f)
+        
+        filtered = {k: v for k, v in projects.items() if v.get("author") == arg}
+        return filtered
+    else:
+        with open('../userprojects.json', 'r') as f:
+            return json.load(f)
+    
+
 
 @app.route('/api/posts', methods=['GET'])
 def get_posts():
@@ -482,6 +500,8 @@ def post_comment():
         project_id = request.json.get('id')
         name = request.json.get('name', 'John Untitled')
         text = request.json.get('text')
+        if len(text) > 1000:
+            return jsonify({'status': 'failure', 'reason': 'comment is more than 1k chars'}), 400
         
         
         if not text:
@@ -500,6 +520,9 @@ def post_comment():
     except Exception as ex:
         print("ERROR!!  |  ", ex)
         return jsonify({'status': 'failure', 'reason': f'backend error, oh no!: {ex}'}), 500
+        with open('server.log','a') as f:
+            ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+            f.write(f"{ip} made a comment on {project_id}: {name}: {text}\n")
     return jsonify({'status': 'success'}), 201
 
     
@@ -514,11 +537,21 @@ def post_notif():
         return jsonify({'status': 'failure', 'reason': f'backend error, oh no!: {ex}'}), 500
     return jsonify({'status': 'success'}), 201
 
+def project_similarity(p1, p2):
+    score = 0
+    fields = ["title", "description", "summary","author"]
+    for f in fields:
+        score += SequenceMatcher(None, p1.get(f,""), p2.get(f,"")).ratio()
+    score /= len(fields)
+    return score  # 0..1
+
 @app.route('/api/upload', methods=['POST'])
 def upload_proj():
     banned = check_banned()
     if banned:
         return banned  
+    with open('../userprojects.json', 'r') as f:
+        projects = json.load(f)
     data = request.get_json()
     title = data.get('title', 'Untitled')
     description = data.get('description','No description')
@@ -542,14 +575,33 @@ def upload_proj():
     ]):
         return jsonify({'status': 'error', 'message': 'One or more fields exceed 5MB limit. I\'m watching you...'}), 413
 
+    new_project = {
+        'title': title,
+        'description': description,
+        'summary': summary,
+        'videoId': videoId,
+        'thumbnail': thumbnail,
+        'images': images,
+        'author': username
+    }
+
+    for existing_id, existing_project in projects.items():
+        sim = project_similarity(new_project, existing_project)
+        if sim > 0.8 and existing_id != projid:  # threshold for "very similar"
+            #return jsonify({'status': 'error', 'message': 'Project is eerily similar to another project'}), 409
+                print(f"New project is eerily similar to another project ({existing_id})!!! Flagging")
+                description += f"<br><span style=\"font-size: x-small; color: #cccccc75\">Possible clone of project {existing_id}."
+                title += f"<span title=\"May be a clone of {existing_id}\" style=\"font-size: x-large; color: #fff\">⚠️"
+                with open('server.log','a') as f:
+                    ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+                    f.write(f"{ip} made {projid}, a likely clone of {existing_id} \n")
     
     try:
-        with open('../userprojects.json', 'r') as f:
-            projects = json.load(f)
+        
         if not projid:
-            return jsonify({'status': 'error', 'message': 'Dumbass forgot the project id????'}), 400
+            return jsonify({'status': 'error', 'message': 'Dumbass forgot the project id????'}), 422
         if not password:
-            return jsonify({'status': 'error', 'message': 'Password missing????'}), 400
+            return jsonify({'status': 'error', 'message': 'Password missing????'}), 422
 
         if projid in projects:
             stored_hash = projects[projid].get("passhash")
@@ -557,6 +609,7 @@ def upload_proj():
                 return jsonify({'status': 'error', 'message': 'Incorrect password for existing project'}), 401
             if title == "":
                 del projects[projid]
+            
 
         if title != "":
             projects[projid] = {
@@ -574,11 +627,14 @@ def upload_proj():
         # it worked
         with open('../userprojects.json', 'w') as f:
             json.dump(projects, f, indent=4)
+        
     except Exception as ex:
         print(ex)
         return jsonify({'status': 'failure', 'reason': f'server error?! exception: {ex}'}), 500
     
-    
+    with open('server.log','a') as f:
+        ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+        f.write(f"{ip} made a project with id {projid}\n")
     return jsonify({'status': 'success'}), 201
 
 @app.route('/api/user', methods=['POST'])
@@ -651,6 +707,8 @@ def handle_connect():
     print("someone connected")
     # get ip thru cf tunnel
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
+    with open('server.log','a') as f:
+        f.write(f"{ip} joined chat\n")
     ips[request.sid] = ip
     print(request.sid,"|",ip)
     c.execute("SELECT username, text FROM messages ORDER BY id DESC LIMIT 100")
@@ -716,6 +774,8 @@ def handle_message(msg):
         users[request.sid] = name
         last_name_change[request.sid] = now
         send(name+" joined the chat!", broadcast=True)
+        with open('server.log','a') as f:
+            f.write(f"{ip} changed their name to {name}\n")
         print(f"[{request.sid}]  | ",name+" joined the chat!")
     else:
         if request.sid in users:
