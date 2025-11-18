@@ -65,11 +65,14 @@
 	</div>
 
 	<div style="padding-left: 30px;">
-		<h1 id="title"><i>Loading title...</i></h1>
-		<p id="username" style="font-size: small;">By Username</p>
+		<div id="throbber" style="display: fixed; margin-left: 50vw; margin-top: 50vh; width: 100vw; height: 100vh;">
+			<img src="img/stalled.png">
+		</div>
+		<h1 id="title" style="display: none;"><i>Loading title...</i></h1>
+		<p id="username" style="font-size: small; display: none;">By Username</p>
 		<div class="thething">
 			<!--<div id="imagediv"></div>-->
-			<section class="carousel">
+			<section class="carousel" id="carousel" style="display: none;">
 				<div class="carousel_slider">
 					<div class="content_inner_slider" id="dynamicCarousel"></div>
 					<button class="prev_button"><ion-icon name="chevron-back-outline"></ion-icon></button>
@@ -89,10 +92,10 @@
 			<div id="videodiv" style="position: relative;"></div>
 		</div>
 
-		<p id="description">Loading description...</p>
+		<p id="description" style="display: none;">Loading description...</p>
 		<br><br><br>
-		<h2>Comments</h2>
-		<form id="commentForm">
+		<h2 id="c2h2" style="display:none;">Comments</h2>
+		<form id="commentForm" style="display: none;">
 			<label>WARNING: Comments are permanent and you have to ask me to remove them. Your footprint is
 				PERMANENT.</label>
 			<br>
@@ -143,7 +146,7 @@
 				}
 			});
 		</script>
-		<div id="comments"></div>
+		<div id="comments" style="display:none;"></div>
 
 	</div>
 	<footer style="font-family: monospace;" id="footer-placeholder"></footer>
@@ -188,7 +191,7 @@
                   </span>`;
 			});
 		}
-		fetch("https://api.meisite.xyz/api/uploads")
+		fetch("https://api.meisite.xyz/api/uploads")		
 			.then(res => res.json())
 			.then(data => {
 				const pageData = data[projectId];
@@ -202,7 +205,16 @@
 				// Fill in title and description
 				document.getElementById("title").innerHTML = `<i>${pageData.title}</i>`;
 				document.getElementById("username").innerHTML = `<i>By ${pageData.author}</i>`;
+				document.getElementById("title").style.display = '';
+				document.getElementById("username").style.display = '';
+
 				document.getElementById("description").innerHTML = replaceEmojiCodes(pageData.description.replace(/\n/g, "<br>"));
+				document.getElementById("description").style.display = '';
+				document.getElementById("comments").style.display = '';
+				document.getElementById("commentForm").style.display = '';
+				document.getElementById("c2h2").style.display = '';
+				document.getElementById("carousel").style.display = '';
+				document.getElementById("throbber").style.display = 'none';
 
 				// Video
 				if (pageData.videoId) {
@@ -219,6 +231,7 @@
 				// Images
 				if (pageData.images?.length) {
 					const container = document.getElementById("dynamicCarousel");
+					container.style.display = '';
 					container.innerHTML = pageData.images.map(src => `<img src="${src}" class="img">`).join("");
 					setupCarousel(); // now run the carousel setup AFTER images are injected
 				}
