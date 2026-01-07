@@ -403,6 +403,12 @@ def comment():
 channels = ["general", "random", "random fucking bullshit"]
 messages = {ch: [] for ch in channels} 
 messages["general"] = [{"author":"system","content":"genreal"}]
+# Add these global trackers near your other globals
+# Structure: { "general": ["user1", "user2"], "random": ["user3"] }
+room_members = {ch: [] for ch in channels} 
+# Structure: { sid: {"username": "joe", "channel": "general"} }
+sid_to_metadata = {}
+
 
 @app.route("/channels", methods=["GET"])
 def getchnls():
@@ -413,27 +419,48 @@ def on_connect():
     print("client connected")
     join_room("general")
 
+@socketio.on("disconnect")
+def on_disconnect():
+    sid = request.sid
+    if sid in sid_to_metadata:
+        user_info = sid_to_metadata[sid]
+        username = user_info["username"]
+        channel = user_info["channel"]
+        
+        if channel in room_members and username in room_members[channel]:
+            room_members[channel].remove(username)
+            # Notify remaining users in that room
+            emit("room_users", room_members[channel], to=channel)
+        
+        del sid_to_metadata[sid]
+
 @socketio.on("join")
 def on_join(data):
     channel = data["channel"]
+    username = data.get("username", "Anonymous")
+    sid = request.sid
     
-    # 1. Look for the previous room in the user's session
-    old_channel = session.get('current_channel')
-    
-    # 2. If they were in a room, leave it first
-    if old_channel:
-        leave_room(old_channel)
-        print(f"User left room: {old_channel}")
+    # Handle leaving previous room tracking
+    old_data = sid_to_metadata.get(sid)
+    if old_data:
+        old_chan = old_data['channel']
+        leave_room(old_chan)
+        if username in room_members.get(old_chan, []):
+            room_members[old_chan].remove(username)
+            emit("room_users", room_members[old_chan], to=old_chan)
 
-    # 3. Join the new room and save it to the session
+    # Join new room
     join_room(channel)
-    session['current_channel'] = channel
-    print(f"User joined room: {channel}")
-
-    if channel not in channels:
-        return
-        
+    sid_to_metadata[sid] = {"username": username, "channel": channel}
+    
+    if channel in room_members:
+        if username not in room_members[channel]:
+            room_members[channel].append(username)
+    
+    # 1. Send chat history
     emit("history", messages.get(channel, []))
+    # 2. Broadcast updated member list to everyone in the room
+    emit("room_users", room_members.get(channel, []), to=channel)
 
 @socketio.on("message")
 def on_message(data):
@@ -453,3 +480,8 @@ def on_message(data):
 
 
 socketio.run(app,host="0.0.0.0", port=27935)
+
+
+
+
+

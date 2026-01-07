@@ -12,6 +12,39 @@
 		body {
 			background-color: #0c090f;
 		}
+
+		.chat-main {
+			position: relative;
+			/* Allows absolute positioning inside */
+		}
+
+		.members-container {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			background: rgba(20, 15, 25, 0.8);
+			border: 1px solid #332a3d;
+			padding: 10px;
+			border-radius: 8px;
+			width: 150px;
+			max-height: 200px;
+			overflow-y: auto;
+			z-index: 100;
+			font-size: 0.8em;
+		}
+
+		.members-container h4 {
+			margin: 0 0 8px 0;
+			color: #888;
+			text-transform: uppercase;
+			font-size: 0.7rem;
+		}
+
+		.member-item {
+			color: #00ffcc;
+			/* Or whatever your theme color is */
+			margin-bottom: 4px;
+		}
 	</style>
 </head>
 
@@ -27,6 +60,10 @@
 				</div>
 
 				<div class="chat-main">
+					<div class="members-container">
+						<h4>Online — <span id="member-count">0</span></h4>
+						<div id="members-list"></div>
+					</div>
 					<div class="chat-messages">
 						<div class="thingyard_comment">
 							<span style="color:#cccccc65;font-size:smaller;">system</span>
@@ -44,13 +81,27 @@
 						const form = document.getElementById("chatform");
 						const input = form.querySelector("input[name='msg']");
 						const chatMessages = document.querySelector(".chat-messages");
-						let currentChannel = "general";
-						let username = localStorage.getItem("user"); // you can make this dynamic later
+						const listContainer = document.getElementById("members-list");
+						const countDisplay = document.getElementById("member-count");
 
-						// connect
+						let currentChannel = "general";
+						let username = localStorage.getItem("user") || "Anonymous";
+
+						// Connect
 						const socket = io("https://api.meisite.xyz");
 
-						//<div class="chat-channel"># general</div>
+						// Helper to handle joining a channel
+						function joinChannel(channelName) {
+							currentChannel = channelName;
+							chatMessages.innerHTML = "";
+							// Tell server we joined AND give them our username
+							socket.emit("join", {
+								channel: currentChannel,
+								username: username
+							});
+						}
+
+						// Fetch channels and build sidebar
 						async function getUserMoralValues() {
 							try {
 								const r = await fetch('https://api.meisite.xyz/channels');
@@ -58,36 +109,46 @@
 								const data = await r.json();
 
 								const container = document.getElementById("channelshit");
-								container.innerHTML = ""; // optional: clear first
+								container.innerHTML = "";
 
 								data.forEach(channel => {
 									const div = document.createElement("div");
 									div.classList.add("chat-channel");
+									if (channel === currentChannel) div.classList.add("active");
 									div.textContent = `# ${channel}`;
 									container.appendChild(div);
 
-									// attach listener here
 									div.addEventListener("click", () => {
 										const active = container.querySelector(".chat-channel.active");
 										if (active) active.classList.remove("active");
 
 										div.classList.add("active");
-										currentChannel = channel;
-										chatMessages.innerHTML = "";
-										socket.emit("join", { channel: currentChannel });
+										joinChannel(channel);
 									});
 								});
 							} catch (e) {
 								console.log('err:', e);
 							}
 						}
+
+						// 1. Initial Load
 						getUserMoralValues();
+						joinChannel(currentChannel);
 
-						// join initial channel
-						socket.emit("join", { channel: currentChannel });
+						// 2. Listen for Member List updates
+						socket.on("room_users", users => {
+							countDisplay.textContent = users.length;
+							listContainer.innerHTML = "";
 
+							users.forEach(user => {
+								const div = document.createElement("div");
+								div.classList.add("member-item");
+								div.textContent = `• ${user}`;
+								listContainer.appendChild(div);
+							});
+						});
 
-						// handle sending messages
+						// 3. Handle sending messages
 						form.addEventListener("submit", e => {
 							e.preventDefault();
 							const msg = input.value.trim();
@@ -101,7 +162,7 @@
 							input.value = "";
 						});
 
-						// receive new message
+						// 4. Receive new message
 						socket.on("message", data => {
 							const div = document.createElement("div");
 							div.classList.add("thingyard_comment");
@@ -110,7 +171,7 @@
 							chatMessages.scrollTop = chatMessages.scrollHeight;
 						});
 
-						// receive chat history
+						// 5. Receive chat history
 						socket.on("history", msgs => {
 							chatMessages.innerHTML = "";
 							msgs.forEach(m => {
@@ -121,7 +182,6 @@
 							});
 							chatMessages.scrollTop = chatMessages.scrollHeight;
 						});
-
 					</script>
 				</div>
 			</div>

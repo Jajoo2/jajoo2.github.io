@@ -6,7 +6,8 @@
       "bio": "Hi! I'm Mei.",
       "pfp": "https://api.meisite.xyz//files/0fcebefdf49bed022dc689f0e34e7cbe0311cc2863687e4117b413ced7ca93a6.png",
       "files": [
-        "files/0fcebefdf49bed022dc689f0e34e7cbe0311cc2863687e4117b413ced7ca93a6.png"
+        "files/0fcebefdf49bed022dc689f0e34e7cbe0311cc2863687e4117b413ced7ca93a6.png",
+        "files/5144b8f8a816150d4120119f1888d8ac437240d3f71cd7289fc83f8aadb89633.png"
       ],
       "showfiles": true,
       "admin": true,
