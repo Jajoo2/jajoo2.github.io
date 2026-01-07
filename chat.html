@@ -167,6 +167,7 @@
 							socket.emit("message", {
 								channel: currentChannel,
 								author: username,
+								pfp: localStorage.getItem("pfp"),
 								content: msg
 							});
 							input.value = "";
@@ -177,7 +178,7 @@
 							pingsound.play();
 							const div = document.createElement("div");
 							div.classList.add("thingyard_comment");
-							div.innerHTML = `<span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p>${data.content}</p>`;
+							div.innerHTML = `<image src="${data.pfp}" width=150> <span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p>${data.content}</p>`;
 							chatMessages.appendChild(div);
 							chatMessages.scrollTop = chatMessages.scrollHeight;
 						});

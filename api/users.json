@@ -7,7 +7,8 @@
       "pfp": "https://api.meisite.xyz//files/0fcebefdf49bed022dc689f0e34e7cbe0311cc2863687e4117b413ced7ca93a6.png",
       "files": [
         "files/0fcebefdf49bed022dc689f0e34e7cbe0311cc2863687e4117b413ced7ca93a6.png",
-        "files/5144b8f8a816150d4120119f1888d8ac437240d3f71cd7289fc83f8aadb89633.png"
+        "files/5144b8f8a816150d4120119f1888d8ac437240d3f71cd7289fc83f8aadb89633.png",
+        "files/70921ac71b53aa6aa98a33203d070f6869708a041dcf2bce87a0a7554b954600.png"
       ],
       "showfiles": true,
       "admin": true,
@@ -36,12 +37,32 @@
       "showfiles": false,
       "admin": false,
       "posts": []
-    }
+    },
     "testlogins": {
       "salt": "6db90745e9a833bc798b45f970707628",
       "hash": "b156ed2ef4d7ebdd19421ccdc8607d5d16bb3de0ed1d07614c13e2416c08b8d5",
       "bio": "You have chosen, or been chosen, to relocate to one of our finest remaining urban centers.",
       "pfp": "https://yt3.googleusercontent.com/tNSpRkTTf_JOznhHTWgD1Y_J__Pkeu_NCHqDoOQWt5BBFdsjKdorCRS32xigHb_rSzp45uon=s120-c-k-c0x00ffffff-no-rj",
+      "files": [],
+      "showfiles": false,
+      "admin": false,
+      "posts": []
+    },
+    "polyframe": {
+      "salt": "b03892daf8c33c2e308d7fe6b406a3a1",
+      "hash": "bb79bc348a22d2c47236b666f0cc7947242d1c2be76c981f829b0a6c98e4c9de",
+      "bio": "You have chosen, or been chosen, to relocate to one of our finest remaining urban centers.",
+      "pfp": "https://cdn.discordapp.com/attachments/1294804315306983515/1458369185896861797/IMG_4211.jpg?ex=695f63a5&is=695e1225&hm=4e7f95b5919acd8ca562902ffc43b22f9f609e0a1da8132f358d31826eed6354&",
+      "files": [],
+      "showfiles": false,
+      "admin": false,
+      "posts": []
+    },
+    "THEpolyframe": {
+      "salt": "be94783231be2afaac698f0ff62409fa",
+      "hash": "5988c9dbc19b2678d202a36705bc8e414cc81318bae0b51169b3bf33a54b0dfc",
+      "bio": "You have chosen, or been chosen, to relocate to one of our finest remaining urban centers.",
+      "pfp": "https://cdn.discordapp.com/attachments/1294804315306983515/1458369185896861797/IMG_4211.jpg?ex=695f63a5&is=695e1225&hm=4e7f95b5919acd8ca562902ffc43b22f9f609e0a1da8132f358d31826eed6354&",
       "files": [],
       "showfiles": false,
       "admin": false,

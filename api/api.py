@@ -9,7 +9,6 @@ import secrets
 from pathlib import Path
 from datetime import datetime, timezone
 import uuid
-import sqlite3
 
 
 
@@ -465,6 +464,7 @@ def on_join(data):
 def on_message(data):
     channel = data["channel"]
     author = data["author"]
+    pfp = data["pfp"]
     content = data["content"]
 
     if channel not in channels:  # ignore unknown channels
@@ -475,7 +475,7 @@ def on_message(data):
     else:
         messages[channel] = [{"author": author, "content": content}]
 
-    emit("message", {"author": author, "content": content}, to=channel, broadcast=False)
+    emit("message", {"author": author, "pfp": data["pfp"], "content": content}, to=channel, broadcast=False)
 
 
 socketio.run(app,host="0.0.0.0", port=27935)
