@@ -178,7 +178,7 @@
 							pingsound.play();
 							const div = document.createElement("div");
 							div.classList.add("thingyard_comment");
-							div.innerHTML = `<image src="${data.pfp}" width=150> <span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p>${data.content}</p>`;
+							div.innerHTML = `<div style="display: flex; gap: 5px;"> <image src="${data.pfp}" width=40> <div><span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p>${data.content}</p></div></div>`;
 							chatMessages.appendChild(div);
 							chatMessages.scrollTop = chatMessages.scrollHeight;
 						});
