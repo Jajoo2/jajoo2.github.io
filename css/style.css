@@ -1,0 +1,277 @@
+@font-face {
+    font-family: 'Comfortaa';
+    src: url('/src/font/comfortaa.ttf');
+}
+
+@font-face {
+    font-family: 'comic-sans-ms';
+    src: url('/src/font/ComicSansMS.ttf');
+}
+
+body,html
+{
+    background-color: #27232c;
+    color: #ccc;
+    font-family: "monospace";
+    margin: 0px;
+    padding: 0px;
+}
+
+p
+{
+    margin: 0;
+    margin-bottom: 0.25em;
+}
+
+/* #5d3c6d accent? */
+
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #5d3c6d;;
+    color: #fff;
+    font-size: 14px;
+    font-family: sans-serif;
+    cursor: pointer;
+    box-shadow: 2px 3px 10px #06040875;
+    transition-duration: 0.15s;
+}
+
+button:hover {
+    background: #7f469b;
+}
+
+button:active {
+    transition-duration: 0s;
+    transform: scale(0.97);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: default;
+    transform: none;
+}
+
+input[type="text"], input[type="password"], textarea, .zone, .zonebutton {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #5d3c6d;
+    color: #fff;
+    font-size: 14px;
+    font-family: sans-serif;
+    cursor: pointer;
+    box-shadow: 2px 3px 10px #06040875;
+    transition-duration: 0.15s;
+}
+
+.zonebutton:hover
+{
+    background-color: #7f469b;
+}
+
+#toast-container
+{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    right: 30px;
+    top: 20px;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.toast
+{
+    display: flex;
+    width: max-content;
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 20px;
+    background-color: #5d3c6d;
+    box-shadow: 0px 5px 10px #0b0313;
+    border-radius: 10px;
+    animation: pop 2.1s ease-out;
+    z-index: 999;
+}
+
+@keyframes boing {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-30px);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translateY(-30px);
+    }
+}
+
+@keyframes pop {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+a
+{
+    text-decoration: none;
+    color: #ccc;
+}
+
+hr
+{
+    width: 100%;
+}
+
+.socials-icon
+{
+    color: #ffffff75;
+    transition-duration: 0.2s;
+    
+}
+
+.socials-icon:hover
+{
+    transition: transform 0s;
+    color: #b698da;
+    transform: scale(1.05);
+}
+
+.sidebar
+{
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: #201a27;
+    padding: 20px;
+    transform: translateX(-17vw);
+    box-shadow: 5px 0px 15px #00000075;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    border-right: #0b0313 solid 5px;
+    z-index: 999;
+    overflow-y: scroll;
+    width: 15vw;
+    height: 100%;
+}
+
+.sidebarlinks 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebarlinks a
+{
+    text-decoration: none;
+    color: #fff;
+    background-color: #573a7a;
+    padding: 10px;
+    border-radius: 5px;
+    border: #745797 solid;
+    transition-duration: 0.2s;
+}
+
+.sidebarlinks a:hover
+{
+    transition-duration: 0.02s;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px #816c9b5b;
+}
+
+.sidebarlinks a:active
+{
+    transform: scale(1);
+    box-shadow: 0px 0px 10px #816c9ba4;
+}
+
+.content
+{
+    width: 100%;
+    padding: 30px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.thingyard_grid
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+    gap: 1em 2em;
+}
+
+.thingyard_grid div[name="thumb"]
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 225px;
+    height: 126px;
+    background-color: #0f0f0f;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #000000;
+    transition-duration: 0.25s;
+    user-select: none;
+    overflow: hidden;
+    justify-content:end;
+}
+
+.thingyard_grid div[name="thumb"] img[name="img"]
+{
+    position: absolute;
+    align-self: center;
+    height: 126px;
+    width: auto;
+}
+
+.thingyard_grid div[name="thumb"] span
+{
+    z-index: 5;
+}
+
+.thingyard_grid div[name="thumb"] span[name="subtitle"]
+{
+    color: #cccccc95;
+    font-size: smaller;
+}
+
+.thingyard_grid div[name="thumb"] div[name="gradient"]
+{
+    position: absolute;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.726) 0%, rgba(0, 0, 0, 0) 80%);
+}
+
+.thingyard_grid div[name="thumb"]:hover
+{
+    transition-duration: 0s;
+    box-shadow: 0px 0px 10px #CCC;
+}

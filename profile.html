@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Profile</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content" style="width: 100% !important;">
+
+			<div style="display: flex; gap: 10px; align-items: center;">
+				<img id="pfp" src="img/twemoji/clock.png" width="70px" height="70px">
+				<h1 id="username">No user</h1>
+				<span title="Administrator" style="display: none; color: rgb(255,255,155);" id="isAdmin" class="material-symbols-outlined"><span style="font-size: 0px;">[</span>crown<span style="font-size: 0px;">]</span></span> <!-- Vile. -->
+			</div>
+			<p id="bio" style="white-space: pre-wrap; word-wrap: break-word;">No bio</p>
+			<div id="files"
+				style="width: fit-content; display: flex; flex-direction: column; gap: 20px; padding: 20px; background-color: rgb(22, 14, 29);">
+				<p>User's files</p>
+			</div>
+			<script>
+				const params = new URLSearchParams(location.search);
+
+				if (params.has('user')) {
+					const user = params.get('user');
+					async function getUserMoralValues() {
+						try {
+							const r = await fetch('https://api.meisite.xyz//userinfo?user=' + user);
+							if (!r.ok) throw new Error('bad :(');
+							const data = await r.json();
+							document.getElementById("username").innerHTML = data.user;
+							document.getElementById("pfp").src = data.pfp;
+							document.getElementById("bio").innerHTML = data.bio;
+							if(data.admin)
+							{
+								document.getElementById("isAdmin").style.display = "";
+							}
+							data.files.forEach(file => {
+								console.log(file);
+								file = "https://api.meisite.xyz//" + file
+								fetch(file)
+									.then(response => {
+										// check content-type header
+										const mimeType = response.headers.get("content-type");
+										console.log("MIME type from header:", mimeType);
+
+										// read as blob if you want more info
+										return response.blob();
+									})
+									.then(blob => {
+										console.log("Blob type:", blob.type); // usually same as MIME type
+										if (blob.type.startsWith("image/")) {
+											const el = document.createElement("a");
+											el.href = file;
+											el.style = "color: #0077ee; text-decoration: underline;"
+											el.innerHTML = "Image:<br><img src=\"" + file + "\" width=\"300px\"></img>";
+											document.getElementById("files").appendChild(el);
+										} if (blob.type.startsWith("audio/")) {
+											const el = document.createElement("a");
+											el.href = file;
+											el.style = "color: #0077ee; text-decoration: underline;"
+											el.innerHTML = "Audio:<br><audio src=\"" + file + "\" controls=\"\"></audio>";
+											document.getElementById("files").appendChild(el);
+										} if (blob.type.startsWith("video/")) {
+											const el = document.createElement("a");
+											el.href = file;
+											el.style = "color: #0077ee; text-decoration: underline;"
+											el.innerHTML = "Video:<br><video src=\"" + file + "\" controls=\"\" width=\"300px\"></video>";
+											document.getElementById("files").appendChild(el);
+										}
+										if (!blob.type.startsWith("audio/") && !blob.type.startsWith("image/") && !blob.type.startsWith("video/")) {
+											const el = document.createElement("a");
+											el.href = file;
+											el.innerText = file
+											el.className = "zonebutton";
+											document.getElementById("files").appendChild(el);
+										}
+									})
+									.catch(err => console.error(err));
+							});
+						} catch (e) {
+							console.log('err:', e);
+						}
+					}
+					getUserMoralValues();
+				}
+			</script>
+		</div>
+	</div>
+
+</body>
+
+</html>

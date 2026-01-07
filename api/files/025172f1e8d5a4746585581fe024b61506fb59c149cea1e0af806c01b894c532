@@ -1,0 +1,105 @@
+#==================================================
+#     ANSI RGB COLORS IN PYTHON (TRUE COLOR)
+#==================================================
+#
+#Examples for lazyboys:
+print(f"\033[38;2;{r};{g};{b}mThis is colored text!\033[0m")
+print(f"\033[48;2;{r};{g};{b}mThis has a background color!\033[0m")
+print(f"\033[0m This text has NO style! (Reset)")
+# Clear terminal:  \033[2J\033[H
+#
+#
+#
+#This guide teaches how to use 24-bit (RGB) ANSI escape codes 
+#to print colored text in terminals that support True Color.
+#
+#Most modern terminals (like Windows Terminal, iTerm2, Linux 
+#terminals, etc.) support 24-bit color.
+#
+#--------------------------------------------------
+# HOW ANSI ESCAPE CODES WORK
+#--------------------------------------------------
+#
+#The basic format to set RGB foreground color:
+#
+#    \033[38;2;<r>;<g>;<b>m
+#
+#And to set RGB background color:
+#
+#    \033[48;2;<r>;<g>;<b>m
+#
+#To reset all styles (colors, bold, etc.):
+#
+#    \033[0m
+#
+#--------------------------------------------------
+# EXAMPLE PYTHON CODE
+#--------------------------------------------------
+#
+#1. Basic RGB Foreground Color Example:
+#
+#```python
+#r = 255
+#g = 100
+#b = 50
+#
+#print(f"\033[38;2;{r};{g};{b}mThis is colored text!\033[0m")
+#```
+#
+#
+#Basic RGB Background Color Example:
+#
+#r = 50
+#g = 100
+#b = 200
+#
+#print(f"\033[48;2;{r};{g};{b}mThis has a background color!\033[0m")
+#
+#    Combining Foreground + Background:
+#
+#print("\033[38;2;255;255;255m\033[48;2;0;0;255m White on Blue \033[0m")
+#
+#    Wrapping it in a function:
+#
+#def rgb_text(text, r, g, b):
+#    return f"\033[38;2;{r};{g};{b}m{text}\033[0m"
+#
+#print(rgb_text("This is red text", 255, 0, 0))
+#
+#RGB COLOR PICKER FOR TESTING
+#
+#You can use websites like:
+#
+#https://rgbcolorpicker.com/
+#https://www.color-hex.com/
+#
+#To find RGB values (Red, Green, Blue between 0-255).
+#NOTES & TROUBLESHOOTING
+#
+#    If colors do not appear, your terminal may not support
+#    24-bit color (especially older or minimal ones like 'xterm').
+#
+#    Always reset colors using \033[0m or the color will "bleed"
+#    into the next lines.
+#
+#    For scripts that must work on all terminals, consider using
+#    fallback 8-bit colors instead of full 24-bit RGB.
+#
+#COLORFUL DEMO (RAINBOW TEXT)
+#
+#for i in range(0, 256, 25):
+#    print(f"\033[38;2;{i};0;255mColor step {i}\033[0m")
+#
+#BONUS: PRINT GRADIENT TEXT
+#
+#def gradient_text(text):
+#    for i, char in enumerate(text):
+#        r = int((i / len(text)) * 255)
+#        g = 0
+#        b = 255 - r
+#        print(f"\033[38;2;{r};{g};{b}m{char}\033[0m", end='')
+#    print()
+#
+#gradient_text("Colorful Gradient!")
+#
+#END OF GUIDE

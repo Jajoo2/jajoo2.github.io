@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Meisite Home</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content">
+			<h1>Hi, I'm Mei <span style="color: #cccccc65; font-size: x-small;">(pronounced May)</span></h1>
+			<p>I use Linux Mint, Python, and Blender. I am equally bad at using all 3.</p>
+			<p>I like pianos. NO idea what genres of music I like but it includes rock.</p>
+			<br>
+			<p>Press this button to create a notification.</p>
+			<button onclick="incrementAndShow()">meisite<sup>3</sup></button>
+			<script>
+				let val = 0
+				var audio1 = new Audio('src/1.wav');
+				var audio2 = new Audio('src/2.wav');
+				var audio3 = new Audio('src/3.wav');
+				var audio4 = new Audio('src/4.wav');
+				var audio5 = new Audio('src/5.mp3');
+				var audio6 = new Audio('src/6.mp3');
+				var audio7 = new Audio('src/7.mp3');
+				function incrementAndShow() {
+					if (val == 0) {
+						showToast("Welcome. Welcome to City 17.", 4000)
+						audio1.play();
+					}
+					if (val == 1) {
+						showToast("You have chosen, or been chosen, to relocate to one of our finest remaining urban centers.", 6000)
+						audio2.play();
+					}
+					if (val == 2) {
+						showToast("I thought so much of City 17 that I elected to establish my Administration here,", 6500)
+						audio3.play();
+					}
+					if (val == 3) {
+						showToast("in the Citadel so thoughtfully provided by Our Benefactors.", 5000)
+						audio4.play();
+					}
+					if (val == 4) {
+						showToast("I have been proud to call City 17 my home.", 4000)
+						audio5.play();
+					}
+					if (val == 5) {
+						showToast("And so, whether you are here to stay, or passing through on your way to parts unknown,", 6500)
+						audio6.play();
+					}
+					if (val == 6) {
+						showToast("Welcome to City 17. It's safer here. ", 4000)
+						audio7.play();
+					}
+					val += 1
+					if (val >= 7) {
+						val = 0
+					}
+				}
+			</script>
+			<button id="apibutton">test api</button>
+			<script>
+				const button = document.getElementById("apibutton");
+				button.addEventListener('click', function () {
+					fetch('https://api.meisite.xyz//ping')
+						.then(r => r.json())
+						.then(d => {
+							console.log('got data:', d)
+							button.innerText = d.message;
+						})
+						.catch(e => {
+							console.log('error:', e)
+							button.innerText = e;
+						})
+				});
+			</script>
+			<br><br><br>
+			<p id="loginstatus">Login status: Not logged in</p>
+			<script>
+				var thep = document.getElementById("loginstatus");
+				var name = localStorage.getItem("user");
+				if (name) {
+					thep.innerText = "Logged in as " + name
+				}
+			</script>
+
+		</div>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Meisite userlogin</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content">
+			<div style="display:flex; gap: 20px;">
+				<div style="width: 300px; padding: 20px; background-color: rgb(22, 14, 29);">
+					<h2>Login</h2>
+					<form id="loginForm">
+						<div style="display: flex; flex-direction: column; gap: 10px;">
+							<input type="text" id="user" name="username" placeholder="username" required>
+							<input type="password" id="password" name="password" placeholder="password" required>
+						</div>
+						<hr>
+						<button type="submit">login</button>
+					</form>
+
+					<script>
+						var form1 = document.getElementById("loginForm");
+						form1.addEventListener("submit", async e => {
+							e.preventDefault();
+							const data = {
+								user: form1.username.value,
+								password: form1.password.value
+							};
+							const res = await fetch("https://api.meisite.xyz//login", {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify(data)
+							});
+							var response = await res.json();
+							console.log(response);
+							if (res.ok) {
+								localStorage.setItem("user", form1.user.value);
+								localStorage.setItem("password", form1.password.value);
+								showToast("Logged in!", 3000);
+								window.location.reload();
+							} else {
+								showToast("Failed!! Reason: " + response.reason, 5000);
+							}
+						});
+					</script>
+				</div>
+				<div style="width: 300px; padding: 20px; background-color: rgb(22, 14, 29);">
+					<h2>Sign Up</h2>
+					<form id="signupForm">
+						<div style="display: flex; flex-direction: column; gap: 10px;">
+							<input type="text" id="user" name="username" placeholder="username" required>
+							<input type="password" id="password" name="password" placeholder="password" required>
+							<input type="text" id="pfp" name="pfp" placeholder="PFP url">
+						</div>
+						<hr>
+						<button type="submit">sign up</button>
+					</form>
+
+					<script>
+						var form2 = document.getElementById("signupForm");
+						form2.addEventListener("submit", async e => {
+							e.preventDefault();
+							const data = {
+								user: form2.username.value,
+								password: form2.password.value,
+								pfp: form2.pfp.value
+							};
+							const res = await fetch("https://api.meisite.xyz//signup", {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify(data)
+							});
+							var response = await res.json();
+							console.log(response);
+							if (res.ok) {
+								showToast("Now login!!");
+							} else {
+								showToast("Failed!! Reason: " + response.reason, 5000);
+							}
+						});
+					</script>
+				</div>
+				<div style="width: 300px; padding: 20px; background-color: rgb(22, 14, 29);">
+					<h2>Change Bio</h2>
+					<form id="bioForm">
+						<div style="display: flex; flex-direction: column; gap: 10px;">
+							<textarea type="text" id="bio" name="bio" required></textarea>
+						</div>
+						<hr>
+						<button type="submit">change bio</button>
+					</form>
+
+					<script>
+						var form3 = document.getElementById("bioForm");
+						var suser = localStorage.getItem("user");
+						var spassword = localStorage.getItem("password");
+						var sbio = localStorage.getItem("bio");
+						if (sbio) {
+							bioForm.bio.value = sbio;
+						}
+						form3.addEventListener("submit", async e => {
+							e.preventDefault();
+							localStorage.setItem("bio", form3.bio.value);
+							const data = {
+								user: suser,
+								password: spassword,
+								bio: form3.bio.value
+							};
+							const res = await fetch("https://api.meisite.xyz//changebio", {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify(data)
+							});
+							var response = await res.json();
+							console.log(response);
+							if (res.ok) {
+								showToast("Success");
+							} else {
+								showToast("Failed!! Reason: " + response.reason, 5000);
+							}
+						});
+					</script>
+				</div>
+
+				<div style="width: 300px; padding: 20px; background-color: rgb(22, 14, 29);">
+					<h2>Change PFP</h2>
+					<form id="pfpForm">
+						<div style="display: flex; flex-direction: column; gap: 10px;">
+							<textarea type="text" id="pfp" name="pfp" required></textarea>
+						</div>
+						<hr>
+						<button type="submit">change pfp</button>
+					</form>
+
+					<script>
+						var form4 = document.getElementById("pfpForm");
+						var puser = localStorage.getItem("user");
+						var ppassword = localStorage.getItem("password");
+						var pfp = localStorage.getItem("pfp");
+						if (pfp) {
+							pfpForm.bio.value = pfp;
+						}
+						form4.addEventListener("submit", async e => {
+							e.preventDefault();
+							localStorage.setItem("pfp", form4.pfp.value);
+							const data = {
+								user: puser,
+								password: ppassword,
+								pfp: form4.pfp.value
+							};
+							const res = await fetch("https://api.meisite.xyz//changepfp", {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify(data)
+							});
+							var response = await res.json();
+							console.log(response);
+							if (res.ok) {
+								showToast("Success");
+							} else {
+								showToast("Failed!! Reason: " + response.reason, 5000);
+							}
+						});
+					</script>
+				</div>
+
+			</div>
+			<p id="loginstatus">Login status: Not logged in</p>
+			<script>
+				var thep = document.getElementById("loginstatus");
+				var name = localStorage.getItem("user");
+				if (name) {
+					thep.innerText = "Logged in as " + name
+				}
+			</script>
+			<button id="apibutton">test api</button>
+			<script>
+				const button = document.getElementById("apibutton");
+				button.addEventListener('click', function () {
+					fetch('https://api.meisite.xyz//ping')
+						.then(r => r.json())
+						.then(d => {
+							console.log('got data:', d)
+							button.innerText = d.message;
+						})
+						.catch(e => {
+							console.log('error:', e)
+							button.innerText = e;
+						})
+				});
+			</script>
+
+			<a href="#" id="myprofile" class="zonebutton">Go to my profile</a>
+			<script>document.getElementById("myprofile").href = "/profile.html?user=" + localStorage.getItem("user");</script>
+			<input type="checkbox" id="showfilesonprofile">
+			<label>Show files on profile?</label>
+			<script>
+				const checkbox = document.getElementById("showfilesonprofile");
+
+				checkbox.addEventListener("change", async e => 
+				{
+					const data = {
+						user: localStorage.getItem("user"),
+						password: localStorage.getItem("password"),
+						showfiles: checkbox.checked
+					};
+					const res = await fetch("https://api.meisite.xyz//showfiles", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(data)
+					});
+					var response = await res.json();
+					console.log(response);
+					if (res.ok) {
+						showToast("Success");
+					} else {
+						showToast("Failed!! Reason: " + response.reason, 5000);
+					}
+				});
+			</script>
+
+			<br><br>
+			<button id="deleteprof" style="background-color: rgb(173, 55, 55);">Delete my profile</button>
+			<script>
+				var butto = document.getElementById("deleteprof");
+				var duser = localStorage.getItem("user");
+				var dassword = localStorage.getItem("password");
+				butto.addEventListener("click", async e => {
+					let promp = prompt("ARE YOU CERTAIN? type \"Yeah!!\"")
+					if (promp == "Yeah!!") {
+						const data = {
+							user: duser,
+							password: dassword
+						};
+						const res = await fetch("https://api.meisite.xyz//deleteprofile", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(data)
+						});
+						var response = await res.json();
+						console.log(response);
+						if (res.ok) {
+							showToast("Success");
+							localStorage.setItem("user", "");
+							localStorage.setItem("password", "");
+							window.location.reload();
+						} else {
+							showToast("Failed!! Reason: " + response.reason, 5000);
+						}
+					} else {
+						showToast("Cancelled");
+					}
+				});
+			</script>
+
+		</div>
+	</div>
+
+</body>
+
+</html>

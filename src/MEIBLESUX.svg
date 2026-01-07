@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1080"
+   height="1080"
+   viewBox="0 0 1080 1080"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="MEIBLESUX.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.33756288"
+     inkscape:cx="542.12121"
+     inkscape:cy="625.06872"
+     inkscape:window-width="1366"
+     inkscape:window-height="716"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="214.1921"
+       y="148.93474"
+       width="381.8728"
+       height="347.46518"
+       id="rect2300" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       id="text2298"
+       style="font-size:30.2362px;line-height:1.25;font-family:'Mystery Font';-inkscape-font-specification:'Mystery Font';white-space:pre;shape-inside:url(#rect2300)" />
+    <text
+       xml:space="preserve"
+       style="font-size:529.091px;line-height:1.25;font-family:Urbanist;-inkscape-font-specification:Urbanist;fill:#ffffff;fill-opacity:1;stroke-width:3.67425"
+       x="2.0422671"
+       y="548.10175"
+       id="text8960"
+       transform="scale(0.65790032,1.5199871)"><tspan
+         sodipodi:role="line"
+         id="tspan8958"
+         x="2.0422671"
+         y="548.10175"
+         style="stroke-width:3.67425">MEI</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:283.55px;line-height:1.25;font-family:Urbanist;-inkscape-font-specification:Urbanist;fill:#ffffff;fill-opacity:1;stroke-width:1.9691"
+       x="739.41571"
+       y="660.22192"
+       id="text8960-6"
+       transform="scale(0.80119969,1.2481283)"><tspan
+         sodipodi:role="line"
+         id="tspan8958-4"
+         x="739.41571"
+         y="660.22192"
+         style="stroke-width:1.9691">SUX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:344.013px;line-height:1.25;font-family:Urbanist;-inkscape-font-specification:Urbanist;fill:#ffffff;fill-opacity:1;stroke-width:2.38898"
+       x="701.65485"
+       y="463.5369"
+       id="text8960-3"
+       transform="scale(0.83535495,1.1970959)"><tspan
+         sodipodi:role="line"
+         id="tspan8958-0"
+         x="701.65485"
+         y="463.5369"
+         style="stroke-width:2.38898">BLE</tspan></text>
+  </g>
+</svg>

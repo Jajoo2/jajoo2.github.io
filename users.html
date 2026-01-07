@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Users</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content" style="width: 100% !important; align-items: center; display: flex !important; justify-content: center !important; flex-direction: column;">
+			<h2>All users</h2>
+			<div id="links" style="display: flex; flex-direction: column; gap: 5px;"></div>
+
+			<script>
+				async function getUserMoralValues() {
+					try {
+						const r = await fetch('https://api.meisite.xyz//users');
+						if (!r.ok) throw new Error('bad :(');
+						const data = await r.json();
+						for (let i = 0; i < Object.keys(data).length; i++) {
+							const el = document.createElement('a');
+							el.innerHTML = `<img src="${data[Object.keys(data)[i]]}" width="20px"> `+Object.keys(data)[i];
+							el.href = "/profile.html?user="+Object.keys(data)[i];
+							el.style.display = "flex";
+							el.style.alignItems = "center";
+							el.style.gap = "10px";
+							el.className = "zonebutton"
+							document.getElementById("links").appendChild(el);
+						}
+					} catch (e) {
+						console.log('err:', e);
+					}
+				}
+				getUserMoralValues();
+			</script>
+		</div>
+	</div>
+
+</body>
+
+</html>

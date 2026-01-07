@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Users</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content" style="width: 100% !important; flex-direction: column;">
+			<p style="color: #cccccc55; font-size: smaller; margin: 0;" id="authorname"></p>
+			<h2 id="title" style="margin: 0;">Title or something</h2>
+			<hr>
+			<p id="body" style="white-space: pre-wrap; margin: 0;">Body or something</p>
+		</div>
+		<script>
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			async function refresh() {
+				const res = await fetch("https://api.meisite.xyz//thingyard/"+urlParams.get("id"), {
+					method: "GET"
+				});
+				var response = await res.json();
+				document.getElementById("authorname").innerText = response.author;
+				document.getElementById("title").innerText = response.title;
+				document.getElementById("body").innerHTML = response.body;
+			}
+			refresh();
+		</script>
+	</div>
+
+</body>
+
+</html>

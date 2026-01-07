@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Meisite Home</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content">
+			<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+				<div>
+					<input type="text" placeholder="Search..." style="width: 500px;">
+					<a href="/uploadthing.html" class="zonebutton">Upload</a>
+				</div>
+				<h1>Thingyard</h1>
+			</div>
+			<div class="thingyard_grid" id="grid">
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+		/* Structure: 
+		<a href="#">
+			<div name="thumb">
+				<img name="img" src="img">
+				<div name="gradient"></div>
+				<span name="title">hello world</span>
+				<span name="subtitle">simple introductory</span>
+			</div>
+		</a>
+		*/
+		const grid = document.getElementById("grid")
+		async function refresh() {
+			const res = await fetch("https://api.meisite.xyz//thingyard", {
+				method: "GET"
+			});
+			var response = await res.json();
+			//console.log(response);
+			for (let i = 0; i < Object.keys(response).length; i++) {
+				let thing = response[i.toString()]
+				let el = document.createElement('a');
+				el.innerHTML = `<div name="thumb"> <img name="img" src="${thing.image}"> <div name="gradient"></div> <span name="title">${thing.title}</span> <span name="subtitle">${thing.summary}</span>`;
+				el.href = "/thing.html?id="+i.toString();
+				grid.appendChild(el);
+			}
+		}
+		refresh();
+	</script>
+
+</body>
+
+</html>
