@@ -37,5 +37,15 @@
       "admin": false,
       "posts": []
     }
+    "testlogins": {
+      "salt": "6db90745e9a833bc798b45f970707628",
+      "hash": "b156ed2ef4d7ebdd19421ccdc8607d5d16bb3de0ed1d07614c13e2416c08b8d5",
+      "bio": "You have chosen, or been chosen, to relocate to one of our finest remaining urban centers.",
+      "pfp": "https://yt3.googleusercontent.com/tNSpRkTTf_JOznhHTWgD1Y_J__Pkeu_NCHqDoOQWt5BBFdsjKdorCRS32xigHb_rSzp45uon=s120-c-k-c0x00ffffff-no-rj",
+      "files": [],
+      "showfiles": false,
+      "admin": false,
+      "posts": []
+    }
   }
 }
