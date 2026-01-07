@@ -79,50 +79,98 @@
 								placeholder="type message..." id="textareathnig"></textarea>
 							<button type="submit">send</button>
 							<script>
-								document.getElementById("file").onchange = event => {
+								document.getElementById("file").onchange = async event => {
 									const file = event.target.files[0];
 									if (!file) return;
 
-									const reader = new FileReader();
+									const textarea = document.getElementById("textareathnig");
 
-									reader.onload = () => {
-										const img = new Image();
+									/* ================= IMAGES ================= */
+									if (file.type.startsWith("image/")) {
+										const reader = new FileReader();
 
-										img.onload = () => {
-											const MAX_WIDTH = 800;
-											const QUALITY = 0.7;
+										reader.onload = () => {
+											const img = new Image();
+											img.onload = () => {
+												const MAX_WIDTH = 800;
+												const QUALITY = 0.7;
 
-											let width = img.width;
-											let height = img.height;
+												let w = img.width;
+												let h = img.height;
 
-											if (width > MAX_WIDTH) {
-												const scale = MAX_WIDTH / width;
-												width *= scale;
-												height *= scale;
-											}
+												if (w > MAX_WIDTH) {
+													const scale = MAX_WIDTH / w;
+													w *= scale;
+													h *= scale;
+												}
 
-											const canvas = document.createElement("canvas");
-											canvas.width = width;
-											canvas.height = height;
+												const canvas = document.createElement("canvas");
+												canvas.width = w;
+												canvas.height = h;
 
-											const ctx = canvas.getContext("2d");
-											ctx.drawImage(img, 0, 0, width, height);
+												const ctx = canvas.getContext("2d");
+												ctx.drawImage(img, 0, 0, w, h);
 
-											const hasAlpha = file.type === "image/png";
-											const mime = hasAlpha ? "image/png" : "image/jpeg";
+												const hasAlpha = file.type === "image/png";
+												const mime = hasAlpha ? "image/png" : "image/jpeg";
 
-											const compressedDataUrl = hasAlpha
-												? canvas.toDataURL(mime)
-												: canvas.toDataURL(mime, QUALITY);
+												const dataUrl = hasAlpha
+													? canvas.toDataURL(mime)
+													: canvas.toDataURL(mime, QUALITY);
 
-											document.getElementById("textareathnig").value +=
-												`<img src="${compressedDataUrl}" width="300">`;
+												textarea.value += `<img src="${dataUrl}" width="300">\n`;
+											};
+											img.src = reader.result;
 										};
 
-										img.src = reader.result;
-									};
+										reader.readAsDataURL(file);
+										return;
+									}
 
-									reader.readAsDataURL(file);
+									/* ================= VIDEOS ================= */
+									if (file.type.startsWith("video/")) {
+										const video = document.createElement("video");
+										video.src = URL.createObjectURL(file);
+										video.muted = true;
+										video.playsInline = true;
+
+										await video.play(); // required to start capture
+
+										const stream = video.captureStream();
+										const recorder = new MediaRecorder(stream, {
+											mimeType: "video/webm; codecs=vp9",
+											videoBitsPerSecond: 1_000_000 // ~1 Mbps
+										});
+
+										const chunks = [];
+										recorder.ondataavailable = e => chunks.push(e.data);
+
+										recorder.start();
+
+										// record entire video
+										await new Promise(resolve => {
+											video.onended = resolve;
+										});
+
+										recorder.stop();
+
+										recorder.onstop = () => {
+											const blob = new Blob(chunks, { type: "video/webm" });
+											const reader = new FileReader();
+
+											reader.onload = () => {
+												textarea.value +=
+													`<video src="${reader.result}" width="300" controls></video>\n`;
+											};
+
+											reader.readAsDataURL(blob);
+											URL.revokeObjectURL(video.src);
+										};
+
+										return;
+									}
+
+									alert("unsupported file type");
 								};
 							</script>
 
