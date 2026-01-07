@@ -400,9 +400,8 @@ def comment():
         return jsonify({"status": "failure", "reason": "incorrect login details?"}), 401
     
     
-channels = ["general", "random", "random fucking bullshit"]
-messages = {ch: [] for ch in channels} 
-messages["general"] = [{"author":"system","content":"genreal"}]
+channels = ["general","general2","general3","general4", "focused", "HTML spam"]
+messages = {ch: [{"author":"system","content":ch+" is functioning"}] for ch in channels} 
 # Add these global trackers near your other globals
 # Structure: { "general": ["user1", "user2"], "random": ["user3"] }
 room_members = {ch: [] for ch in channels} 
@@ -437,7 +436,7 @@ def on_disconnect():
 @socketio.on("join")
 def on_join(data):
     channel = data["channel"]
-    username = data.get("username", "Anonymous")
+    username = data.get("username", "Anonymous User"+str(random.randint(1000,9999)))
     sid = request.sid
     
     # Handle leaving previous room tracking

@@ -78,6 +78,7 @@
 						</div>
 					</form>
 					<script>
+						const pingsound = new Audio('src/pip.mp3');
 						const form = document.getElementById("chatform");
 						const input = form.querySelector("textarea[name='msg']");
 						const chatMessages = document.querySelector(".chat-messages");
@@ -173,6 +174,7 @@
 
 						// 4. Receive new message
 						socket.on("message", data => {
+							pingsound.play();
 							const div = document.createElement("div");
 							div.classList.add("thingyard_comment");
 							div.innerHTML = `<span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p>${data.content}</p>`;
