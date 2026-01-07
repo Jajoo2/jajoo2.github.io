@@ -290,11 +290,7 @@ def uploadfile():
     else:
         return jsonify({"status": "failure", "reason": "incorrect login details?"}), 401
 
-def auth(request):
-    data = request.json
-    user = data.get("user")
-    password = data.get("password")
-
+def auth(user,password):
     if user is None or password is None:
         return jsonify({"status": "failure", "reason": "Missing user or password"}), 400
     with open("users.json") as f:
@@ -339,9 +335,9 @@ def uploadthing():
     body = data.get("body")
     summary = data.get("summary")
     image = data.get("image")
-    authorized = auth(request)
+    authorized = auth(data.get("user"),data.get("password"))
     
-    if authorized:
+    if authorized == True:
         if len(title)+len(body)+len(summary)+len(image) > 10000:
             return jsonify({"status": "failure", "reason": "over 10mb, CALM DOWN!"}), 413
         with open("thingyard.json") as f:
@@ -380,15 +376,15 @@ def thing(thingid):
 def comment():
     data = request.json
     body = data.get("body")
-    id = data.get("id")
-    authorized = auth(request)
+    pid = data.get("id")
+    authorized = auth(data.get("user"),data.get("password"))
     
-    if authorized:
+    if authorized == True:
         if len(body) > 10000:
             return jsonify({"status": "failure", "reason": "over 10mb, CALM DOWN!"}), 413
         with open("thingyard.json") as f:
             db = json.load(f)
-        db[id][comments].append(body)
+        db[pid]["comments"].append({"author": data.get("user"), "body": body, "timestamp": get_timestamp()})
         with open("thingyard.json","w") as f:
             json.dump(db,f,indent=2)
         return jsonify({"status": "success"}), 200

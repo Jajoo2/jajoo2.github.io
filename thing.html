@@ -4,7 +4,7 @@
 <head>
 	<meta charset=utf-8>
 	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
-	<title>Users</title>
+	<title>Thingyard thing</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<script src="js/script.js"></script>
 </head>
@@ -19,18 +19,70 @@
 			<h2 id="title" style="margin: 0;">Title or something</h2>
 			<hr>
 			<p id="body" style="white-space: pre-wrap; margin: 0;">Body or something</p>
+			<br>
+			<hr>
+			<h3>Comments</h3>
+			<div
+				style="width: fit-content; height: fit-content; border-radius: 5px; padding: 20px; background-color: rgb(22, 14, 29);">
+				<form id="commentForm">
+					<input type="text" id="user" name="body" placeholder="Body" required>
+					<button type="submit">post</button>
+				</form>
+
+				<script>
+					var form1 = document.getElementById("commentForm");
+					form1.addEventListener("submit", async e => {
+						e.preventDefault();
+						const data = {
+							user: localStorage.getItem("user"),
+							password: localStorage.getItem("password"),
+							body: form1.body.value,
+							id: new URLSearchParams(window.location.search).get("id")
+						};
+						const res = await fetch("https://api.meisite.xyz/thingyard/comment", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(data)
+						});
+						var response = await res.json();
+						console.log(response);
+						if (res.ok) {
+							showToast("Posted");
+							window.location.reload();
+						} else {
+							showToast("Failed!! Reason: " + response.reason, 5000);
+						}
+					});
+				</script>
+			</div>
+			<br>
+			<div id="comments"
+				style="width: 100%; height: fit-content; display: flex; flex-direction: column-reverse; gap: 10px;">
+				<!--
+					<div class="thingyard_comment">
+						<div style="display: flex; gap: 4px;"><span style="color: #cccccc65; font-size: smaller;">Mei!!! <span style="color: #cccccc45; font-size: xx-small;">2025-03-18T14:32:09Z</span></span></div>
+						<p>Why don't y'all like this one?</p>
+					</div>
+				-->
+			</div>
 		</div>
 		<script>
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
 			async function refresh() {
-				const res = await fetch("https://api.meisite.xyz//thingyard/"+urlParams.get("id"), {
+				const res = await fetch("https://api.meisite.xyz//thingyard/" + urlParams.get("id"), {
 					method: "GET"
 				});
 				var response = await res.json();
 				document.getElementById("authorname").innerText = response.author;
 				document.getElementById("title").innerText = response.title;
 				document.getElementById("body").innerHTML = response.body;
+				for (let i = 0; i < Object.keys(response.comments).length; i++) {
+						document.getElementById("comments").innerHTML += `<div class="thingyard_comment">
+						<div style="display: flex; gap: 4px;"><span style="color: #cccccc65; font-size: smaller;">${response.comments[i].author} <span style="color: #cccccc45; font-size: xx-small;">${response.comments[i].timestamp}</span></span></div>
+						<p>${response.comments[i].body}</p>
+					</div>`
+				}
 			}
 			refresh();
 		</script>

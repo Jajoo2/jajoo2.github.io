@@ -23,6 +23,18 @@
       "showfiles": true,
       "admin": false,
       "posts": []
+    },
+    "jorin": {
+      "salt": "15d8e970e2e3adcfee145ea48be37881",
+      "hash": "c8bc39de9493227a4fed4c4483560aa0904f77de1815017da356b695b76d0082",
+      "bio": "Yeah",
+      "pfp": "https://api.meisite.xyz//files/f9591320536a48955533403675815e3d6bea2269e9aa1e193cf13b6311e3b5fd.png",
+      "files": [
+        "files/f9591320536a48955533403675815e3d6bea2269e9aa1e193cf13b6311e3b5fd.png"
+      ],
+      "showfiles": false,
+      "admin": false,
+      "posts": []
     }
   }
 }
