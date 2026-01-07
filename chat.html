@@ -72,9 +72,60 @@
 					</div>
 					<form id="chatform">
 						<div class="chat-input">
+							<input type="file" id="file" hidden>
+							<label for="file"
+								style="background-color: #0c090f; border-radius: 100px; width: 2em; text-align: center; align-content: center; font-size: xx-large;">+</label>
 							<textarea name="msg" autocomplete="off" style="width: 100%; outline: none;" type="text"
-								placeholder="type message..."></textarea>
+								placeholder="type message..." id="textareathnig"></textarea>
 							<button type="submit">send</button>
+							<script>
+								document.getElementById("file").onchange = event => {
+									const file = event.target.files[0];
+									if (!file) return;
+
+									const reader = new FileReader();
+
+									reader.onload = () => {
+										const img = new Image();
+
+										img.onload = () => {
+											const MAX_WIDTH = 800;
+											const QUALITY = 0.7;
+
+											let width = img.width;
+											let height = img.height;
+
+											if (width > MAX_WIDTH) {
+												const scale = MAX_WIDTH / width;
+												width *= scale;
+												height *= scale;
+											}
+
+											const canvas = document.createElement("canvas");
+											canvas.width = width;
+											canvas.height = height;
+
+											const ctx = canvas.getContext("2d");
+											ctx.drawImage(img, 0, 0, width, height);
+
+											const hasAlpha = file.type === "image/png";
+											const mime = hasAlpha ? "image/png" : "image/jpeg";
+
+											const compressedDataUrl = hasAlpha
+												? canvas.toDataURL(mime)
+												: canvas.toDataURL(mime, QUALITY);
+
+											document.getElementById("textareathnig").value +=
+												`<img src="${compressedDataUrl}" width="300">`;
+										};
+
+										img.src = reader.result;
+									};
+
+									reader.readAsDataURL(file);
+								};
+							</script>
+
 						</div>
 					</form>
 					<script>
