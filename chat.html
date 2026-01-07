@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Meisite Chat</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="js/script.js"></script>
+	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+	<style>
+		body {
+			background-color: #0c090f;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div class="sidebar" id="sidebar"></div>
+
+		<div id="toast-container"></div>
+		<div class="content">
+			<div class="chat-layout">
+				<div class="chat-channels" id="channelshit">
+					<!--<div class="chat-channel"># general</div>-->
+				</div>
+
+				<div class="chat-main">
+					<div class="chat-messages">
+						<div class="thingyard_comment">
+							<span style="color:#cccccc65;font-size:smaller;">system</span>
+							<p>welcome</p>
+						</div>
+					</div>
+					<form id="chatform">
+						<div class="chat-input">
+							<input name="msg" autocomplete="off" style="width: 100%; outline: none;" type="text"
+								placeholder="type message..." />
+							<button type="submit">send</button>
+						</div>
+					</form>
+					<script>
+						const form = document.getElementById("chatform");
+						const input = form.querySelector("input[name='msg']");
+						const chatMessages = document.querySelector(".chat-messages");
+						let currentChannel = "general";
+						let username = localStorage.getItem("user"); // you can make this dynamic later
+
+						// connect
+						const socket = io("https://api.meisite.xyz");
+
+						//<div class="chat-channel"># general</div>
+						async function getUserMoralValues() {
+							try {
+								const r = await fetch('https://api.meisite.xyz/channels');
+								if (!r.ok) throw new Error('bad :(');
+								const data = await r.json();
+
+								const container = document.getElementById("channelshit");
+								container.innerHTML = ""; // optional: clear first
+
+								data.forEach(channel => {
+									const div = document.createElement("div");
+									div.classList.add("chat-channel");
+									div.textContent = `# ${channel}`;
+									container.appendChild(div);
+
+									// attach listener here
+									div.addEventListener("click", () => {
+										const active = container.querySelector(".chat-channel.active");
+										if (active) active.classList.remove("active");
+
+										div.classList.add("active");
+										currentChannel = channel;
+										chatMessages.innerHTML = "";
+										socket.emit("join", { channel: currentChannel });
+									});
+								});
+							} catch (e) {
+								console.log('err:', e);
+							}
+						}
+						getUserMoralValues();
+
+						// join initial channel
+						socket.emit("join", { channel: currentChannel });
+
+
+						// handle sending messages
+						form.addEventListener("submit", e => {
+							e.preventDefault();
+							const msg = input.value.trim();
+							if (!msg) return;
+
+							socket.emit("message", {
+								channel: currentChannel,
+								author: username,
+								content: msg
+							});
+							input.value = "";
+						});
+
+						// receive new message
+						socket.on("message", data => {
+							const div = document.createElement("div");
+							div.classList.add("thingyard_comment");
+							div.innerHTML = `<span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p>${data.content}</p>`;
+							chatMessages.appendChild(div);
+							chatMessages.scrollTop = chatMessages.scrollHeight;
+						});
+
+						// receive chat history
+						socket.on("history", msgs => {
+							chatMessages.innerHTML = "";
+							msgs.forEach(m => {
+								const div = document.createElement("div");
+								div.classList.add("thingyard_comment");
+								div.innerHTML = `<span style="color:#cccccc65;font-size:smaller;">${m.author}</span><p>${m.content}</p>`;
+								chatMessages.appendChild(div);
+							});
+							chatMessages.scrollTop = chatMessages.scrollHeight;
+						});
+
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

@@ -1,4 +1,6 @@
-from flask import Flask, jsonify, abort, request, send_file
+from flask import Flask, jsonify, abort, request, send_file, session
+from flask_socketio import SocketIO, emit, join_room, leave_room
+import flask_socketio
 from flask_cors import CORS
 import json
 import random
@@ -7,6 +9,9 @@ import secrets
 from pathlib import Path
 from datetime import datetime, timezone
 import uuid
+import sqlite3
+
+
 
 
 def hash_password(password):
@@ -20,8 +25,11 @@ def verify(password, salt, stored_hash):
     return h == stored_hash
 
 
+
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app)
+
 BANNED_IPS = []
 with open("bans.txt",'r') as f:
     for i in f.readlines():
@@ -391,5 +399,57 @@ def comment():
     else:
         return jsonify({"status": "failure", "reason": "incorrect login details?"}), 401
     
+    
+channels = ["general", "random", "random fucking bullshit"]
+messages = {ch: [] for ch in channels} 
+messages["general"] = [{"author":"system","content":"genreal"}]
 
-app.run(host="0.0.0.0", port=27935)
+@app.route("/channels", methods=["GET"])
+def getchnls():
+    return jsonify(channels)
+
+@socketio.on("connect")
+def on_connect():
+    print("client connected")
+    join_room("general")
+
+@socketio.on("join")
+def on_join(data):
+    channel = data["channel"]
+    
+    # 1. Look for the previous room in the user's session
+    old_channel = session.get('current_channel')
+    
+    # 2. If they were in a room, leave it first
+    if old_channel:
+        leave_room(old_channel)
+        print(f"User left room: {old_channel}")
+
+    # 3. Join the new room and save it to the session
+    join_room(channel)
+    session['current_channel'] = channel
+    print(f"User joined room: {channel}")
+
+    if channel not in channels:
+        return
+        
+    emit("history", messages.get(channel, []))
+
+@socketio.on("message")
+def on_message(data):
+    channel = data["channel"]
+    author = data["author"]
+    content = data["content"]
+
+    if channel not in channels:  # ignore unknown channels
+        return
+
+    if channel in messages:
+        messages[channel].append({"author": author, "content": content})
+    else:
+        messages[channel] = [{"author": author, "content": content}]
+
+    emit("message", {"author": author, "content": content}, to=channel, broadcast=False)
+
+
+socketio.run(app,host="0.0.0.0", port=27935)

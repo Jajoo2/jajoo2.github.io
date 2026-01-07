@@ -287,3 +287,63 @@ hr
     width: fit-content;
     height: fit-content;
 }
+
+.chat-layout {
+    display: flex;
+    height: calc(100vh - 60px);
+    gap: 15px;
+}
+
+.chat-channels {
+    width: 220px;
+    background-color: #1a1420;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 2px 3px 10px #06040875;
+    overflow-y: scroll;
+}
+
+.chat-channel {
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #573a7a;
+    cursor: pointer;
+    transition-duration: 0.15s;
+}
+
+.chat-channel:hover {
+    background-color: #7f469b;
+}
+
+.chat-channel.active {
+    background-color: #5d3c6d;
+    box-shadow: inset 0px 0px 0px 2px #816c9b;
+}
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #201a27;
+    border-radius: 8px;
+    box-shadow: 2px 3px 10px #06040875;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-top: 1px solid #0b0313;
+}
