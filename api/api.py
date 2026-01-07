@@ -174,7 +174,7 @@ def changepfp():
     password_hash = db["users"][user]["hash"]
     ver = verify(password, salt, password_hash)
     if ver:
-        db["users"][user]["bio"] = bio
+        db["users"][user]["pfp"] = pfp
         with open("users.json", "w") as f:
             json.dump(db, f, indent=2)
         return jsonify({"status": "success"}), 201
