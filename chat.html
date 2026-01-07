@@ -277,8 +277,8 @@
 							pingsound.play();
 							const div = document.createElement("div");
 							div.classList.add("thingyard_comment");
-							div.innerHTML = `<div style="display: flex; gap: 5px;"> <image src="${data.pfp}" width=40> <div><span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p style="white-space: pre-wrap;">${data.content}</p></div></div>`;
-							chatMessages.appendChild(div);
+							div.innerHTML = `<div style="display: flex; gap: 5px;"> <div><span style="color:#cccccc65;font-size:smaller;">${data.author}</span><p style="white-space: pre-wrap;">${data.content}</p></div></div>`;
+							chatMessages.appendChild(div); // <image src="${data.pfp}" width=40> removed due to broken      :(
 							chatMessages.scrollTop = chatMessages.scrollHeight;
 						});
 
