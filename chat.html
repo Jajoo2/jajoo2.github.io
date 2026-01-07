@@ -72,17 +72,26 @@
 					</div>
 					<form id="chatform">
 						<div class="chat-input">
-							<input name="msg" autocomplete="off" style="width: 100%; outline: none;" type="text"
-								placeholder="type message..." />
+							<textarea name="msg" autocomplete="off" style="width: 100%; outline: none;" type="text"
+								placeholder="type message..."></textarea>
 							<button type="submit">send</button>
 						</div>
 					</form>
 					<script>
 						const form = document.getElementById("chatform");
-						const input = form.querySelector("input[name='msg']");
+						const input = form.querySelector("textarea[name='msg']");
 						const chatMessages = document.querySelector(".chat-messages");
 						const listContainer = document.getElementById("members-list");
 						const countDisplay = document.getElementById("member-count");
+
+						input.addEventListener("keydown", e => {
+							if (e.key === "Enter" && !e.shiftKey) {
+								e.preventDefault();        // prevent newline
+								form.dispatchEvent(new Event("submit", { cancelable: true })); // trigger your submit handler
+							}
+						});
+
+
 
 						let currentChannel = "general";
 						let username = localStorage.getItem("user") || "Anonymous";
