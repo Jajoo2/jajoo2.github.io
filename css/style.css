@@ -330,6 +330,7 @@ hr
     background-color: #201a27;
     border-radius: 8px;
     box-shadow: 2px 3px 10px #06040875;
+    overflow-x: hidden; 
 }
 
 .chat-messages {
@@ -339,7 +340,7 @@ hr
     display: flex;
     flex-direction: column;
     gap: 8px;
-    overflow-x: auto;
+    
 }
 
 .chat-input {
