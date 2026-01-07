@@ -12,7 +12,7 @@ body,html
 {
     background-color: #27232c;
     color: #ccc;
-    font-family: "Comfortaa";
+    font-family: "Comfortaa"; /* Comment is here because git is being a shitty broken tool */
     margin: 0px;
     padding: 0px;
 }
