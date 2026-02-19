@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'>
+	<title>Loading Sceem</title>
+</head>
+
+<body>
+	<div style="display: flex; justify-content: center; align-items: center;">
+		<p id="loading">loading</p>
+		<script>
+			window.SetStatusChanged = function(status) {
+				document.getElementById('loading').innerHTML = status;
+			};
+		</script>
+	</div>
+
+</body>
+
+</html>
